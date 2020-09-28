@@ -18,6 +18,7 @@ const cooldowns = new Discord.Collection();
 // On initialization
 client.once('ready', () => {
 	console.log('JNFR ready!');
+	client.user.setActivity('type j!help');
 });
 
 // On message received...

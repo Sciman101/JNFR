@@ -20,7 +20,7 @@ module.exports = {
 	cooldown: 3,
 	description: 'Lets you create, manage, and battle OCs',
 	aliases: ['character'],
-	usage:'<create/delete> -OR- <character id to view>',
+	usage:'<create/delete/list> -OR- <character id to view>',
 	guildOnly:false,
 	args:true,
 	execute(message, args) {
