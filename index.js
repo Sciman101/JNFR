@@ -1,15 +1,41 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const storage = require('./util/storage.js');
 // Load from config file
 const {prefix, token, defaultCooldown} = require('./config.json');
+
+// Load splash messages
+const splash = require('./data/splash.json');
+
+// Helper to run a splash message
+function doSplash(key,params) {
+	const responses = splash[key];
+
+	let msg = responses[Math.floor(Math.random() * responses.length)];
+	if (params) {
+		for (const p in params) {
+			msg = msg.replace(p,params[p]);
+		}
+	}
+	return msg;
+}
 
 // Setup discord client
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name,command);
+	if (!file.startsWith('-')) {
+		const command = require(`./commands/${file}`);
+		client.commands.set(command.name,command);
+
+		// Add listeners for specific commands
+		if ('listeners' in command) {
+			for (const listener in command.listeners) {
+				client.on(listener,command.listeners[listener]);
+			}
+		}
+	}
 }
 
 // Setup cooldown system
@@ -24,8 +50,11 @@ client.once('ready', () => {
 // On message received...
 client.on('message', message => {
 	
+	// Ignore bots
+	if (message.author.bot) return;
+
 	// Make sure it's a command for us
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (!message.content.startsWith(prefix)) return;
 	
 	// Parse command name and arguments
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -37,14 +66,14 @@ client.on('message', message => {
 	// Check command requirements
 	// Guild only
 	if (command.guildOnly && message.channel.type == 'dm') {
-		return message.reply('I can\'t use that command here!');
+		return message.reply(doSplash('guildOnly'));
 	}
 	
 	// Missing parameters
 	if (command.args && !args.length) {
-		let reply = `You didn't give me any arguments, ${message.author}!`
+		let reply = doSplash('noArgs',{AUTHOR:message.author});
 		if (command.usage) {
-			reply += `\nThe proper usage of that command is \`${prefix}${command.name} ${command.usage}\``;
+			reply += '\n'+doSplash('properUsage',{USAGE:`\`${prefix}${command.name} ${command.usage}\``});
 		}
 		return message.channel.send(reply);
 	}
@@ -64,7 +93,7 @@ client.on('message', message => {
 		
 		if (now < expirationTime) {
 			const timeLeft = ((expirationTime - now)/1000).toFixed(1);
-			return message.reply(`Wait ${timeLeft} more second(s) before using \`${command.name}\` again`);
+			return message.reply(doSplash('cooldown',{TIME:timeLeft,COMMAND:command.name}));
 		}
 	}
 	// Update timestamp
@@ -76,8 +105,10 @@ client.on('message', message => {
 		command.execute(message,args);
 	}catch(error) {
 		console.error(error);
-		message.reply('Something went wrong! :P');
+		message.reply(doSplash('error'));
 	}
+
+
 });
 
 // Login!

@@ -1,0 +1,34 @@
+{
+	"guildOnly":[
+		"I can't use that command here!",
+		"That only works in servers, bud",
+		"That command only works in servers",
+		"Gonna need to run that in a server for it to work, my dude",
+		"Can't use that in DMs",
+		"Oops! I can only run that in DMs"
+	],
+	"noArgs":[
+		"You didn't give me any arguments, AUTHOR!",
+		"I need a little more than that, AUTHOR, give me some arguments",
+		"That command needs arguments to run, AUTHOR",
+		"... And? I need arguments to run that, AUTHOR"
+	],
+	"properUsage":[
+		"The proper usage of that command is USAGE",
+		"The proper way to do that is USAGE",
+		":shrug: Maybe try running it like USAGE"
+	],
+	"cooldown":[
+		"Wait TIME more second(s) before using COMMAND again!",
+		"Gimmie like TIME second(s) before you use that command",
+		"COMMAND is on cooldown for TIME second(s)"
+	],
+	"error":[
+		"Something went wrong!",
+		"Uh, oops. Something went wrong",
+		"404: Something went wrong",
+		"Might have dropped the ball on that command, something went wrong",
+		"This is *not* poggers, there was an error running that command",
+		"Uh, try again? Something went wrong"
+	]
+}
