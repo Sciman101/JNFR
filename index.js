@@ -1,6 +1,5 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const storage = require('./util/storage.js');
 // Load from config file
 const {prefix, token, defaultCooldown} = require('./config.json');
 
@@ -21,7 +20,7 @@ function doSplash(key,params) {
 }
 
 // Setup discord client
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] });
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -109,8 +108,14 @@ client.on('message', message => {
 		console.error(error);
 		message.reply(doSplash('error'));
 	}
+});
 
-
+// Handle shutdown
+process.on('SIGINT', () => {
+	process.exit();
+});
+process.on('SIGTERM', () => {
+	process.exit();
 });
 
 // Login!

@@ -9,6 +9,7 @@ let guildData = {};
 
 // Timeouts
 let userWriteTimeout = null;
+let guildWriteTimeout = null;
 
 // Load userdata
 try {
@@ -25,25 +26,17 @@ function writeUserData() {
 }
 
 // Load guilddata
-const guildFiles = fs.readdirSync('.storage/guild').filter(file => file.endsWith('.json'));
-for (const file of guildFiles) {
-	// Load file
-	try {
-		const guildId = file.slice(0,-5);
-		const rawData = fs.readFileSync(`.storage/guild/${file}`);
-
-		guildData[guildId] = JSON.parse(rawData);
-
-		console.log(`Loaded guild data for ${file}`);
-
-	}catch (err) {
-		console.error(`Error loading guild data ${file}`);
-	}
+try {
+	const rawData = fs.readFileSync('.storage/guilddata.json');
+	guildData = JSON.parse(rawData);
+	console.log(`Loaded guild data!`);
+}catch (err) {
+	console.error(`Error loading guild data! ${err}`);
 }
-function writeGuildData(guild) {
-	const data = guildData[guild];
-	fs.writeFileSync(`.storage/guild/${guild}.json`,JSON.stringify(data));
-	console.log(`Updated guild data file ${guild}`);
+function writeGuildData() {
+	fs.writeFileSync('.storage/guilddata.json',JSON.stringify(guildData));
+	guildWriteTimeout = null;
+	console.log('Updated guild data file');
 }
 
 // Actual functionality
@@ -83,7 +76,9 @@ module.exports = {
 			}
 			guildData[guild][key] = value;
 			// Write to storage
-			writeGuildData(guild);
+			if (guildWriteTimeout == null) {
+				guildWriteTimeout = setTimeout(writeGuildData,WRITE_DELAY);
+			}
 		}
 	}
 }
