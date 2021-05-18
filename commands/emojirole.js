@@ -87,7 +87,9 @@ module.exports = {
 				// Give the role to the user!
 				const role = message.guild.roles.cache.get(emojirole.role);
 				const member = message.guild.members.cache.get(user.id.toString());
-				member.roles.add(role);
+				if (role && member) {
+					member.roles.add(role);
+				}
 			}
 		},
 		'messageReactionRemove': async(reaction, user) => {
@@ -109,7 +111,9 @@ module.exports = {
 				// Remove the role from the user
 				const role = message.guild.roles.cache.get(emojirole.role);
 				const member = message.guild.members.cache.get(user.id.toString());
-				member.roles.remove(role);
+				if (role && member) {
+					member.roles.remove(role);
+				}
 			}
 		}
 	}
