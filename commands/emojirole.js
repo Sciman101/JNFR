@@ -8,7 +8,7 @@ module.exports = {
 	description: 'Setup reaction-based roles for your server!',
 	args:true,
 	usage:'<add|remove> <channel> <message id> <emoji> [role (only required when adding)]',
-	guildOnly:false,
+	guildOnly:true,
 	execute(message, args) {
 
 		if (args.length < 4) {

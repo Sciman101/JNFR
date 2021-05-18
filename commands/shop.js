@@ -40,7 +40,7 @@ module.exports = {
 
 			const itemNum = parseInt(args[0]);
 			if (!itemNum || (itemNum < 1 || itemNum > 5)) {
-				return message.reply("That's an invalid item number!");
+				return message.reply("That's an invalid item number! (Pick something from 1-5)");
 			}
 			const index = itemNum-1;
 			if (stock[index] <= 0) {
