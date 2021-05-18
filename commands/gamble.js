@@ -23,7 +23,7 @@ module.exports = {
 			// Get balance
 			const bal = storage.userdata.get(user,'balance');
 			if (wager > bal) {
-				return message.reply(`Sorry, ${message.author}, I don't *give* credit. Come back when you're a little, mmm, richer!`);
+				return message.reply(`Sorry, ${message.author}, I don't *give* credit. You can't wager more than you have!`);
 			}
 
 			// Did we do it?

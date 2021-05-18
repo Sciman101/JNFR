@@ -60,8 +60,8 @@ client.on('message', message => {
 	const commandName = args.shift().toLowerCase();
 	
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-	if (!command) {
-		message.reply(doSplash('unrecognized'));
+	if (!command || command == undefined) {
+		return message.reply(doSplash('unrecognized'));
 	}
 	
 	// Check command requirements
