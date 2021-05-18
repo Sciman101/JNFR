@@ -25,16 +25,22 @@ module.exports = {
 	execute(message, args) {
 		if (!args.length) {
 			// Show products
+
+			// Get balance
+			const user = message.author.id.toString();
+			const bal = storage.userdata.get(user,'balance') || 0;
+
 			let result = `The store is currently selling:\n--------------\n`;
 			for (let i=0;i<5;i++) {
 
-				let desc = `${i+1}) **${inventory[i]}** (x${stock[i]}) - _\`${(i+1)*100} jCoins\`_`;
+				let desc = `${i+1}) **${inventory[i]}** (x${stock[i]}) - _\`${(i+1)*50} jCoins\`_`;
 				if (stock[i] == 0) {
 					desc = `~~` + desc + `~~ (OUT OF STOCK)`;
 				}
 				result += desc + `\n\n`;
 			}
-			result += `--------------\nTo buy something, use \`j!shop <item number>\``;
+			result += `--------------\n(You have ${bal} jCoins)\n`;
+			result += `To buy something, use \`j!shop <item number>\``;
 			message.channel.send(result);
 		}else{
 
@@ -51,7 +57,7 @@ module.exports = {
 			const user = message.author.id.toString();
 
 			// Get cost and balance
-			const cost = (itemNum) * 100;
+			const cost = (itemNum) * 50;
 			const item = inventory[index];
 			const bal = storage.userdata.get(user,'balance') || 0;
 			if (bal < cost) {

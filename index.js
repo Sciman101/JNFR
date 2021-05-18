@@ -69,6 +69,16 @@ client.on('message', message => {
 	if (command.guildOnly && message.channel.type == 'dm') {
 		return message.reply(doSplash('guildOnly'));
 	}
+
+	// Check permissions
+	if (command.permissions) {
+		const member = message.guild.members.cache.get(message.author.id);
+		for (const perm in command.permissions) {
+			if (!member || !member.hasPermission(perm)) {
+				return message.reply(doSplash('noPermission'));
+			}
+		}
+	}
 	
 	// Missing parameters
 	if (command.args && !args.length) {

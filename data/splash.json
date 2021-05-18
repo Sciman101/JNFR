@@ -1,4 +1,10 @@
 {
+	"noPermission":[
+		"Sorry, you're not allowed to do that",
+		"You don't have permission for that command",
+		"Gonna need to ask someone higher up for that one",
+		"I'm afriad I can't let you do that (Insufficient permissions)"
+	],
 	"unrecognized":[
 		"What the hell are you talking about?",
 		"I don't know that one",

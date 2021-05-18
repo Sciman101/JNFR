@@ -7,6 +7,7 @@ module.exports = {
 	cooldown: 1,
 	description: 'Setup reaction-based roles for your server!',
 	args:true,
+	permissions:['MANAGE_MESSAGES'],
 	usage:'<add|remove> <channel> <message id> <emoji> [role (only required when adding)]',
 	guildOnly:true,
 	execute(message, args) {
@@ -24,12 +25,6 @@ module.exports = {
 
 		if (action == 'add' && args.length != 5) {
 			return message.reply('Improper arguments passed! Check usage for help');
-		}
-
-		// Check for permissions
-		const member = guild.members.cache.get(message.author.id);
-		if (!(member && member.hasPermission('MANAGE_MESSAGES'))) {
-			return message.reply('You do not have permission to use this command!');
 		}
 
 		// Get channel
@@ -69,6 +64,7 @@ module.exports = {
 	// Now the important part: The actual listener
 	listeners:{
 		'messageReactionAdd': async(reaction, user) => {
+			if (user.bot) return;
 			// When a reaction is received, check if the structure is partial
 			if (reaction.partial) {
 				// If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
@@ -93,6 +89,7 @@ module.exports = {
 			}
 		},
 		'messageReactionRemove': async(reaction, user) => {
+			if (user.bot) return;
 			// When a reaction is received, check if the structure is partial
 			if (reaction.partial) {
 				// If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
