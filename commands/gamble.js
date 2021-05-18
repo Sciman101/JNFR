@@ -23,7 +23,7 @@ module.exports = {
 			// Get balance
 			const bal = storage.userdata.get(user,'balance');
 			if (wager > bal) {
-				return message.reply(`Sorry, ${message.author}, I don't *give* credit. You can't wager more than you have!`);
+				return message.channel.send(`Sorry, ${message.author}, I don't *give* credit. You can't wager more than you have!`);
 			}
 
 			// Did we do it?
