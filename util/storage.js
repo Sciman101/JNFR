@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const WRITE_DELAY = 5000;
+const WRITE_DELAY = 10000;
 
 // Dictionary to store data per member
 let userData = {};

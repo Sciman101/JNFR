@@ -1,4 +1,11 @@
 {
+	"unrecognized":[
+		"What the hell are you talking about?",
+		"I don't know that one",
+		"That's not a real command. You're making that up",
+		"Can't run that, sorry pal",
+		"That's not a valid command!"
+	],
 	"guildOnly":[
 		"I can't use that command here!",
 		"That only works in servers, bud",

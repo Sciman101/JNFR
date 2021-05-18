@@ -37,7 +37,7 @@ module.exports = {
 				if (bal == wager) {
 					message.reply('Ooooh, so sorry, you just lost everything. Better luck next time :smirk:');
 				}else{
-					message.reply(`Tough luck, you just lost ${wager} jCoin, my guy`);
+					message.reply(`Tough luck, you just lost ${wager} jCoin, my guy. You now have ${bal-wager}`);
 				}
 			}
 		}
