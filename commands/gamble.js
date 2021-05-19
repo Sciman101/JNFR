@@ -17,8 +17,8 @@ module.exports = {
 
 			// Get wager
 			const wager = parseInt(args[0]);
-			if (wager == NaN) {
-				return message.reply('IDK what that is, but you sure can\'t wager it');
+			if (wager == NaN || wager <= 0) {
+				return message.reply('You can\'t wager that amount!');
 			}
 			// Get balance
 			const bal = storage.userdata.get(user,'balance');
