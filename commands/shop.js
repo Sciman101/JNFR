@@ -70,9 +70,11 @@ module.exports = {
 				let userInventory = storage.userdata.get(user,'inventory');
 				if (!userInventory) {
 					userInventory = {};
-					userInventory[item] = 1;
-				}else{
+				}
+				if (userInventory[item]) {
 					userInventory[item] += 1;
+				}else{
+					userInventory[item] = 1;
 				}
 				stock[index]--;
 
