@@ -8,7 +8,7 @@ module.exports = {
 
 	// Helper to run a splash message
 	get(key,params) {
-		const responses = splash[key];
+		const responses = strings[key];
 		let msg = responses[Math.floor(Math.random() * responses.length)];
 		if (params) {
 			for (const p in params) {
