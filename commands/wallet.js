@@ -1,5 +1,6 @@
 const storage = require('../util/storage.js');
 const {prefix} = require('../config.json');
+const Text = require('../util/text.js');
 
 module.exports = {
 	name: 'wallet',
@@ -13,7 +14,7 @@ module.exports = {
 		const user = message.author.id.toString();
 		const bal = storage.userdata.get(user,'balance') || 0;
 		
-		message.reply(`You have ${bal} jCoins!`);
+		message.reply(`You have ${bal} ${Text.getJollarSign(message.guild)} !`);
 	},
 	listeners:{
 		'message':function(message) {

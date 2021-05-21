@@ -1,4 +1,5 @@
 const storage = require('../util/storage.js');
+const Text = require('../util/text.js');
 
 module.exports = {
 	name: 'gamble',
@@ -14,6 +15,7 @@ module.exports = {
 		}else{
 
 			const user = message.author.id.toString();
+			const jollarSign = Text.getJollarSign(message.guild);
 
 			// Get wager
 			const wager = parseInt(args[0]);
@@ -31,13 +33,13 @@ module.exports = {
 
 			if (success) {
 				storage.userdata.put(user,'balance',bal+wager);
-				message.reply(`Lucky! You doubled your wager, you now have ${bal+wager} jCoins!`);
+				message.reply(`Lucky! You doubled your wager, you now have ${bal+wager} ${jollarSign}!`);
 			}else{
 				storage.userdata.put(user,'balance',bal-wager);
 				if (bal == wager) {
 					message.reply('Ooooh, so sorry, you just lost everything. Better luck next time :smirk:');
 				}else{
-					message.reply(`Tough luck, you just lost ${wager} jCoin, my guy. You now have ${bal-wager}`);
+					message.reply(`Tough luck, you just lost ${wager} ${jollarSign}, my guy. You now have ${bal-wager} ${jollarSign}`);
 				}
 			}
 		}

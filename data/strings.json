@@ -32,9 +32,9 @@
 		":shrug: Maybe try running it like USAGE"
 	],
 	"cooldown":[
-		"Wait TIME more second(s) before using COMMAND again!",
-		"Gimmie like TIME second(s) before you use that command",
-		"COMMAND is on cooldown for TIME second(s)"
+		"Wait TIME before using COMMAND again!",
+		"Gimmie like TIME before you use that command",
+		"COMMAND is on cooldown for TIME"
 	],
 	"error":[
 		"Something went wrong!",

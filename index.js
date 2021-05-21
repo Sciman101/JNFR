@@ -1,23 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const Text = require('./util/text.js');
 // Load from config file
 const {prefix, token, defaultCooldown} = require('./config.json');
-
-// Load splash messages
-const splash = require('./data/splash.json');
-
-// Helper to run a splash message
-function doSplash(key,params) {
-	const responses = splash[key];
-
-	let msg = responses[Math.floor(Math.random() * responses.length)];
-	if (params) {
-		for (const p in params) {
-			msg = msg.replace(p,params[p]);
-		}
-	}
-	return msg;
-}
 
 // Setup discord client
 const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] });
@@ -61,13 +46,13 @@ client.on('message', message => {
 	
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command || command == undefined) {
-		return message.reply(doSplash('unrecognized'));
+		return message.reply(Text.get('unrecognized'));
 	}
 	
 	// Check command requirements
 	// Guild only
 	if (command.guildOnly && message.channel.type == 'dm') {
-		return message.reply(doSplash('guildOnly'));
+		return message.reply(Text.get('guildOnly'));
 	}
 
 	// Check permissions
@@ -75,16 +60,16 @@ client.on('message', message => {
 		const member = message.guild.members.cache.get(message.author.id);
 		for (const perm in command.permissions) {
 			if (!member || !member.hasPermission(perm)) {
-				return message.reply(doSplash('noPermission'));
+				return message.reply(Text.get('noPermission'));
 			}
 		}
 	}
 	
 	// Missing parameters
 	if (command.args && !args.length) {
-		let reply = doSplash('noArgs',{AUTHOR:message.author});
+		let reply = Text.get('noArgs',{AUTHOR:message.author});
 		if (command.usage) {
-			reply += '\n'+doSplash('properUsage',{USAGE:`\`${prefix}${command.name} ${command.usage}\``});
+			reply += '\n'+Text.get('properUsage',{USAGE:`\`${prefix}${command.name} ${command.usage}\``});
 		}
 		return message.channel.send(reply);
 	}
@@ -104,7 +89,17 @@ client.on('message', message => {
 		
 		if (now < expirationTime) {
 			const timeLeft = ((expirationTime - now)/1000).toFixed(1);
-			return message.reply(doSplash('cooldown',{TIME:timeLeft,COMMAND:command.name}));
+
+			let timeAmount = '';
+			if (timeLeft < 60) {
+				timeAmount = `${timeLeft} second(s)`;
+			}else if (timeLeft < 3600) {
+				timeAmount = `${Math.floor(timeLeft/60)} minute(s)`;
+			}else{
+				timeAmount = `${Math.floor(timeLeft/3600)} hour(s)`;
+			}
+
+			return message.reply(Text.get('cooldown',{TIME:timeAmount,COMMAND:command.name}));
 		}
 	}
 	// Update timestamp
@@ -116,7 +111,7 @@ client.on('message', message => {
 		command.execute(message,args);
 	}catch(error) {
 		console.error(error);
-		message.reply(doSplash('error'));
+		message.reply(Text.get('error'));
 	}
 });
 
