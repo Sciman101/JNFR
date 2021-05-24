@@ -20,7 +20,7 @@ module.exports = {
 			if (Math.random() < 0.05) {
 				// 5% chance to receive a huge cash bonus
 				const reward = Math.floor(((Math.random()+1) * cost));
-				storage.userdata.put(user,'balance',bal-reward);
+				storage.userdata.put(user,'balance',bal+reward);
 				message.reply(`Woah! You got super lucky and found ${reward} jCoin!`);
 
 			}else{
