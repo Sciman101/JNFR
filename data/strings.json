@@ -43,5 +43,18 @@
 		"Might have dropped the ball on that command, something went wrong",
 		"This is *not* poggers, there was an error running that command",
 		"Uh, try again? Something went wrong"
+	],
+
+	"crafting":[
+		"Let's just smash these things into each other and see what happens!...",
+		"Add a little this, a little that, and we get!-",
+		"Time to work some magic! What're we gonna get...",
+		"You can nail these together, right?",
+		"Will they blend?",
+		"Imagine the breath of the wild cooking jingle here",
+		"3... 2... 1... leeeeeeet's craft!",
+		"Equivalent exchange blah blah you know the drill",
+		"I sure hope this thing doesn't come alive and kill me!",
+		"Just let me check this recipe on the wiki real quick..."
 	]
 }

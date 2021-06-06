@@ -16,8 +16,14 @@ module.exports = {
 			return message.reply(`Your inventory is empty!`);
 		}else{
 			let result = `Your inventory contains:\n`;
+			let slot = 1;
 			for (const item in inventory) {
-				result += `-**${item}** (x${inventory[item]})\n`;
+				result += `${slot}) **${item}**`;
+				if (inventory[item] > 1) {
+					result += ` (x${inventory[item]})`;
+				}
+				result += `\n`;
+				slot++;
 			}
 			return message.reply(result);
 		}
