@@ -113,11 +113,14 @@ module.exports = {
 								}else{
 									// Fuck it just get the text of the message
 									text = `<@${message.author.id.toString()}> said...\n> `;
-									if (message.cleanContent.length + text.length > 2000) {
-										text += message.cleanContent.slice(0,2000-text.length-3) + '...';
+									const link = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
+									const bodyLen = message.cleanContent.length + link.length;
+									if (bodyLen > 2000) {
+										text += message.cleanContent.slice(0,2000-text.length-4-link.length) + '...';
 									}else{
 										text += message.cleanContent;
 									}
+									text += '\n' + link;
 								}
 
 								// Post it!
