@@ -5,7 +5,7 @@ module.exports = {
 	name: 'lucky',
 	aliases: ['lootbox','gacha'],
 	cooldown: 60*15,
-	description: 'Spend 100 jCoin to receive a random prize! Has a very long cooldown',
+	description: 'Spend 100 Jollars to receive a random prize! Has a very long cooldown',
 	args:false,
 	usage:'',
 	guildOnly:false,

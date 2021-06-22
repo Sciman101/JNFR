@@ -5,7 +5,7 @@ module.exports = {
 	name: 'gamble',
 	aliases: ['wager'],
 	cooldown: 3,
-	description: 'Bet your hard earned jCoins in a game of double or nothing!',
+	description: 'Bet your hard earned Jollars! in a game of double or nothing!',
 	args:true,
 	usage:'<wager>',
 	guildOnly:false,

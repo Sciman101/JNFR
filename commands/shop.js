@@ -19,7 +19,7 @@ module.exports = {
 	name: 'shop',
 	aliases: ['store','buy'],
 	cooldown: 1,
-	description: 'Spend your jCoins on random crap I found! Shop contents refresh every day',
+	description: 'Spend your Jollars on random crap I found! Shop contents refresh every day',
 	args:false,
 	usage:'[item number]',
 	guildOnly:false,
