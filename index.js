@@ -6,6 +6,7 @@ const {prefix, token, defaultCooldown} = require('./config.json');
 
 // Setup discord client
 const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] });
+require('discord-buttons')(client);
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
