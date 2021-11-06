@@ -44,6 +44,41 @@
 		"This is *not* poggers, there was an error running that command",
 		"Uh, try again? Something went wrong"
 	],
+	"gamblePoor":[
+		"Sorry, USER, I don't *give* credit. You can't wager more than you have!",
+		"What kind of ~~scam artist~~ authentic reputable gambler do you take me for? You don't have that much money!",
+		"You can't wager what you don't have, sorry!",
+		"USER, you don't have that much money!",
+		"You don't have enough [[WACKY STACKS]]"
+	],
+	"gambleWin":[
+		"Lucky! You doubled your wager, you now have BALANCE!",
+		"Congrats! You now have BALANCE!",
+		"Big money!!! You now have BALANCE!",
+		"Congradulations!! You're winner!! You have BALANCE!",
+		"You know money is the root of all evil, right? Anyways, you won! You have BALANCE!",
+		"Woah, look at you, Mr/Mrs/Mx/Etc Rich Guy! You now have BALANCE!",
+		"Win! You now have BALANCE!"
+	],
+	"gambleLose":[
+		"Tough luck, you just lost WAGER, my guy. You now have BALANCE",
+		"You lose! Good day!! You now have BALANCE!!!",
+		"Mmmm delicious [[JOLLARS]]. You lost WAGER and now have BALANCE",
+		"Today's not your lucky day! You've got BALANCE, now",
+		"I love taking people's money :D You lost WAGER and now only have BALANCE",
+		"`Math.random()` is *not* in your favor today. You lost WAGER, and now have BALANCE",
+		"Lose! You now have BALANCE"
+	],
+	"gambleTerrible":[
+		"Ooooh, so sorry, you just lost everything. Better luck next time :smirk:",
+		"Oh noooo you lost all your money. That's so saaaaaaad",
+		"Whaaat? You bet ALL THAT? Well... mine now :)",
+		"One day, I'll get tired of you guys losing all your money. Not today though! You just lost all your money",
+		"You lost all your money. Womp womp.",
+		"Looks like you're money'nt. Lost everything!",
+		"Don't check your j!wallet soon, uh, you might find it empty. Sorry!",
+		"I will now take All your money"
+	],
 
 	"crafting":[
 		"Let's just smash these things into each other and see what happens!...",

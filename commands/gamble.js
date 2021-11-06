@@ -25,7 +25,9 @@ module.exports = {
 			// Get balance
 			const bal = storage.userdata.get(user,'balance');
 			if (wager > bal) {
-				return message.channel.send(`Sorry, ${message.author}, I don't *give* credit. You can't wager more than you have!`);
+				return message.channel.send(
+					Text.get('gamblePoor',{'USER':message.author})
+				);
 			}
 
 			// Did we do it?
@@ -33,13 +35,14 @@ module.exports = {
 
 			if (success) {
 				storage.userdata.put(user,'balance',bal+wager);
-				message.reply(`Lucky! You doubled your wager, you now have ${bal+wager} ${jollarSign}!`);
+				message.reply(Text.get('gambleWin',{'BALANCE':(bal+wager).toString()+jollarSign}));
 			}else{
 				storage.userdata.put(user,'balance',bal-wager);
+				storage.jnfr.put('pot',storage.jnfr.get('pot')+wager);
 				if (bal == wager) {
-					message.reply('Ooooh, so sorry, you just lost everything. Better luck next time :smirk:');
+					message.reply(Text.get('gambleTerrible'));
 				}else{
-					message.reply(`Tough luck, you just lost ${wager} ${jollarSign}, my guy. You now have ${bal-wager} ${jollarSign}`);
+					message.reply(Text.get('gambleLose',{'WAGER':wager.toString()+jollarSign,'BALANCE':(bal-wager).toString()+jollarSign}));
 				}
 			}
 		}

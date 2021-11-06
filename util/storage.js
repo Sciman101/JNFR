@@ -6,10 +6,13 @@ const WRITE_DELAY = 10000;
 let userData = {};
 // Dictionary to store data per server
 let guildData = {};
+// Dictinary to store data for JNFR
+let jnfrData = {};
 
 // Timeouts
 let userWriteTimeout = null;
 let guildWriteTimeout = null;
+let jnfrWriteTimeout = null;
 
 // Load userdata
 try {
@@ -37,6 +40,20 @@ function writeGuildData() {
 	fs.writeFileSync('.storage/guilddata.json',JSON.stringify(guildData));
 	guildWriteTimeout = null;
 	console.log('Updated guild data file');
+}
+
+// load JNFR data
+try {
+	const rawData = fs.readFileSync('.storage/jnfrdata.json');
+	guildData = JSON.parse(rawData);
+	console.log(`Loaded jnfr data!`);
+}catch (err) {
+	console.error(`Error loading jnfr data! ${err}`);
+}
+function writeJnfrData() {
+	fs.writeFileSync('.storage/jnfr.json',JSON.stringify(jnfrData));
+	jnfrWriteTimeout = null;
+	console.log('Updated jnfr data file');
 }
 
 // Actual functionality
@@ -78,6 +95,23 @@ module.exports = {
 			// Write to storage
 			if (guildWriteTimeout == null) {
 				guildWriteTimeout = setTimeout(writeGuildData,WRITE_DELAY);
+			}
+		}
+	},
+	jnfr: {
+		// Get jnfr data
+		get(key) {
+			if (key in jnfrData) {
+				return jnfrData[key];
+			}
+			return null;
+		},
+		// Put user data
+		put(key,value) {
+			jnfrData[key] = value;
+			// Write to storage
+			if (jnfrWriteTimeout == null) {
+				jnfrWriteTimeout = setTimeout(writeJnfrData,WRITE_DELAY);
 			}
 		}
 	}
