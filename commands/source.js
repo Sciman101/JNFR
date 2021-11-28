@@ -9,10 +9,6 @@ module.exports = {
 	usage:'',
 	guildOnly:false,
 	execute(message, args) {
-		let button = new MessageButton()
-			.setStyle('url')
-			.setURL('https://github.com/Sciman101/JNFR')
-			.setLabel('GitHub');
-		message.reply('You can find my source code here!',button);
+		message.reply('You can find my source code here! https://github.com/Sciman101/JNFR');
 	}
 }

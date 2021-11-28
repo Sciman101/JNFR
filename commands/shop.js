@@ -15,6 +15,9 @@ for (let i=0;i<5;i++) {
 	stock.push(Math.floor(Math.random()*3)+1);
 }
 
+const scpA = 'A locked box with the SCP logo on it';
+const scpB = 'A key with the SCP logo on it';
+
 module.exports = {
 	name: 'shop',
 	aliases: ['store','buy'],
@@ -82,10 +85,39 @@ module.exports = {
 				}
 				stock[index]--;
 
+				// check for item matching
+				let scpCraft = false;
+				let scpItem = '';
+				if (userInventory[scpA] && userInventory[scpA] > 0 && userInventory[scpB] && userInventory[scpB] > 0) {
+					userInventory[scpA]--;
+					userInventory[scpB]--;
+
+					// craft an scp
+					let number = Math.floor(Math.random()*10000).toString();
+					if (number < 10) {
+						number = '00' + number.toString();
+					}else if (number < 100) {
+						number = '0' + number.toString();
+					}else{
+						number = number.toString();
+					}
+					let count = 1;
+					scpItem = 'SCP-'+number;
+					if (userInventory[scpItem]) {
+						count = 1 + userInventory[scpItem];
+					}
+					userInventory[scpItem] = count;
+					scpCraft = true;
+				}
+
 				storage.userdata.put(user,'inventory',userInventory);
 
 				// Done!
-				message.reply(`You bought '${item}' for ${cost} ${jollarSign}! Pleasure doing business with you`);
+				if (!scpCraft) {
+					return message.reply(`You bought '${item}' for ${cost} ${jollarSign}! Pleasure doing business with you`);
+				}else{
+					return message.reply(`You take the key and slide it into the box... you find ${scpItem} inside!`);
+				}
 			}
 
 		}
