@@ -42,7 +42,7 @@ module.exports = {
 				if (bal == wager) {
 					message.reply(Text.get('gambleTerrible'));
 				}else{
-					message.reply(Text.get('gambleLose',{'WAGER':wager.toString()+jollarSign,'BALANCE':(bal-wager).toString()+jollarSign}));
+					message.reply(Text.get('gambleLose',{'WAGER':wager.toString()+' '+jollarSign,'BALANCE':(bal-wager).toString()+' '+jollarSign}));
 				}
 			}
 		}

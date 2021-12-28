@@ -96,6 +96,13 @@
 		"This probably won't poison you, right? Eat up!",
 		"Dinner is served! Enjoy :thumbsup:"
 	],
+	"rating": [
+		"I rate 'THING' at a solid SCORE/10!",
+		"THING? That's gotta be a SCORE out of 10, for me",
+		"THING is a SCORE/10, imo",
+		"I don't want to start controversy but I think 'THING' is a SCORE/10",
+		"THING is an easy SCORE/10. What do these scores mean? Who knows!"
+	],
 
 	"crafting":[
 		"Let's just smash these things into each other and see what happens!...",
