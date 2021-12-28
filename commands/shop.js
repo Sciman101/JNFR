@@ -106,6 +106,10 @@ module.exports = {
 					if (userInventory[scpItem]) {
 						count = 1 + userInventory[scpItem];
 					}
+
+					userInventory[scpA] -= 1;
+					userInventory[scpB] -= 1;
+
 					userInventory[scpItem] = count;
 					scpCraft = true;
 				}

@@ -79,6 +79,23 @@
 		"Don't check your j!wallet soon, uh, you might find it empty. Sorry!",
 		"I will now take All your money"
 	],
+	"eating":[
+		"You ate up the FOOD! Yummy!",
+		"You nibbled on the FOOD - doesn't tase *that* good",
+		"You guys can eat FOOD, right? Right, yeah, shove this in your gob",
+		"Humans love eating! Especially FOOD! Yum yum!",
+		"You ate the FOOD! Mmmmm mm, bone apple tea :ok_hand:",
+		"You devoured the FOOD like some kind of animal",
+		"You donated your FOOD to the local food bank, how generous of you",
+		"You fried up your FOOD, a little salt, little pepper, that's tasty!",
+		"I'm gonna be honest, I have no taste buds, I'm just gonna assume FOOD tastes good cause you seem to be having a good time",
+		"Are you sure you should be eating that? Eh, I'm not a cop, go nuts",
+		"The smooth taste of FOOD!",
+		"You ate the FOOD, Crunchy!",
+		"Yesssss consume eat devour. You have one less FOOD now",
+		"This probably won't poison you, right? Eat up!",
+		"Dinner is served! Enjoy :thumbsup:"
+	],
 
 	"crafting":[
 		"Let's just smash these things into each other and see what happens!...",
