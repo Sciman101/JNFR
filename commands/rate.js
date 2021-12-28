@@ -1,3 +1,5 @@
+const Text = require('../util/text.js');
+
 const specificResponses = {
     iekika: 'Fun but she threw her spear through my face once. 7/10',
     uma: "Too clingy, keep finding slime jamming my motors, 3/10",
@@ -33,7 +35,7 @@ module.exports = {
         }
 
         // random value
-        return message.reply(`I rate '${thing}' at a solid ${score}/10!`);
+        return message.reply(Text.get('rating',{THING:thing,SCORE:score}));
 	}
 }
 
