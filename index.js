@@ -46,6 +46,17 @@ client.once('ready', () => {
 // On message received...
 client.on('message', message => {
 	
+	// nice
+	if (message.content == '69') {
+
+		return message.react('🇳')
+			.then(() => message.react('🇮'))
+			.then(() => message.react('🇨'))
+			.then(() => message.react('🇪'))
+			.then(() => message.react('😎'))
+			.catch(() => console.error("Not nice :("));
+	}
+
 	// Ignore bots
 	if (message.author.bot) return;
 
