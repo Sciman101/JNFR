@@ -30,7 +30,7 @@ module.exports = {
         const score = Math.ceil(randFrom2d(0,thing.toLowerCase().hashCode()) * 10);
 
         // jnfr thinks very highly of herself
-        if (lowerThing == 'jnfr' || lowerThing == 'you') {
+        if (lowerThing == 'jnfr' || lowerThing == 'you' || thing == '<@!352566617231720468>' || thing == '<@352566617231720468>') {
             return message.reply(`I rate myself at an 11/10 :)`);
         }
 

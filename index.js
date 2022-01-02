@@ -47,7 +47,7 @@ client.once('ready', () => {
 client.on('message', message => {
 	
 	// nice
-	if (message.content == '69') {
+	if (message.content == '69' || message.content.toLowerCase().replace(/[- ]/,'') == 'sixtynine') {
 
 		return message.react('🇳')
 			.then(() => message.react('🇮'))

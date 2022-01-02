@@ -11,5 +11,15 @@ module.exports = {
             }
         }
         return results;
+    },
+
+    addItem(inventory,item) {
+        if (inventory == null) {
+            inventory = {};
+            inventory[item] = 1;
+        }else{
+            const count = inventory[item] || 0;
+            inventory[item] = count + 1;
+        }
     }
 }
