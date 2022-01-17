@@ -31,31 +31,23 @@ module.exports = {
             const gift = args.slice(1).join(' ');
             const jollarAmount = parseInt(gift);
 
-            if (!jollarAmount) {
+            let senderInventory = storage.userdata.get(user,'inventory');
+            // Find an item
+            let item = inventoryHelper.searchInventory(senderInventory,gift);
 
-                let senderInventory = storage.userdata.get(user,'inventory');
+            if (item.length > 0) {
+                item = item[0];
+                // give it
+                let receiverInventory = storage.userdata.get(mentionedUser,'inventory');
+                
+                senderInventory[item]--;
+                inventoryHelper.addItem(receiverInventory,item);
 
-                // Find an item
-                let item = inventoryHelper.searchInventory(senderInventory,gift);
+                storage.userdata.put(user,'inventory',senderInventory);
+                storage.userdata.put(mentionedUser,'inventory',receiverInventory);
 
-                if (item.length > 0) {
-                    item = item[0];
-                    // give it
-                    let receiverInventory = storage.userdata.get(mentionedUser,'inventory');
-                    
-                    senderInventory[item]--;
-                    inventoryHelper.addItem(receiverInventory,item);
-
-                    storage.userdata.put(user,'inventory',senderInventory);
-                    storage.userdata.put(mentionedUser,'inventory',receiverInventory);
-
-                    return message.reply(`You gave away your '${item}'!`);
-
-
-                }else{
-                    return message.reply("You don't have one of those");
-                }
-            }else{
+                return message.reply(`You gave away your '${item}'!`);
+            }else if (jollarAmount) {
                 // Do we have that much?
 
                 let senderBalance = storage.userdata.get(user,'balance');
@@ -73,6 +65,8 @@ module.exports = {
                 }else{
                     return message.reply("You don't have that many Jollars!");
                 }
+            }else{
+                return message.reply("You don't have that to give!");
             }
 
 
