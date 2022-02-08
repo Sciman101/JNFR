@@ -51,7 +51,7 @@ try {
 	console.error(`Error loading jnfr data! ${err}`);
 }
 function writeJnfrData() {
-	fs.writeFileSync('.storage/jnfr.json',JSON.stringify(jnfrData));
+	fs.writeFileSync('.storage/jnfrdata.json',JSON.stringify(jnfrData));
 	jnfrWriteTimeout = null;
 	console.log('Updated jnfr data file');
 }

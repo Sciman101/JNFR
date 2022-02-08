@@ -1,4 +1,6 @@
 const Text = require('../util/text.js');
+const Storage = require('../util/storage.js');
+const storage = require('../util/storage.js');
 
 const specificResponses = {
     iekika: 'Fun but she threw her spear through my face once. 7/10',
@@ -34,8 +36,14 @@ module.exports = {
             return message.reply(`I rate myself at an 11/10 :)`);
         }
 
+        const biases = storage.jnfr.get('biases');
+        let offset = 0;
+        if (biases != null && lowerThing in biases) {
+            offset = biases[lowerThing].score;
+        }
+
         // random value
-        return message.reply(Text.get('rating',{THING:thing,SCORE:score}));
+        return message.reply(Text.get('rating',{THING:thing,SCORE:score + offset}));
 	}
 }
 
