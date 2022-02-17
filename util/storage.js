@@ -45,7 +45,7 @@ function writeGuildData() {
 // load JNFR data
 try {
 	const rawData = fs.readFileSync('.storage/jnfrdata.json');
-	guildData = JSON.parse(rawData);
+	jnfrData = JSON.parse(rawData);
 	console.log(`Loaded jnfr data!`);
 }catch (err) {
 	console.error(`Error loading jnfr data! ${err}`);

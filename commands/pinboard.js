@@ -66,7 +66,7 @@ module.exports = {
 			// Set 'disabled' to true
 			let data = storage.guilddata.get(guild.id.toString(),'pinboard') || {enabled:false};
 			data.enabled = false;
-			storage.guilddata.put(guild.id.toString(),'pinboard');
+			storage.guilddata.put(guild.id.toString(),'pinboard',data);
 
 			return message.reply(`Pin board disabled`);
 		}
