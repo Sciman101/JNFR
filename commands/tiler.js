@@ -48,7 +48,7 @@ function generateBoardString(board) {
 }
 
 function getTeamFromId(id) {
-	return id.charCodeAt(0) % 2 + 1;
+	return Math.floor(id.charCodeAt(0) % 2) + 1;
 }
 
 // get the thing at a position in the board
@@ -101,7 +101,7 @@ module.exports = {
 	name: 'tiler',
 	aliases: ['board'],
 	cooldown: 5,
-	description: 'Enjoy the classic game of Tiler in a competitive, per-server daily rumble!\nUse with no args to view your current team and board info.\nUse `j!tiler rules` to view game rules',
+	description: 'Enjoy the classic game of Tiler in a competitive, per-server daily rumble!\nUse with no args to view your current team and board info.\nUse `j!tiler rules` to view game rules\n\n(Based on the game <https://sciman101.itch.io/tiler>)',
 	args:false,
 	usage:'[space to play (i.e. a3)]',
 	guildOnly:true,
