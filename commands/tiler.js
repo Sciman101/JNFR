@@ -48,7 +48,7 @@ function generateBoardString(board) {
 }
 
 function getTeamFromId(id) {
-	return Math.floor(id.charCodeAt(0) % 2) + 1;
+	return Math.floor(id.charCodeAt(17) % 2) + 1;
 }
 
 // get the thing at a position in the board
