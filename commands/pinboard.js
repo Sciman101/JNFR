@@ -1,5 +1,10 @@
 const items = require('../data/items.json');
 const storage = require('../util/storage.js');
+const { MessageEmbed, Message } = require('discord.js');
+
+const MONTHS = [
+	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug",'Sep',"Oct","Nov","Dec"
+]
 
 // Get store inventory
 let inventory = [];
@@ -100,46 +105,49 @@ module.exports = {
 							if (pinboard.cache.indexOf(reaction.message.id.toString()) == -1) {
 								
 								// Let's find some media to pin
-								let text = null;
 								const message = reaction.message;
-								// Try attachments
-								if (message.attachments && message.attachments.size) {
-									const attachment = message.attachments.first();
-									text = attachment.url;
-								// Try embeds
-								}else if (message.embeds && message.embeds.length) {
-									const embed = message.embeds[0];
-									text = embed.url;
-								}else{
-									// Fuck it just get the text of the message
-									text = `<@${message.author.id.toString()}> said...\n> `;
-									const link = `https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`;
-									const bodyLen = message.cleanContent.length + link.length;
-									if (bodyLen > 2000) {
-										text += message.cleanContent.slice(0,2000-text.length-4-link.length) + '...';
-									}else{
-										text += message.cleanContent;
-									}
-									text += '\n' + link;
-								}
+								const member = await message.guild.members.fetch(message.author);
+								const nickname = member ? member.displayName : message.author.username;
 
 								// Post it!
-								if (text) {
-									const channel = message.guild.channels.cache.get(pinboard.channel);
-									if (channel) {
-										channel.send(text);
+								const channel = message.guild.channels.cache.get(pinboard.channel);
+								if (channel) {
 
-										// Reward the original sender with some jCoin
-										if (!message.author.bot) {
-											const author = message.author.id.toString();
-											const bal = storage.userdata.get(author,'balance');
-											storage.userdata.put(author,'balance',bal+10);
-										}
+									const originalDate = new Date(message.createdTimestamp);
+									//const pinnedDate = new Date();
 
-										// Add the message to the cache so we don't do it again
-										pinboard.cache.push(message.id.toString());
-										storage.guilddata.put(reaction.message.guild.id.toString(),'pinboard',pinboard);
+									// Create an embed for it
+									const pinEmbed = new MessageEmbed()
+										.setColor('#62B7E8')
+										.setTitle(`Jump to message!`)
+										.setURL(message.url)
+										.setAuthor(nickname, message.author.avatarURL())
+										.setDescription(message.cleanContent)
+										//.setTimestamp()
+										.setFooter(`Originally posted ${MONTHS[originalDate.getMonth()]} ${originalDate.getDate()}, ${originalDate.getFullYear()}`)
+										/*.addFields(
+											{name: 'Pinned on ', value: `${MONTHS[pinnedDate.getMonth()]} ${pinnedDate.getDate()}, ${pinnedDate.getFullYear()}`}
+										);*/
+									
+									if (message.attachments.size > 0) {
+										pinEmbed.setImage(message.attachments.first().proxyURL);
+									}else if (message.embeds.length > 0 && message.embeds[0].thumbnail) {
+										pinEmbed.setImage(message.embeds[0].thumbnail.url);
 									}
+
+
+									channel.send({ embed: pinEmbed });
+
+									// Reward the original sender with some jollars
+									if (!message.author.bot) {
+										const author = message.author.id.toString();
+										const bal = storage.userdata.get(author,'balance');
+										storage.userdata.put(author,'balance',bal+50);
+									}
+
+									// Add the message to the cache so we don't do it again
+									pinboard.cache.push(message.id.toString());
+									storage.guilddata.put(reaction.message.guild.id.toString(),'pinboard',pinboard);
 								}
 
 							}
