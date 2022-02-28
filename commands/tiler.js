@@ -38,12 +38,17 @@ const DA_RULES = "```TILER (JNFR EDITION) RULES:\n0) Your team is randomly assig
 // turn the board into a printable string
 function generateBoardString(board) {
 	let boardString = ":black_large_square: :regional_indicator_a: :regional_indicator_b: :regional_indicator_c: :regional_indicator_d: :regional_indicator_e: :regional_indicator_f: :regional_indicator_g: :regional_indicator_h: ";
+	let scores = [0,0,0];
 	for (let y=0;y<8;y++) {
 		boardString += "\n:" + NUMBER_NAMES[y] + ": ";
 		for (let x=0;x<8;x++) {
-			boardString += TEAM_SYMBOLS[board[y*8+x]] + " ";
+			const c = board[y*8+x]
+			boardString += TEAM_SYMBOLS[c] + " ";
+			// figure out scores
+			scores[c]++;
 		}
 	}
+	boardString += `\n\n${TEAM_SYMBOLS[1]} **${scores[1]}** / ${TEAM_SYMBOLS[2]} **${scores[2]}**`
 	return boardString;
 }
 
@@ -83,6 +88,7 @@ function flipAround(board,row,col,team) {
 		}
 	}
 }
+
 // Check for a winner
 function checkWinner(board) {
 	let total = 0;
@@ -132,7 +138,13 @@ module.exports = {
 
 			// Can this player play?
 			if (guildId in timeouts && timeouts[guildId].indexOf(authorId) != -1) {
-				return message.reply('You can only claim one space per day! Come back tomorrow');
+				let hour = new Date().getUTCHours()-5;
+				if (hour < 0) hour += 24;
+
+				let minute = new Date().getUTCMinutes();
+				const timeLeft = hour < 1 ? `${60-minute} minutes` : `${24-hour} hours`
+
+				return message.reply('You can only claim one space per day! Come back in ' + timeLeft);
 			}
 
 			// get the space they want to play
