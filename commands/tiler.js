@@ -33,7 +33,7 @@ const DEFAULT_BOARD = [
 	1,0,0,0,0,0,0,0,
 ];
 
-const DA_RULES = "```TILER (JNFR EDITION) RULES:\n0) Your team is randomly assigned\n1) You can claim a space adjacent to one your team owns\n2) You may only claim one space per day\n3) If that space is owned by the opposing team, every space around it will become yours if unclaimed, and flip which team they're on otherwise\n4) Once the board is filled, the team with more claimed spaces wins!\n5) The winning team receives 250 jollars per player who participated!```";
+const DA_RULES = "```TILER (JNFR EDITION) RULES:\n0) Your team is randomly assigned\n1) You can claim a space adjacent to one your team owns\n2) You may only claim one space per day\n3) If that space is owned by the opposing team, every space around it will become yours if unclaimed, and flip which team they're on otherwise\n4) Once the board is filled, the team with more claimed spaces wins!\n5) The winning team receives 500 Jollars per player who participated! (In the event of a tie, everyone who participated gets 100 Jollars)```";
 
 // turn the board into a printable string
 function generateBoardString(board) {
@@ -206,7 +206,7 @@ module.exports = {
 					}
 
 					// reward
-					const reward = winner == 0 ? 50 : 250;
+					const reward = winner == 0 ? 100 : 500;
 					gamers.forEach(
 						gamer => {
 							if (winner == 0 || getTeamFromId(gamer) == winner) {
