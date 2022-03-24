@@ -10,7 +10,10 @@
 		"I don't know that one",
 		"That's not a real command. You're making that up",
 		"Can't run that, sorry pal",
-		"That's not a valid command!"
+		"That's not a valid command!",
+		"I can't read that, what is that, Java?",
+		"I can't read that, what is that, Python?",
+		"I can't read that, what is that, Fortran?"
 	],
 	"guildOnly":[
 		"I can't use that command here!",
