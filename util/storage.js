@@ -66,9 +66,6 @@ module.exports = {
 			}
 			return null;
 		},
-		users() {
-			return userData;
-		},
 		// Put user data
 		put(user,key,value) {
 			if (!(user in userData)) {
