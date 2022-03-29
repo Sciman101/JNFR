@@ -24,8 +24,8 @@ const responses = [
 ];
 
 module.exports = {
-	name: 'guidance',
-	aliases: ['helpme','8ball'],
+	name: 'verdict',
+	aliases: ['yesno','8ball'],
 	cooldown: 1,
 	description: 'You know a magic 8 ball? It\'s like that. Ask me a yes/no question! (Do not take answers seriously)',
 	args:true,
