@@ -17,6 +17,7 @@ for (let i=0;i<5;i++) {
 
 const scpA = 'A locked box with the SCP logo on it';
 const scpB = 'A key with the SCP logo on it';
+const instaKill = "Elephant's Foot (This will kill you if you buy it)";
 
 module.exports = {
 	name: 'shop',
@@ -84,6 +85,15 @@ module.exports = {
 					userInventory[item] = 1;
 				}
 				stock[index]--;
+
+				// Check for elephants foot
+				if (item == instaKill) {
+					storage.userdata.put(user,'inventory',{});
+					storage.userdata.put(user,'balance',0);
+					const deaths = storage.userdata.get(user,'deaths') || 0;
+					storage.userdata.put(user,'deaths',deaths+1);
+					return message.reply("Why did you buy that. You died. You lost all your jollars and stuff. Good job");
+				}
 
 				// check for item matching
 				let scpCraft = false;

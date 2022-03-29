@@ -10,7 +10,8 @@ const specificResponses = {
     root: "Pretty chill but they're just barely taller than me and that makes them a 0/10",
     aparna: "Doesn't say much, looks like a skyscraper. 7/10",
     orange: "Best (only) roommate ever, doesn't mind me playing loud music all the time, 10/10",
-    ramda: "Love that goof, won't stop assaulting me with wikipedia orbs, 9/10"
+    ramda: "Love that goof, won't stop assaulting me with wikipedia orbs, 9/10",
+    losi: "Little gremlin tried to eat my system files, 0/10",
 }
 
 module.exports = {
