@@ -106,6 +106,16 @@
 		"I don't want to start controversy but I think 'THING' is a SCORE/10",
 		"THING is an easy SCORE/10. What do these scores mean? Who knows!"
 	],
+	"murder":[
+		"You run VICTIM through with your ITEM",
+		"You KICK and PUNCH and STAB and KILL and MURDER VICTIM with your ITEM",
+		"You don't do anything. VICTIM just dies of unrelated causes",
+		"You crush VICTIM under the weight of your ITEM",
+		"You bop VICTIM on the head with your ITEM",
+		"VICTIM is choked to death by ITEM",
+		"VICTIM: YOU DIED!!",
+		""
+	],
 
 	"crafting":[
 		"Let's just smash these things into each other and see what happens!...",
