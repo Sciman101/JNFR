@@ -113,8 +113,7 @@
 		"You crush VICTIM under the weight of your ITEM",
 		"You bop VICTIM on the head with your ITEM",
 		"VICTIM is choked to death by ITEM",
-		"VICTIM: YOU DIED!!",
-		""
+		"VICTIM: YOU DIED!!"
 	],
 
 	"crafting":[
