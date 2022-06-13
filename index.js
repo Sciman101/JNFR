@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const Text = require('./util/text.js');
+const Storage = require('./util/storage.js');
 // Load from config file
 const {prefix, token, defaultCooldown} = require('./config.json');
 

@@ -109,6 +109,8 @@ module.exports = {
 								const member = await message.guild.members.fetch(message.author);
 								const nickname = member ? member.displayName : message.author.username;
 
+								let stupidWorkaroundForDiscordJsVideosNotEmbedding = null;
+
 								// Post it!
 								const channel = message.guild.channels.cache.get(pinboard.channel);
 								if (channel) {
@@ -130,11 +132,32 @@ module.exports = {
 										);*/
 									
 									if (message.attachments.size > 0) {
+										// Attach first attachment
+										const attachment = message.attachments.first();
+										const url = attachment.proxyURL.toLowerCase();
+										console.log(url);
+										const isVideo = url.endsWith('webm') || url.endsWith('mp4') || url.endsWith('mov');
+
 										pinEmbed.setImage(message.attachments.first().proxyURL);
-									}else if (message.embeds.length > 0 && message.embeds[0].thumbnail) {
-										pinEmbed.setImage(message.embeds[0].thumbnail.url);
+										if (isVideo){
+											stupidWorkaroundForDiscordJsVideosNotEmbedding = message.attachments.first().proxyURL;
+										}
+									}else if (message.embeds.length > 0) {
+										// Attach embed
+
+										console.log('embed');
+
+										if (message.embeds[0].thumbnail) {
+											pinEmbed.setImage(message.embeds[0].thumbnail.url);
+										}else if (message.embeds[0].video) {
+											stupidWorkaroundForDiscordJsVideosNotEmbedding = message.embeds[0].video.proxyURL;
+										}
 									}
 
+									if (stupidWorkaroundForDiscordJsVideosNotEmbedding) {
+										channel.send(stupidWorkaroundForDiscordJsVideosNotEmbedding);
+										pinEmbed.setDescription(`Discord.JS can't embed videos, so it's been posted above seperately`);
+									}
 
 									channel.send({ embed: pinEmbed });
 

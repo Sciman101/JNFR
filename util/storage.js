@@ -14,6 +14,14 @@ let userWriteTimeout = null;
 let guildWriteTimeout = null;
 let jnfrWriteTimeout = null;
 
+// Validate files
+if (!fs.existsSync('.storage')){
+    fs.mkdirSync('.storage');
+}
+fs.writeFile('.storage/jnfrdata.json','{}',{flag:'wx'},(err) => {});
+fs.writeFile('.storage/guilddata.json','{}',{flag:'wx'},(err) => {});
+fs.writeFile('.storage/userdata.json','{}',{flag:'wx'},(err) => {});
+
 // Load userdata
 try {
 	const rawData = fs.readFileSync('.storage/userdata.json');
