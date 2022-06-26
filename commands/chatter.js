@@ -10,6 +10,7 @@ module.exports = {
 	cooldown: 3,
 	description: 'Enable/Disable random messages from me now and then (disabled by default)',
 	args:false,
+    permissions:['MANAGE_MESSAGES'],
 	usage:'<disable/enable> [channel or \'all\']',
 	guildOnly:true,
 	execute(message, args) {	
