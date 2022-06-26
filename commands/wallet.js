@@ -33,9 +33,9 @@ module.exports = {
 						// reward them
 						const id = user.id.toString();
 						const balance = storage.userdata.get(id,'balance') || 0;
-						storage.userdata.put(id,'balance',balance+number);
+						storage.userdata.put(id,'balance',balance-number);
 
-						return message.channel.send(`Oops! What a shame - ${user.username} gets ${number} ${Text.getJollarSign(message.guild)} for breaking the chain!`);
+						return message.channel.send(`UH OH! - ${user.username} ***LOSES*** ${number} ${Text.getJollarSign(message.guild)} for breaking the chain! >:)`);
 					}
 				}
 			}

@@ -2,6 +2,8 @@ const storage = require('../util/storage.js');
 const {prefix} = require('../config.json');
 const Text = require('../util/text.js');
 
+const amongusRegexp = /among\s*us/gi;
+
 module.exports = {
 	name: 'chatter',
 	aliases: [],
@@ -72,6 +74,20 @@ module.exports = {
             // Misinformation
             if (Math.random() < 0.0025) {
                 return message.channel.send(':warning: The above post may contain misinformation :warning:');
+            }
+
+            // mention
+            if (message.content.indexOf('<@352566617231720468>') !== -1) {
+                return message.channel.send(Text.get('mention'));
+            }
+
+            // Among us
+            const matches = message.content.matchAll(amongusRegexp);
+            for (const match of matches) {
+                const number = parseInt(match[1]);
+                if (number != NaN) {
+                    return message.channel.send(Text.get('amongus'));
+                }
             }
 
 
