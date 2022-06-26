@@ -88,11 +88,11 @@ module.exports = {
 
 				// Check for elephants foot
 				if (item == instaKill) {
-					storage.userdata.put(user,'inventory',{});
+					//storage.userdata.put(user,'inventory',{});
 					storage.userdata.put(user,'balance',0);
 					const deaths = storage.userdata.get(user,'deaths') || 0;
 					storage.userdata.put(user,'deaths',deaths+1);
-					return message.reply("Why did you buy that. You died. You lost all your jollars and stuff. Good job");
+					return message.reply("Why did you buy that. You died. You lost all your jollars. Good job");
 				}
 
 				// check for item matching
