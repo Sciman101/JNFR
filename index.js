@@ -1,28 +1,15 @@
 const fs = require('fs');
-const Discord = require('discord.js');
-const Text = require('./util/text.js');
-const Storage = require('./util/storage.js');
-// Load from config file
-const {prefix, token, defaultCooldown} = require('./config.json');
+const {Client, Intents, Collection} = require('discord.js');
+const {prefix, token} = require('./config.json');
 
-String.prototype.hashCode = function() {
-	var hash = 0, i, chr;
-	if (this.length === 0) return hash;
-	for (i = 0; i < this.length; i++) {
-	  chr   = this.charCodeAt(i);
-	  hash  = ((hash << 5) - hash) + chr;
-	  hash |= 0; // Convert to 32bit integer
-	}
-	return hash;
-  };
+const argumentParser = require('./parser/argumentParser.js');
 
 // Setup discord client
-const client = new Discord.Client({ partials: ['MESSAGE', 'REACTION'] });
-require('discord-buttons')(client);
-client.commands = new Discord.Collection();
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
-	if (!file.startsWith('-')) {
+	if (!file.startsWith('-')) { // Files starting with a hyphen are ignored
 		const command = require(`./commands/${file}`);
 		client.commands.set(command.name,command);
 
@@ -35,9 +22,6 @@ for (const file of commandFiles) {
 	}
 }
 
-// Setup cooldown system
-const cooldowns = new Discord.Collection();
-
 // On initialization
 client.once('ready', () => {
 	console.log('JNFR ready!');
@@ -46,17 +30,6 @@ client.once('ready', () => {
 
 // On message received...
 client.on('message', message => {
-	
-	// nice
-	if (message.content == '69' || message.content.toLowerCase().replace(/[- ]/,'') == 'sixtynine') {
-
-		return message.react('🇳')
-			.then(() => message.react('🇮'))
-			.then(() => message.react('🇨'))
-			.then(() => message.react('🇪'))
-			.then(() => message.react('😎'))
-			.catch(() => console.error("Not nice :("));
-	}
 
 	// Ignore bots
 	if (message.author.bot) return;
@@ -65,12 +38,12 @@ client.on('message', message => {
 	if (!message.content.startsWith(prefix)) return;
 	
 	// Parse command name and arguments
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const commandName = args.shift().toLowerCase();
+	const rawArgs = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = rawArgs.shift().toLowerCase();
 	
-	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+	const command = client.commands.get(commandName);
 	if (!command || command == undefined) {
-		return message.reply(Text.get('unrecognized'));
+		return message.reply('Unknown command');
 	}
 	
 	// Check command requirements
@@ -84,55 +57,21 @@ client.on('message', message => {
 		const member = message.guild.members.cache.get(message.author.id);
 		for (const perm in command.permissions) {
 			if (!member || !member.hasPermission(perm)) {
-				return message.reply(Text.get('noPermission'));
+				return message.reply('You do not have permission to use that command!');
 			}
 		}
 	}
-	
-	// Missing parameters
-	if (command.args && !args.length) {
-		let reply = Text.get('noArgs',{AUTHOR:message.author});
-		if (command.usage) {
-			reply += '\n'+Text.get('properUsage',{USAGE:`\`${prefix}${command.name} ${command.usage}\``});
-		}
-		return message.channel.send(reply);
-	}
-	
-	// Cooldown
-	// Establish cooldowns, if we haven't already
-	if (!cooldowns.has(command.name)) {
-		cooldowns.set(command.name,new Discord.Collection());
-	}
-	// Check
-	const now = Date.now();
-	const timestamps = cooldowns.get(command.name);
-	const cooldownAmt = (command.cooldown || defaultCooldown) * 1000;
-	
-	if (timestamps.has(message.author.id)) {
-		const expirationTime = timestamps.get(message.author.id) + cooldownAmt;
-		
-		if (now < expirationTime) {
-			const timeLeft = ((expirationTime - now)/1000).toFixed(1);
 
-			let timeAmount = '';
-			if (timeLeft < 60) {
-				timeAmount = `${timeLeft} second(s)`;
-			}else if (timeLeft < 3600) {
-				timeAmount = `${Math.floor(timeLeft/60)} minute(s)`;
-			}else{
-				timeAmount = `${Math.floor(timeLeft/3600)} hour(s)`;
-			}
-
-			return message.reply(Text.get('cooldown',{TIME:timeAmount,COMMAND:command.name}));
-		}
+	// Parse arguments
+	const parseResult = argumentParser(rawArgs,command.argTree);
+	if (parseResult.error) {
+		// Oops!
+		return message.reply(parseResult.error);
 	}
-	// Update timestamp
-	timestamps.set(message.author.id, now);
-	setTimeout(() => timestamps.delete(message.author.id), cooldownAmt);
 	
 	// Actually run the dang thing
 	try {
-		command.execute(message,args);
+		command.execute(message,parseResult);
 	}catch(error) {
 		console.error(error);
 		message.reply(Text.get('error'));

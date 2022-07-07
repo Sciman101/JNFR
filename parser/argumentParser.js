@@ -1,0 +1,34 @@
+module.exports = (argArray, argTreeNode) => {
+	let argIndex = 0;
+	let parsedValues = [];
+
+	// Move down the arg tree
+	while (argTreeNode != null) {
+
+		if (argIndex >= argArray.length) {
+			return {
+				index: argIndex-1,
+				error: `Expected '${argTreeNode.description}'`,
+				node: argTreeNode
+			}
+		}
+
+		// Run the branch
+		const result = argTreeNode.evaluate(argArray,argIndex);
+		if (result.error) {
+			return {
+				index: argIndex,
+				error: result.error,
+				node: argTreeNode
+			}
+		}else{
+			parsedValues.push(result.value);
+			// Advance down tree
+			argTreeNode = result.next;
+			// Advance index
+			argIndex = result.nextIndex || argIndex + 1;
+		}
+	}
+	// Return the parsed values
+	return parsedValues;
+}
