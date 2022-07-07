@@ -1,0 +1,38 @@
+{
+	"unknown_command":[
+		"What the hell are you talking about?",
+		"I don't know that one",
+		"That's not a real command. You're making that up",
+		"Can't run that, sorry pal",
+		"That's not a valid command!",
+		"I can't read that, what is that, Java?",
+		"I can't read that, what is that, Python?",
+		"I can't read that, what is that, Fortran?",
+		"toki ike >:("
+	],
+	"guild_only":[
+		"I can't use that command here!",
+		"That only works in servers, bud",
+		"That command only works in servers",
+		"Gonna need to run that in a server for it to work, my dude",
+		"Can't use that in DMs",
+		"Oops! I can only run that in DMs"
+	],
+	"lacking_permissions":[
+		"Sorry, you're not allowed to do that",
+		"You don't have permission to use that",
+		"Gonna need to ask someone higher up for that one",
+		"I'm afriad I can't let you do that"
+	],
+	"argument_error":[
+
+	],
+	"error":[
+		"Something went wrong!",
+		"Uh, oops. Something went wrong",
+		"404: Something went wrong",
+		"Might have dropped the ball on that command, something went wrong",
+		"This is *not* poggers, there was an error running that command",
+		"Uh, try again? Something went wrong"
+	]
+}

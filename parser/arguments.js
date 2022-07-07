@@ -1,3 +1,5 @@
+const argumentParser = require('./argumentParser.js');
+
 module.exports = {
 
 	/* Argument node structure:

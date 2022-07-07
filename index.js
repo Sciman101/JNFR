@@ -1,17 +1,36 @@
 const fs = require('fs');
 const {Client, Intents, Collection} = require('discord.js');
 const {prefix, token} = require('./config.json');
+const Babbler = require('./util/babbler');
+const SimpleLogger = require('simple-node-logger');
 
+if (!fs.existsSync('./logs')){
+    fs.mkdirSync('./logs');
+}
+const logManager = new SimpleLogger();
+logManager.createConsoleAppender();
+logManager.createRollingFileAppender({
+	errorEventName:'error',
+    logDirectory:'./logs', // NOTE: folder must exist and be writable...
+    fileNamePattern:'JNFR-<DATE>.log',
+    dateFormat:'YYYY.MM.DD'
+});
+const log = logManager.createLogger();
+log.info('-=== Logger initialized ===-');
+
+// Create argument parser
 const argumentParser = require('./parser/argumentParser.js');
 
 // Setup discord client
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS] });
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+log.info('Loading commands...');
 for (const file of commandFiles) {
 	if (!file.startsWith('-')) { // Files starting with a hyphen are ignored
 		const command = require(`./commands/${file}`);
 		client.commands.set(command.name,command);
+		log.info('└ ' + command.name);
 
 		// Add listeners for specific commands
 		if ('listeners' in command) {
@@ -22,14 +41,16 @@ for (const file of commandFiles) {
 	}
 }
 
+Babbler.init(log);
+
 // On initialization
 client.once('ready', () => {
-	console.log('JNFR ready!');
+	log.info('JNFR ready!');
 	client.user.setActivity('type j!help');
 });
 
 // On message received...
-client.on('message', message => {
+client.on('messageCreate', message => {
 
 	// Ignore bots
 	if (message.author.bot) return;
@@ -43,13 +64,13 @@ client.on('message', message => {
 	
 	const command = client.commands.get(commandName);
 	if (!command || command == undefined) {
-		return message.reply('Unknown command');
+		return message.reply(Babbler.get('unknown_command'));
 	}
 	
 	// Check command requirements
 	// Guild only
 	if (command.guildOnly && message.channel.type == 'dm') {
-		return message.reply(Text.get('guildOnly'));
+		return message.reply(Babbler.get('guild_only'));
 	}
 
 	// Check permissions
@@ -57,7 +78,7 @@ client.on('message', message => {
 		const member = message.guild.members.cache.get(message.author.id);
 		for (const perm in command.permissions) {
 			if (!member || !member.hasPermission(perm)) {
-				return message.reply('You do not have permission to use that command!');
+				return message.reply(Babbler.get('lacking_permissions'));
 			}
 		}
 	}
@@ -71,10 +92,10 @@ client.on('message', message => {
 	
 	// Actually run the dang thing
 	try {
-		command.execute(message,parseResult);
+		command.execute(message,parseResult,log);
 	}catch(error) {
-		console.error(error);
-		message.reply(Text.get('error'));
+		log.error(error);
+		message.reply(Babbler.get('error'));
 	}
 });
 

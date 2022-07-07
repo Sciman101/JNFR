@@ -5,7 +5,8 @@ module.exports = {
 	description: 'Repeats back whatever you type',
 	guildOnly:false,
 	argTree:stringValue(true),
-	execute(message, args) {
+	execute(message, args, log) {
 		message.channel.send(args[0]);
+		log.info('Thing happened!');
 	}
 }
