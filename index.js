@@ -4,6 +4,8 @@ const {prefix, token} = require('./config.json');
 const Babbler = require('./util/babbler');
 const SimpleLogger = require('simple-node-logger');
 
+require('./util/db');
+
 if (!fs.existsSync('./logs')){
     fs.mkdirSync('./logs');
 }

@@ -6,6 +6,7 @@
   "dependencies": {
     "discord.js": "^13.8.1",
     "eslint": "^7.26.0",
+    "mongodb": "^4.7.0",
     "npx": "^10.2.2",
     "simple-node-logger": "^21.8.12"
   },
