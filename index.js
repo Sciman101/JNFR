@@ -90,7 +90,7 @@ client.on('messageCreate', message => {
 	
 	// Actually run the dang thing
 	try {
-		command.execute(message,parseResult);
+		command.execute(message,parseResult.args);
 	}catch(error) {
 		log.error(error);
 		message.reply(Babbler.get('error'));

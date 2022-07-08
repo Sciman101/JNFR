@@ -71,20 +71,21 @@ const branch = (paths) => {
 	}
 }
 
-const literal = (literalString,next) => {
+const literal = (id,literalString,next) => {
 	return {
 			description: literalString,
 			evaluate: (args, argIndex) => {
 				return {
 					error: args[argIndex] === literalString ? null : 'mismatched literal',
 					value: literalString,
-					next: next
+					next: next,
+					id: id
 				}
 			}
 	}
 };
 
-const numValue = (min,max,int,next) => {
+const numValue = (id, min,max,int,next) => {
 	return {
 		description: `${int ? 'integer' : 'number'} in range [${min},${max}]`,
 		evaluate: (args, argIndex) => {
@@ -108,7 +109,8 @@ const numValue = (min,max,int,next) => {
 			if ((typeof min === 'undefined' || num >= min) && (typeof max === 'undefined' || num <= max)) {
 				return {
 					value: num,
-					next: next
+					next: next,
+					id: id
 				}
 			}else{
 				return {
@@ -119,7 +121,7 @@ const numValue = (min,max,int,next) => {
 	}
 };
 
-const stringValue = (quoted,next) => {
+const stringValue = (id,quoted,next) => {
 	return {
 		description: "a string",
 		evaluate: (args, argIndex) => {
@@ -130,7 +132,8 @@ const stringValue = (quoted,next) => {
 				// Just return the value
 				return {
 					value: args[argIndex].trim(),
-					next: next
+					next: next,
+					id: id
 				}
 			}else{
 
@@ -139,7 +142,8 @@ const stringValue = (quoted,next) => {
 					if (args[index].endsWith('"')) {
 						return {
 							value: args.slice(argIndex,index+1).join(' ').slice(1,-1),
-							next: next
+							next: next,
+							id: id
 						}
 					}
 					index++;

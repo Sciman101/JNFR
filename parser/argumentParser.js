@@ -1,6 +1,6 @@
 export default (argArray, argTreeNode) => {
 	let argIndex = 0;
-	let parsedValues = [];
+	let parsedValues = {};
 
 	// Move down the arg tree
 	while (argTreeNode != null) {
@@ -25,7 +25,7 @@ export default (argArray, argTreeNode) => {
 				node: argTreeNode
 			}
 		}else{
-			parsedValues.push(result.value);
+			parsedValues[result.id] = result.value;
 			// Advance down tree
 			argTreeNode = result.next;
 			// Advance index
@@ -33,5 +33,5 @@ export default (argArray, argTreeNode) => {
 		}
 	}
 	// Return the parsed values
-	return parsedValues;
+	return {args:parsedValues};
 }
