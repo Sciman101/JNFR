@@ -53,7 +53,7 @@ export default {
 	get: (key,placeholders) => {
 
 		if (!dialouge[key]) {
-			log.err('Unknown dialouge key ',key);
+			log.error('Unknown dialouge key ',key);
 			return 'MISSING DIALOUGE';
 		}
 

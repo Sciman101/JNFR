@@ -1,6 +1,7 @@
 import {optional, stringValue} from '../parser/arguments.js';
 import {generateCommandUsage} from '../parser/usageGenerator.js';
 import {log} from '../util/logger.js';
+import Babbler from '../util/babbler.js';
 
 export default {
 	name: 'help',
@@ -23,7 +24,7 @@ ${command.description}
 				message.reply(commandDescription);
 
 			}else{
-				message.reply(`That command doesn't exist`);
+				message.reply(Babbler.get('unknown_command_help',{command:args.command_name}));
 			}
 		}else{
 			// List all commands

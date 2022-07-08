@@ -9,6 +9,15 @@
 		"I can't read that, what is that, Python?",
 		"I can't read that, what is that, Fortran?",
 		"toki ike >:("
+	],"unknown_command_help":[
+		"'$command' isn't a valid command",
+		"That's... that's nothing. I can't help with that",
+		"I can only help with commands that actually exist",
+		"Did you make a typo? That's nothing",
+		"Idk what '$command' means",
+		"I think *you* need to j!help me figure out what that's supposed to be",
+		"Invalid command",
+		"404: Command not found"
 	],
 	"guild_only":[
 		"I can't use that command here!",
