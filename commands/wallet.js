@@ -21,10 +21,7 @@ export default {
 
 			// Give em a coin
 			const userId = message.author.id.toString();
-			if (!db.data.users[userId]) {
-				Database.getUser(userId);
-			}
-			db.data.users[userId].balance += 1;
+			Database.getUser(userId).balance += 1;
 			Database.scheduleWrite();
 		}
 	}
