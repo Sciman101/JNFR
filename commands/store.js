@@ -54,7 +54,7 @@ ${inventory.map((slot,index) => {
 			const itemIndex = args.item_number-1;
 			const itemSlot = inventory[itemIndex];
 			const item = itemSlot.item;
-			const cost = itemIndex * 50;
+			const cost = (itemIndex+1) * 50;
 			if (itemSlot.stock <= 0) {
 				// We can't sell this
 				return message.reply(Babbler.get('out_of_stock',{item:item.name}));
@@ -68,7 +68,7 @@ ${inventory.map((slot,index) => {
 			user.balance -= cost;
 			const userItemSlot = addItem(user,item);
 			
-			let response = `You bought ${item.name} for ${cost} ${jollarSign}! Pleasure doing business with you`;
+			let response = `You bought '${item.name}' for ${cost} ${jollarSign}! Pleasure doing business with you`;
 
 			// Try callback
 			if (item.callbacks.bought) {

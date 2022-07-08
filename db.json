@@ -1,8 +1,19 @@
 {
   "users": {
     "160121042902188033": {
-      "balance": 39999800,
-      "inventory": []
+      "balance": 39998951,
+      "inventory": [
+        {
+          "id": "ru_b_plushie",
+          "count": 1,
+          "owned": 1
+        },
+        {
+          "id": "skull",
+          "count": 1,
+          "owned": 1
+        }
+      ]
     }
   },
   "guilds": {},

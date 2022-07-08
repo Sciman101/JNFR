@@ -10,14 +10,29 @@ export const ItemRarity = {
 	LEGENDARY: 3
 }
 
+export function rarityString(rarity) {
+	switch (rarity) {
+		case ItemRarity.COMMON:
+			return 'Common';
+		case ItemRarity.RARE:
+			return 'Rare!'
+		case ItemRarity.LEGENDARY:
+			return '*Legendary!!*'
+	}
+}
+
 export function randomItem() {
 	const index = Math.floor(Math.random()*numItems);
 	return items[Object.keys(items)[index]];
 }
 
+export function nameToId(name) {
+	return name.toLowerCase().replaceAll(' ','_').replaceAll('-','_').replaceAll(/[^\w_]/g,'');
+}
+
 function createItem(name,description,rarity) {
 	// Create id by replacing spaces and stripping alphanumeric
- 	const id = name.toLowerCase().replaceAll(' ','_').replaceAll('-','_').replaceAll(/[^\w_]/g,'');
+ 	const id = nameToId(name);
 
 	items[id] = {
 		id: id,
@@ -119,7 +134,6 @@ export function createItems() {
 		(message,user,slot,response) => {
 			response += `\nAnd since you're such a good sport, I'll throw in a screwdriver for free!`;
 			const screwdriver_type = Math.random() < 0.5 ? 'screwdriver_flat_head' : 'screwdriver_phillips_head';
-			console.log(items[screwdriver_type]);
 			addItem(user,items[screwdriver_type]);
 
 			return response;
