@@ -22,6 +22,11 @@ function createItem(name,description,rarity) {
 	return items[id];
 }
 
+function addCallback(item,name,effect) {
+	item.callbacks[name] = effect;
+	return item;
+}
+
 // Item definitions begin below
 createItem("Healing Potion","A small vial of shimmering red liquid");
 createItem("Mana Potion","A bottle of blue, flourescent fluid");
@@ -114,122 +119,120 @@ createItem("Diamond Pickaxe","I came to dig, dig, dig, dig...");
 createItem("Amazon Echo with a bullet lodged in it","You can thank me for that");
 createItem("Tub of 'Fun Slime'","Their wording, not mine");
 createItem("Barrel of Oil","I got this for free back when oil prices crashed");
-createItem("Fushigi Ball",
-createItem("A Little Bird",
-createItem("Rotary Phone",
-createItem("Sheep in a Box",
-createItem("Gamepad",
-createItem("Silly Putty Egg",
-createItem("Ome Plushie",
-createItem("Mariimo Plushie",
-createItem("Handfull of Small Frogs",
-createItem("Trenchoat (Max Occupancy, 3 creatures)",
-createItem("Soap",
-createItem("Soup",
-createItem("Clothes from the soup store",
-createItem("Tomato Sauce",
-createItem("2kg of Lead",
-createItem("Complimentary Napkin",
-createItem("Unarmed(?) Landmine",
-createItem("Atari 2600",
-createItem("Bee the size of a dog",
-createItem("Haunted Doll",
-createItem("Chicken Strips",
-createItem("Macaroni and Cheese",
-createItem("Wooden blocks",
-createItem("The concept of a Tuesday",
-createItem("A locked box with the SCP logo on it",
-createItem("A key with the SCP logo on it",
-createItem("Blanket Wizard Plush",
-createItem("Fabio Meeple",
-createItem("Rat",
-createItem("Old Telescope",
-createItem("Deck of Cards",
-createItem("Tech Dech",
-createItem("Bloody Beyblade",
-createItem("Yellow Crowbar",
-createItem("Among Us Baby",
-createItem("1 meter cube of fudge",
-createItem("Steampunk Alarm Clock",
-createItem("Chessboard",
-createItem("Chess Pawn",
-createItem("Chess King",
-createItem("Chess Queen",
-createItem("Chess Bishop",
-createItem("Chess Rook",
-createItem("Chess Knight",
-createItem("Javascript for Dummies book",
-createItem("Trans Pride Flag themed XBOX Elite Controller",
-createItem("Dead AA Battery",
-createItem("Comically Large Wrench",
-createItem("Toilet Seat with Scorch Marks",
-createItem("Mario",
-createItem("Oblivia Plushie",
-createItem("Busted Hard Drive",
-createItem("Booty shorts with 'ENEMY OF THE STATE' written across the ass",
-createItem("Joy-Con (Drifing)",
-createItem("Two Trucks",
-createItem("A new car!!!",
-createItem("2 mile long aux cable",
-createItem("3,078,546.2 Grapes",
-createItem("Tooth submerged in Coca-Cola",
-createItem("Tiny spoon for baby ants",
-createItem("Gold Choker",
-createItem("Ammo Box",
-createItem("Gargantuan Sword",
-createItem("Not so much a 'sword' as much a slab of vaugely sharpened iron",
-createItem("Minceraft T-shirt",
-createItem("Kitbashed JNFR Model",
-createItem("Long Egg",
-createItem("Wet Monopoly",
-createItem("Snap Electronics Kit",
-createItem("Laser Pointer",
-createItem("Ball Lightning",
-createItem("Peanut Butter & Jelly Sandwich",
-createItem("`[[HYPERLINK BLOCKED]]`",
-createItem("Cheese Cylinder",
-createItem("Empty Polaroid Camera",
-createItem("3dBenchy",
-createItem("Book",
-createItem("Notebook",
-createItem("Colored Pencils",
-createItem("Crayons",
-createItem("Iced Tea",
-createItem("3kg of Lead",
-createItem("Floppy Disk",
-createItem("Bone Token",
-createItem("Chucky Cheese Arcade Token",
-createItem("Baba is You Plushie",
-createItem("Tank of Helium",
-createItem("Nothing",
-createItem("Funko Pop",
-createItem("Bucket of Slime",
-createItem("Pretty Dress",
-createItem("1-grit",
-createItem("Pack of Post-it Notes",
-createItem("Loose Change",
-createItem("Iekika's Tooth (Stolen)",
-createItem("Gamecube Controller (Full of Relish)",
-createItem("Two birds and a stone",
-createItem("JavaScript for Dummies",
-createItem("The worst sauce",
-createItem("Breath Mint",
-createItem("Green T-Shirt with the Triforce on it",
-createItem("A really cool dog!!!!",
-createItem("This thing I found in a dumpster",
-createItem("Elephant's Foot (Like from an elephant)",
-createItem("Elephant's Foot (This will kill you if you buy it)",
-createItem("??? Plushie",
-createItem("Robot Foot",
-createItem("A jumbo serving of movie theater nachos",
-createItem("The United States Constitution (With a lemony scent?)",
-createItem("Power brick",
-createItem("Brick of power",
-createItem("Brick's Power",
-createItem("The Power of Brick",
-createItem("Bower Prick",
-createItem("Phone case with the ghost of an iPhone in it",
-createItem("Toki Pona Dictionary",
-createItem("Disarmed warhead i swear it's totally safe"
+createItem("Fushigi Ball","You'll never compare to my mad fushigi skills >:)");
+createItem("A Little Bird","A little guy...");
+createItem("Rotary Phone","I don't know if you can actually use this nowadays");
+createItem("Sheep in a Box","It's totally in there trust me");
+createItem("Gamepad","Gamepad for which type of console? That's up to you");
+createItem("Silly Putty Egg","I'm not actually sure it has silly putty in there");
+createItem("Ome Plushie","A plushie of Ome the salamander - now with real shocking functionality!");
+createItem("Mariimo Plushie","A plushie of Mariimo the robot - about as clumsy as the real thing");
+createItem("Handfull of Small Frogs","A large handful");
+createItem("Trenchoat (Max Occupancy, 3 creatures)","Granted, it's 3 smallish creatures, but still");
+createItem("Soap","Light green with a slight minty scent");
+createItem("Soup","Bought from the local soup store");
+createItem("Clothes from the soup store","Actually very nice clothes, considering their source");
+createItem("Tomato Sauce","Fresh from Italy");
+createItem("2kg of Lead","A 2 kilogram ball of solid lead");
+createItem("Complimentary Napkin","Did you really buy this on it's own?");
+createItem("Unarmed(?) Landmine","It's probably safe. Probably. Totally");
+createItem("Atari 2600","The famous retro console itself");
+createItem("Bee the size of a dog","Comes with a leash so you can walk it like a balloon");
+createItem("Haunted Doll","Got it off eBay. Laughs creepily at night but otherwise harmless");
+createItem("Chicken Strips","It's kinda like fly paper but, for chickens. Right?");
+createItem("Macaroni and Cheese","Nobody stopped me");
+createItem("Wooden blocks","Not the kind with letters on the sides, just random pieces of wood");
+createItem("The concept of a Tuesday","What a concept!");
+createItem("A locked box with the SCP logo on it","It needs a key...");
+createItem("A key with the SCP logo on it","I wonder what this goes to...");
+createItem("Blanket Wizard Plush","A plushie of Blanket Wizard - comes with blanket!");
+createItem("Antonio Meeple","A wooden meeple of Antonio");
+createItem("Rat","I picked this thing up in New York, it's enormous");
+createItem("Old Telescope","This guy's been staring at the sky for years...");
+createItem("Deck of Cards","A standard 52 card deck");
+createItem("Tech Dech","A tiny skateboard for mice");
+createItem("Bloody Beyblade","A relic from the Beyblade wars of 2085");
+createItem("Yellow Crowbar","Stolen from a raccoon");
+createItem("Among Us Baby","?????");
+createItem("1 meter cube of fudge","I was told this is a normal serving size");
+createItem("Steampunk Alarm Clock","An alarm clock covered in gears and brass tubing, wearing a tiny top hat");
+createItem("Chessboard","A standard 9x9 chess board");
+createItem("Chess Pawn","The pawn - moves 1 space forward, captures diagonally, wraps around the board when it hits the edge");
+createItem("Chess King","The king - can only move and capture one space at a time, unless it's been infected. If you lose it, you lose the game");
+createItem("Chess Queen", "The queen - can move any number of spaces in any direction. Gets promoted to a pawn upon reaching the opponent's side of the board");
+createItem("Chess Bishop","The bishop - moves in a weird L shape");
+createItem("Chess Rook","The rook - moves in straight lines. Moves in gay lines during pride month");
+createItem("Chess Knight","The knight - horse");
+createItem("Javascript for Dummies book","How I was made");
+createItem("Trans Pride Flag themed XBOX Elite Controller","Only able to connect during the month of June, for some reason");
+createItem("Dead AA Battery","R.I.P, 2022-2022");
+createItem("Comically Large Wrench","Good luck picking it up, much less turning it");
+createItem("Toilet Seat with Scorch Marks","We don't talk about where this came from");
+createItem("Mario","Mario!");
+createItem("Oblivia Plushie","A plushie of Oblivia Nyx - filled with real ink!");
+createItem("Busted Hard Drive","Used to be full of pirated MP3s");
+createItem("Booty shorts with 'ENEMY OF THE STATE' written across the ass","... don't look at me, you're the one who bought them");
+createItem("Joy-Con (Drifing)","Mint condition");
+createItem("Two Trucks","American made, built ford tough");
+createItem("A new car!!!","Brand new!! Mint contidion!! Nothing suspicious here!!");
+createItem("2 mile long aux cable","When you wanna listen to music from your pc as you drive to work");
+createItem("3,078,546.2 Grapes","Ok, I lied, it's 3,078,546.*1* grapes. Cry me a river");
+createItem("Tooth submerged in Coca-Cola","It's been in there for 7 years and it's still fine");
+createItem("Tiny spoon for baby ants","Like, it's *really* small. Trust me, you can't see it with the naked eye");
+createItem("Gold Choker","A gold-plated metal band that could fit around a slime's neck");
+createItem("Ammo Box","No ammo inside, unfortunately - but someone did leave a grenade in here");
+createItem("Gargantuan Sword","A sword fit for a fucking gigantic knight");
+createItem("Not so much a 'sword' as much a slab of vaugely sharpened iron","I think this used to be part of a bridge");
+createItem("Minceraft T-shirt","Minecraft Gamer? A real Minecraft Gamer?");
+createItem("Kitbashed JNFR Model","It's me :D");
+createItem("Long Egg","An egg that's about 3 feet long");
+createItem("Wet Monopoly","Exactly what it sounds like");
+createItem("Laser Pointer","Pew pew pew (does not actually make sound)");
+createItem("Ball Lightning","Make sure to keep it tied down or it's gonna float around everywhere");
+createItem("Peanut Butter & Jelly Sandwich","The best way to eat goop between two slices of bread");
+createItem("`[[HYPERLINK BLOCKED]]`","Bought this from a real big shot I ran into once");
+createItem("Cheese Cylinder","Not a cheese *wheel*, to be clear");
+createItem("Empty Polaroid Camera","You do not need to smile");
+createItem("3dBenchy","The standard calibration tool for 3d printers");
+createItem("Book","An empty book");
+createItem("Notebook","An empty notebook");
+createItem("Colored Pencils","A set of pencils that draw in every color of the rainbow");
+createItem("Crayons","A set of wax crayons that draw in some of the colors of the rainbow");
+createItem("Iced Tea","A refreshing pitcher of iced tea");
+createItem("3kg of Lead","A 3 kilogram slab of lead metal");
+createItem("Floppy Disk","A relic from a bygone era... also the save icon");
+createItem("Bone Token","Gained from one of your creatures dying, for any reason");
+createItem("Chucky Cheese Arcade Token","Valid at any participating Chunky Cheese ~~restaurant~~ ~~entertainment center~~ ~~restaurant~~ ~~arcade~~ location");
+createItem("Baba is You Plushie","A plushie of Baba from Baba is you");
+createItem("Tank of Helium","Careful grab it it's floating away!!!!!!");
+createItem("Nothing","Why did you buy this?");
+createItem("Funko Pop","It's King Louie");
+createItem("Bucket of Slime","Harvested from local slimes (they did not give me permision (I'm in trouble))");
+createItem("Pretty Dress","A pretty, powder blue dress");
+createItem("1-grit","A... chunk of concrete? I think?");
+createItem("Pack of Post-it Notes","Great for taking notes or covering your friend's car");
+createItem("Loose Change","About $1.50, in total");
+createItem("Iekika's Tooth (Stolen)","Don't worry she's got like 4 sets of these to go");
+createItem("Gamecube Controller (Full of Relish)","From a particularly heated melee tournament");
+createItem("Two birds and a stone","They're friends :D");
+createItem("The worst sauce","Great for dipping fries");
+createItem("Breath Mint","You could use it...");
+createItem("Green T-Shirt with the Triforce on it","Stylish!");
+createItem("A really cool dog!!!!","Look at them! Look!!!!!!!");
+createItem("This thing I found in a dumpster","It's pretty nasty not gonna lie");
+createItem("Elephant's Foot (Like from an elephant)","Don't ask me how I got this");
+createItem("Elephant's Foot (This will kill you if you buy it)","DEFINITELY don't ask me how I got this");
+createItem("??? Plushie","A plushie of ???? - [REDACTED]");
+createItem("Robot Foot","A foot from a robot");
+createItem("A jumbo serving of movie theater nachos","I've had these sitting around for months, hope you enjoy!");
+createItem("The United States Constitution (With a lemony scent?)","I spilled sauce on it once but you can't even notice");
+createItem("Power brick","A charging brick for a laptop or other electronic device");
+createItem("Brick of power","A brick bestowed with incredible power");
+createItem("Brick's Power","The power of the legendary hero, brick");
+createItem("The Power of Brick","The power of a brick, truly incredible");
+createItem("Bower Prick","Idk man");
+createItem("Phone case with the ghost of an iPhone in it","I would have gotten rid of the ghost but Genius bar exorcists suck");
+createItem("Toki Pona Dictionary","toki! mi jan jnr");
+createItem("Disarmed warhead i swear it's totally safe","smiles :)");
 
 log.info('Items initialized!');
