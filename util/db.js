@@ -12,14 +12,26 @@ export default {
 	init: async () => {
 		const _db = new Low(new JSONFile('db.json'));
 		await _db.read();
-		log.info('Database initialized!');
 		db = _db;
 
 		db.data ||= {
-			users: [],
-			guilds: [],
+			users: {},
+			guilds: {},
 			jnfr: {}
 		}
+		await db.write();
+
+		log.info('Database initialized!');
+	},
+
+	getUser: (id) => {
+		if (!db.data.users[id]) {
+			db.data.users[id] = {
+				balance: 0,
+				inventory: []
+			};
+		}
+		return db.data.users[id];
 	},
 
 	scheduleWrite: () => {

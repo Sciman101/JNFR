@@ -1,5 +1,8 @@
 import fs from 'fs';
 import {log} from './logger.js';
+import {Collection} from 'discord.js';
+
+const jollarCache = new Collection(); 
 
 let dialouge;
 let logger;
@@ -63,6 +66,23 @@ export default {
 		}
 
 		return dialougeString;
+	},
+
+	getJollarSign: (guild) => {
+		const id = guild.id.toString();
+		let emojiText = jollarCache.get(id);
+		if (!emojiText) {
+			const emoji = guild.emojis.cache.find(emoji => emoji.name == 'jollar');
+
+			if (!emoji) {
+				emojiText = 'Jollar(s)';
+			}else{
+				emojiText = `<:jollar:${emoji.id}>`;
+			}
+
+			jollarCache.set(id,emojiText);
+		}
+		return emojiText;
 	}
 
 }
