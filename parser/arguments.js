@@ -72,7 +72,7 @@ const branch = (paths) => {
 	}
 }
 
-const literal = (id,literalString,next) => {
+const literal = (literalString,next) => {
 	return {
 			description: literalString,
 			evaluate: (args, argIndex) => {
@@ -80,15 +80,25 @@ const literal = (id,literalString,next) => {
 					error: args[argIndex] === literalString ? null : 'mismatched literal',
 					value: literalString,
 					next: next,
-					id: id
+					id: literalString
 				}
 			}
 	}
 };
 
+const rangeString = (min,max) => {
+	if (!min && max) {
+		return 'below ' + max;
+	}else if (min && !max) {
+		return 'above ' + min;
+	}else{
+		return 'between ' + min + ' and ' + max;
+	}
+}
+
 const numValue = (id, min,max,int,next) => {
 	return {
-		description: `${int ? 'integer' : 'number'} in range [${min},${max}]`,
+		description: `'${id}' (a ${int ? 'whole number' : 'number'} ${rangeString(min,max)})`,
 		evaluate: (args, argIndex) => {
 			let num = parseFloat(args[argIndex].trim());
 			
@@ -115,7 +125,7 @@ const numValue = (id, min,max,int,next) => {
 				}
 			}else{
 				return {
-					error: `${num} is out of bounds [${min},${max}]`
+					error: `${id} (${num}) needs to be ${rangeString(min,max)}`
 				}
 			}
 		}

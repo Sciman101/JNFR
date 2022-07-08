@@ -34,7 +34,65 @@
 		"I'm afriad I can't let you do that"
 	],
 	"argument_error":[
-
+		"That's not how you're supposed to write that!",
+		"Incorrect command usage!",
+		"You typed that a bit wrong",
+		"Small error with how you typed that",
+		"Oops, mistyped that-"
+	],
+	"insufficient_funds":[
+		"You don't have enough $jollar for that! Come back when you're a little, mmm, richer!",
+		"Sorry $user, I can't *give* credit. You need more $jollar for that",
+		"You're too poor, you [[LITTLE SPONGE]]!! You need more $jollar",
+		"Come back when you've got more $jollar, $user"
+	],
+	"gamble_win":[
+		"Lucky! You doubled your wager, you now have $balance $jollar!",
+		"Congrats! You now have $balance!",
+		"Big money!!! You now have $balance!",
+		"Congradulations!! You're winner!! You have $balance!",
+		"You know money is the root of all evil, right? Anyways, you won! You have $balance!",
+		"Woah, look at you, Mr/Mrs/Mx/Etc Rich Guy! You now have $balance!",
+		"Win! You now have $balance!"
+	],
+	"gamble_lose":[
+		"Tough luck, you just lost $bet, friend. You now have $balance",
+		"You lose! Good day!! You now have $balance!!!",
+		"Mmmm delicious [[JOLLARS]]. You lost $bet and now have $balance",
+		"Today's not your lucky day! You've got $balance, now",
+		"I love taking people's money :D You lost $bet and now only have $balance",
+		"`Math.random()` is *not* in your favor today. You lost $bet, and now have $balance",
+		"Lose! You now have $balance"
+	],
+	"gamble_lose_all":[
+		"Ooooh, so sorry, you just lost everything. Better luck next time :smirk:",
+		"Oh noooo you lost all your money. That's so saaaaaaad",
+		"Whaaat? You bet ALL THAT? Well... mine now :)",
+		"One day, I'll get tired of you guys losing all your money. Not today though! You just lost all your money",
+		"You lost all your money. Womp womp.",
+		"Looks like you're money'nt. Lost everything!",
+		"Don't check your j!wallet soon, uh, you might find it empty. Sorry!",
+		"I will now take All your money"
+	],
+	"slots_1":[
+		"Ah, boo, no matches - you get nothing, sorry!",
+		"1 of a kind! That means... nothing. You get nothing",
+		"*Fart sound*",
+		"You get nothing for this one, sorry bud!",
+		"You'll get that pot someday!",
+		"Nope. Sorry, try again some other time! That pot is just within reach ;)"
+	],
+	"slots_2":[
+		"2 of a kind! You get 40 $jollar for your trouble",
+		"2! The loneliest number! I think? You win 40 $jollar",
+		"Ah. you got 2 of a kind. That's... something, I guess. You get 40 $jollar",
+		"I've seen better. 40 $jollar payout. No pot for you",
+		"2 of the same! Not pot worthy but, I'll give ya 40 $jollar"
+	],
+	"slots_3":[
+		"Holy shit!!! You got the pot! You win $pot $jollar !",
+		".... wait you WON? You actually ***WON***? Well... uh, you get $pot $jollar. Wow",
+		"UGGGGGHHHH now I gotta PAY you. You win the entire pot - $pot $jollar"
 	],
 	"error":[
 		"Something went wrong!",

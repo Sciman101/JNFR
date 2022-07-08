@@ -8,7 +8,7 @@ export default (argArray, argTreeNode) => {
 		if (!argTreeNode.optional && argIndex >= argArray.length) {
 			return {
 				index: argIndex-1,
-				error: `Expected '${argTreeNode.description}'`,
+				error: `Missing argument - ${argTreeNode.description}`,
 				node: argTreeNode
 			}
 		}

@@ -85,7 +85,7 @@ client.on('messageCreate', message => {
 	const parseResult = argumentParser(rawArgs,command.argTree);
 	if (parseResult.error) {
 		// Oops!
-		return message.reply(parseResult.error);
+		return message.reply(Babbler.get('argument_error')+'\n`'+parseResult.error+'`');
 	}
 	
 	// Actually run the dang thing

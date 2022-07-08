@@ -39,50 +39,51 @@ function randomFromArray(arr) {
 	return newString;
 }*/
 
-export default {
 
-	init: () => {
-		// Load text from strings.json
-		fs.readFile('./data/strings.json',(err,data) => {
-			if (err) {
-				log.error('Unable to read data/strings.json!');
-			}else{
-				dialouge = JSON.parse(data);
-				log.info('Loaded witty banter!');
-			}
-		});
-	},
-
-	get: (key,placeholders) => {
-
-		if (!dialouge[key]) {
-			log.error('Unknown dialouge key ',key);
-			return 'MISSING DIALOUGE';
+const init = () => {
+	// Load text from strings.json
+	fs.readFile('./data/strings.json',(err,data) => {
+		if (err) {
+			log.error('Unable to read data/strings.json!');
+		}else{
+			dialouge = JSON.parse(data);
+			log.info('Loaded witty banter!');
 		}
+	});
+}
 
-		let dialougeString = randomFromArray(dialouge[key]);
-		for (const key in placeholders) {
-			dialougeString = dialougeString.replace('$'+key,placeholders[key]);
-		}
+const get = (key,placeholders,guild) => {
 
-		return dialougeString;
-	},
-
-	getJollarSign: (guild) => {
-		const id = guild.id.toString();
-		let emojiText = jollarCache.get(id);
-		if (!emojiText) {
-			const emoji = guild.emojis.cache.find(emoji => emoji.name == 'jollar');
-
-			if (!emoji) {
-				emojiText = 'Jollar(s)';
-			}else{
-				emojiText = `<:jollar:${emoji.id}>`;
-			}
-
-			jollarCache.set(id,emojiText);
-		}
-		return emojiText;
+	if (!dialouge[key]) {
+		log.error('Unknown dialouge key ',key);
+		return 'MISSING DIALOUGE';
 	}
 
+	let dialougeString = randomFromArray(dialouge[key]);
+	for (const key in placeholders) {
+		dialougeString = dialougeString.replace('$'+key,placeholders[key]);
+	}
+
+	return dialougeString;
+}
+
+const getJollarSign = (guild) => {
+	const id = guild.id.toString();
+	let emojiText = jollarCache.get(id);
+	if (!emojiText) {
+		const emoji = guild.emojis.cache.find(emoji => emoji.name == 'jollar');
+
+		if (!emoji) {
+			emojiText = 'Jollar(s)';
+		}else{
+			emojiText = `<:jollar:${emoji.id}>`;
+		}
+
+		jollarCache.set(id,emojiText);
+	}
+	return emojiText;
+}
+
+export default {
+	init, get, getJollarSign
 }

@@ -17,7 +17,9 @@ export default {
 		db.data ||= {
 			users: {},
 			guilds: {},
-			jnfr: {}
+			jnfr: {
+				pot: 0
+			}
 		}
 		await db.write();
 
