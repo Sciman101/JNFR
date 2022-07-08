@@ -16,8 +16,6 @@ export default (argArray, argTreeNode) => {
 		// Run the branch
 		const result = argTreeNode.evaluate(argArray,argIndex);
 
-
-
 		if (result.error) {
 			return {
 				index: argIndex,

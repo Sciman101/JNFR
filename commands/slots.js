@@ -66,24 +66,23 @@ export default {
 					maxCount = counts[spins[i]];
 				}
 			}
-			console.log(counts);
 			// Ok, now what?
 			if (maxCount === 1) {
 				message.reply(Babbler.get('slots_1'));
 			}else if (maxCount === 2) {
 				user.balance += 40;
-				message.reply(Babbler.get('slots_2',{jollar:Babbler.getJollarSign(message.guild)}));
+				message.reply(Babbler.get('slots_2',{jollar:jollarSign}));
 			}else if (maxCount === 3) {
 				user.balance += pot;
 				db.data.jnfr.pot = 0;
-				message.reply(Babbler.get('slots_3',{jollar:Babbler.getJollarSign(message.guild),pot:pot}));
+				message.reply(Babbler.get('slots_3',{jollar:jollarSign,pot:pot}));
 			}
 			Database.scheduleWrite();
 
 
 		}else{
 			// Display info
-			return message.reply(`The current pot is ${pot} ${Babbler.getJollarSign(message.guild)}`);
+			return message.reply(`The current pot is ${pot} ${jollarSign}`);
 		}
 
 

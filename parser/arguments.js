@@ -1,4 +1,5 @@
 import argumentParser from './argumentParser.js';
+import {log} from '../util/logger.js';
 
 /* Argument node structure:
 	Take in
@@ -18,6 +19,7 @@ import argumentParser from './argumentParser.js';
 const optional = (node) => {
 	return {
 		optional: true, // Basically just a flag for the parser
+		next: node,
 		description: node.description,
 		evaluate: (args,argIndex) => {
 			if (argIndex >= args.length) {
@@ -34,8 +36,15 @@ const optional = (node) => {
 // Allows for any of multiple nodes
 const any = (nodes,next) => {
 
+	if (nodes.length === 0) {
+		log.error('Any node set up with 0 children!');
+	}
+
+	const descText = nodes.map(node => node.description).join('/');
+
 	return {
-		description: nodes.forEach(node => `'${node.description}' or`).toString().slice(1,-4),
+		description: descText,
+		next: next,
 		evaluate: (args,argIndex) => {
 			for (let i=0;i<nodes.length;i++) {
 				const result = nodes[i].evaluate(args,argIndex);
@@ -54,14 +63,17 @@ const any = (nodes,next) => {
 // example usage
 // branch({node:literal('remove'),})
 const branch = (paths) => {
+
+	const descText = 'one of ' + paths.map(node => node.description).join(', ');
+
 	return {
 		paths: paths,
-		description: nodes.forEach(node => `'${node.description}'/`).toString().slice(1,-2),
+		description: descText,
 		evaluate: (args,argIndex) => {
 			for (let i=0;i<paths.length;i++) {
-				let result = paths[i].node.evaluate(args,argIndex);
+				let result = paths[i].evaluate(args,argIndex);
 				if (!result.error) {
-					result.next = paths[i].next;
+					result.next = result.next;
 					return result;
 				}
 			}
@@ -74,31 +86,34 @@ const branch = (paths) => {
 
 const literal = (literalString,next) => {
 	return {
-			description: literalString,
-			evaluate: (args, argIndex) => {
-				return {
-					error: args[argIndex] === literalString ? null : 'mismatched literal',
-					value: literalString,
-					next: next,
-					id: literalString
-				}
+		literal: true,
+		next: next,
+		description: literalString,
+		evaluate: (args, argIndex) => {
+			return {
+				error: args[argIndex] === literalString ? null : 'mismatched literal',
+				value: literalString,
+				next: next,
+				id: literalString
 			}
+		}
 	}
 };
 
 const rangeString = (min,max) => {
 	if (!min && max) {
-		return 'below ' + max;
+		return '<' + max;
 	}else if (min && !max) {
-		return 'above ' + min;
+		return '>' + min;
 	}else{
-		return 'between ' + min + ' and ' + max;
+		return '[' + min + ',' + max + ']';
 	}
 }
 
 const numValue = (id, min,max,int,next) => {
 	return {
-		description: `'${id}' (a ${int ? 'whole number' : 'number'} ${rangeString(min,max)})`,
+		description: `${id} (${rangeString(min,max)})`,
+		next: next,
 		evaluate: (args, argIndex) => {
 			let num = parseFloat(args[argIndex].trim());
 			
@@ -135,6 +150,7 @@ const numValue = (id, min,max,int,next) => {
 const stringValue = (id,quoted,next) => {
 	return {
 		description: id,
+		next: next,
 		evaluate: (args, argIndex) => {
 
 			const arg = args[argIndex].trim();
@@ -169,4 +185,4 @@ const stringValue = (id,quoted,next) => {
 	}
 }
 
-export {optional, literal, numValue, stringValue};
+export {optional, any, branch, literal, numValue, stringValue};

@@ -53,7 +53,8 @@
 		"Congradulations!! You're winner!! You have $balance!",
 		"You know money is the root of all evil, right? Anyways, you won! You have $balance!",
 		"Woah, look at you, Mr/Mrs/Mx/Etc Rich Guy! You now have $balance!",
-		"Win! You now have $balance!"
+		"Win! You now have $balance!",
+		"You feel a searing pain and gain $bet"
 	],
 	"gamble_lose":[
 		"Tough luck, you just lost $bet, friend. You now have $balance",
@@ -62,7 +63,8 @@
 		"Today's not your lucky day! You've got $balance, now",
 		"I love taking people's money :D You lost $bet and now only have $balance",
 		"`Math.random()` is *not* in your favor today. You lost $bet, and now have $balance",
-		"Lose! You now have $balance"
+		"Lose! You now have $balance",
+		"You pay the shrine and gain nothing"
 	],
 	"gamble_lose_all":[
 		"Ooooh, so sorry, you just lost everything. Better luck next time :smirk:",

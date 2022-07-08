@@ -18,7 +18,7 @@ export default {
 				// Generate description of command
 				const commandDescription = `
 **${command.name}** ${command.aliases ? `(${command.aliases.join(', ')})` : ''}
-\`Usage: ${generateCommandUsage(command.argTree)}\`
+\`Usage: ${generateCommandUsage(args.command_name,command.argTree).join('\n')}\`
 ${command.description}
 `
 				message.reply(commandDescription);

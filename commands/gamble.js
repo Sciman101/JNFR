@@ -29,7 +29,7 @@ export default {
 			}
 		}else{
 			user.balance += betAmount;
-			message.reply(Babbler.get('gamble_win',{balance:user.balance+jollarSign}));
+			message.reply(Babbler.get('gamble_win',{balance:user.balance+jollarSign,bet:betAmount}));
 		}
 		Database.scheduleWrite();
 

@@ -1,14 +1,13 @@
-import {stringValue} from '../parser/arguments.js';
+import {stringValue, branch, any, numValue,literal} from '../parser/arguments.js';
 import {log} from '../util/logger.js';
 
 export default {
 	name: 'echo',
-	aliases: ['ecto','pingpong'],
+	aliases: ['pingpong'],
 	description: 'Repeats back whatever you type',
 	guildOnly:false,
-	argTree:stringValue(true),
+	argTree:stringValue('message',true),
 	execute(message, args) {
-		message.channel.send(args[0]);
-		log.info('Thing happened!');
+		message.channel.send(args.message);
 	}
 }
