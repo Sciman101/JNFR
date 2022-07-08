@@ -35,7 +35,7 @@ for (const file of commandFiles) {
 					}
 				})
 				.catch((err) => {
-					log.err('Error importing command ',file);
+					log.error('Error importing command ',file,err);
 				});
 			
 	}

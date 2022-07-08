@@ -55,6 +55,7 @@ const any = (nodes,next) => {
 // branch({node:literal('remove'),})
 const branch = (paths) => {
 	return {
+		paths: paths,
 		description: nodes.forEach(node => `'${node.description}'/`).toString().slice(1,-2),
 		evaluate: (args,argIndex) => {
 			for (let i=0;i<paths.length;i++) {
@@ -123,7 +124,7 @@ const numValue = (id, min,max,int,next) => {
 
 const stringValue = (id,quoted,next) => {
 	return {
-		description: "a string",
+		description: id,
 		evaluate: (args, argIndex) => {
 
 			const arg = args[argIndex].trim();

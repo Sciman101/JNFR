@@ -3,7 +3,7 @@ import {log} from '../util/logger.js';
 
 export default {
 	name: 'echo',
-	aliases: [],
+	aliases: ['ecto','pingpong'],
 	description: 'Repeats back whatever you type',
 	guildOnly:false,
 	argTree:stringValue(true),
