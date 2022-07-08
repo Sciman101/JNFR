@@ -1,25 +1,14 @@
-const {MongoClient, ServerApiVersion } = require('mongodb');
-const {dbPassword, dbName} = require('../config.json');
+import {Low, JSONFile} from 'lowdb';
+import {log} from './logger.js';
 
-const uri = `mongodb+srv://jnfr:${dbPassword}@jnfr.v4qch.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+export default{
 
-let logger;
+	init: async () => {
 
-module.exports = {
+		const db = new Low(new JSONFile('db.json'));
+		await db.read();
+		log.info('Database initialized!');
 
-	init: (log) => {
-		logger = log;
-		try {
-			await client.connect();
-
-			const database = client.db(dbName);
-
-		}catch (e) {
-			logger.error(e);
-		}finally{
-			await client.close();
-		}
 	}
 
 }

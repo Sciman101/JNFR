@@ -1,4 +1,4 @@
-module.exports = (argArray, argTreeNode) => {
+export default (argArray, argTreeNode) => {
 	let argIndex = 0;
 	let parsedValues = [];
 

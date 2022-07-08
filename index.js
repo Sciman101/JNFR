@@ -1,27 +1,16 @@
-const fs = require('fs');
-const {Client, Intents, Collection} = require('discord.js');
+import fs from 'fs';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+import {Client, Intents, Collection} from 'discord.js';
 const {prefix, token} = require('./config.json');
-const Babbler = require('./util/babbler');
-const SimpleLogger = require('simple-node-logger');
 
-require('./util/db');
+import Babbler from './util/babbler.js';
+import Logger, {log} from './util/logger.js';
+import argumentParser from './parser/argumentParser.js';
 
-if (!fs.existsSync('./logs')){
-    fs.mkdirSync('./logs');
-}
-const logManager = new SimpleLogger();
-logManager.createConsoleAppender();
-logManager.createRollingFileAppender({
-	errorEventName:'error',
-    logDirectory:'./logs', // NOTE: folder must exist and be writable...
-    fileNamePattern:'JNFR-<DATE>.log',
-    dateFormat:'YYYY.MM.DD'
-});
-const log = logManager.createLogger();
-log.info('-=== Logger initialized ===-');
-
-// Create argument parser
-const argumentParser = require('./parser/argumentParser.js');
+Logger.init();
+;Babbler.init();
 
 // Setup discord client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS] });
@@ -30,7 +19,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 log.info('Loading commands...');
 for (const file of commandFiles) {
 	if (!file.startsWith('-')) { // Files starting with a hyphen are ignored
-		const command = require(`./commands/${file}`);
+		const command = import(`./commands/${file}`);
 		client.commands.set(command.name,command);
 		log.info('└ ' + command.name);
 
@@ -42,8 +31,6 @@ for (const file of commandFiles) {
 		}
 	}
 }
-
-Babbler.init(log);
 
 // On initialization
 client.once('ready', () => {
@@ -94,7 +81,7 @@ client.on('messageCreate', message => {
 	
 	// Actually run the dang thing
 	try {
-		command.execute(message,parseResult,log);
+		command.execute(message,parseResult);
 	}catch(error) {
 		log.error(error);
 		message.reply(Babbler.get('error'));

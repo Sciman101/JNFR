@@ -1,4 +1,5 @@
-const fs = require('fs');
+import fs from 'fs';
+import {log} from './logger.js';
 
 let dialouge;
 let logger;
@@ -35,17 +36,16 @@ function randomFromArray(arr) {
 	return newString;
 }*/
 
-module.exports = {
+export default {
 
-	init: (log) => {
-		logger = log;
+	init: () => {
 		// Load text from strings.json
 		fs.readFile('./data/strings.json',(err,data) => {
 			if (err) {
-				logger.error('Unable to read data/strings.json!');
+				log.error('Unable to read data/strings.json!');
 			}else{
 				dialouge = JSON.parse(data);
-				logger.info('Loaded witty banter!');
+				log.info('Loaded witty banter!');
 			}
 		});
 	},
@@ -53,7 +53,7 @@ module.exports = {
 	get: (key,placeholders) => {
 
 		if (!dialouge[key]) {
-			logger.err('Unknown dialouge key ',key);
+			log.err('Unknown dialouge key ',key);
 			return 'MISSING DIALOUGE';
 		}
 
