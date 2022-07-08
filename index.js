@@ -8,11 +8,13 @@ const {prefix, token} = require('./config.json');
 import Babbler from './util/babbler.js';
 import Logger, {log} from './util/logger.js';
 import Database, {db} from './util/db.js';
+import {createItems} from './data/items.js';
 import argumentParser from './parser/argumentParser.js';
 
 Logger.init();
 Database.init();
 Babbler.init();
+createItems();
 
 // Setup discord client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS] });

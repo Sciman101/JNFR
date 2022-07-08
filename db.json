@@ -1,12 +1,12 @@
 {
   "users": {
     "160121042902188033": {
-      "balance": 70,
+      "balance": 39999800,
       "inventory": []
     }
   },
   "guilds": {},
   "jnfr": {
-    "pot": 50
+    "pot": 185
   }
 }

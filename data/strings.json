@@ -66,7 +66,7 @@
 		"Lose! You now have $balance",
 		"You pay the shrine and gain nothing"
 	],
-	"gamble_lose_all":[
+	"gamble_lose_everything":[
 		"Ooooh, so sorry, you just lost everything. Better luck next time :smirk:",
 		"Oh noooo you lost all your money. That's so saaaaaaad",
 		"Whaaat? You bet ALL THAT? Well... mine now :)",
@@ -95,6 +95,12 @@
 		"Holy shit!!! You got the pot! You win $pot $jollar !",
 		".... wait you WON? You actually ***WON***? Well... uh, you get $pot $jollar. Wow",
 		"UGGGGGHHHH now I gotta PAY you. You win the entire pot - $pot $jollar"
+	],
+	"out_of_stock":[
+		"That item is out of stock",
+		"I'm all out of $item, sorry!",
+		"All out of that for the day, come back tomorrow",
+		"I don't have any more $item to sell, sorry!"
 	],
 	"error":[
 		"Something went wrong!",
