@@ -14,12 +14,69 @@ import argumentParser from './argumentParser.js';
 
 */
 
+// Wrap a node in this fella to make it optional
+const optional = (node) => {
+	return {
+		optional: true, // Basically just a flag for the parser
+		description: node.description,
+		evaluate: (args,argIndex) => {
+			if (argIndex >= args.length) {
+				return {
+					value: null
+				}
+			}else{
+				return node.evaluate(args,argIndex);
+			}
+		}
+	}
+};
+
+// Allows for any of multiple nodes
+const any = (nodes,next) => {
+
+	return {
+		description: nodes.forEach(node => `'${node.description}' or`).toString().slice(1,-4),
+		evaluate: (args,argIndex) => {
+			for (let i=0;i<nodes.length;i++) {
+				const result = nodes[i].evaluate(args,argIndex);
+				if (!result.error) {
+					return result;
+				}
+			}
+			return {
+				error: 'no matching argument provided'
+			}
+		}
+	}
+}
+
+// Like any, but the chosen route becomes the new path to take
+// example usage
+// branch({node:literal('remove'),})
+const branch = (paths) => {
+	return {
+		description: nodes.forEach(node => `'${node.description}'/`).toString().slice(1,-2),
+		evaluate: (args,argIndex) => {
+			for (let i=0;i<paths.length;i++) {
+				let result = paths[i].node.evaluate(args,argIndex);
+				if (!result.error) {
+					result.next = paths[i].next;
+					return result;
+				}
+			}
+			return {
+				error: 'no matching argument provided'
+			}
+		}
+	}
+}
+
 const literal = (literalString,next) => {
 	return {
 			description: literalString,
 			evaluate: (args, argIndex) => {
 				return {
-					error: args[argIndex] === literalString ? null : 'Mismatched literal',
+					error: args[argIndex] === literalString ? null : 'mismatched literal',
 					value: literalString,
 					next: next
 				}
@@ -97,4 +154,4 @@ const stringValue = (quoted,next) => {
 	}
 }
 
-export {literal, numValue, stringValue};
+export {optional, literal, numValue, stringValue};

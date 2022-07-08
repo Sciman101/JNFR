@@ -5,7 +5,7 @@ export default (argArray, argTreeNode) => {
 	// Move down the arg tree
 	while (argTreeNode != null) {
 
-		if (argIndex >= argArray.length) {
+		if (!argTreeNode.optional && argIndex >= argArray.length) {
 			return {
 				index: argIndex-1,
 				error: `Expected '${argTreeNode.description}'`,
@@ -15,6 +15,9 @@ export default (argArray, argTreeNode) => {
 
 		// Run the branch
 		const result = argTreeNode.evaluate(argArray,argIndex);
+
+
+
 		if (result.error) {
 			return {
 				index: argIndex,

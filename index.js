@@ -21,16 +21,23 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 log.info('Loading commands...');
 for (const file of commandFiles) {
 	if (!file.startsWith('-')) { // Files starting with a hyphen are ignored
-		const command = import(`./commands/${file}`);
-		client.commands.set(command.name,command);
-		log.info('└ ' + command.name);
-
-		// Add listeners for specific commands
-		if ('listeners' in command) {
-			for (const listener in command.listeners) {
-				client.on(listener,command.listeners[listener]);
-			}
-		}
+			import(`./commands/${file}`)
+				.then((module) => {
+					const command = module.default;
+					client.commands.set(command.name,command);
+					log.info('└ ' + command.name);
+		
+					// Add listeners for specific commands
+					if ('listeners' in command) {
+						for (const listener in command.listeners) {
+							client.on(listener,command.listeners[listener]);
+						}
+					}
+				})
+				.catch((err) => {
+					log.err('Error importing command ',file);
+				});
+			
 	}
 }
 
