@@ -53,7 +53,7 @@ client.on('messageCreate', message => {
 	const rawArgs = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = rawArgs.shift().toLowerCase();
 	
-	const command = client.commands.get(commandName);
+	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command || command == undefined) {
 		return message.reply(Babbler.get('unknown_command'));
 	}
