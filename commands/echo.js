@@ -1,5 +1,4 @@
-import {stringValue, branch, any, numValue,literal} from '../parser/arguments.js';
-import {log} from '../util/logger.js';
+import {stringValue} from '../parser/arguments.js';
 
 export default {
 	name: 'echo',

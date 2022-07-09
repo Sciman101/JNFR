@@ -39,7 +39,8 @@ export default {
 	getGuild: (id) => {
 		if (!db.data.guilds[id]) {
 			db.data.guilds[id] = {
-				pinboard:{}
+				pinboard:{},
+				emojiroles:[]
 			};
 		}
 		return db.data.guilds[id];

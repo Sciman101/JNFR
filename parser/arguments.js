@@ -20,7 +20,7 @@ import {log} from '../util/logger.js';
 const optional = (node) => {
 	return {
 		optional: true, // Basically just a flag for the parser
-		next: node,
+		next: node.next,
 		description: node.description,
 		evaluate: (args,argIndex) => {
 			if (argIndex >= args.length) {
@@ -50,6 +50,7 @@ const any = (nodes,next) => {
 			for (let i=0;i<nodes.length;i++) {
 				const result = nodes[i].evaluate(args,argIndex);
 				if (!result.error) {
+					result.next = next;
 					return result;
 				}
 			}
@@ -234,7 +235,7 @@ const discordEmoji = (id,next) => {
 					value: {
 						name: emojiName,
 						id: emojiId,
-						toString: () => `<:${emojiName}:${emojiId}>`
+						stringValue: `<:${emojiName}:${emojiId}>`
 					}
 				}
 			}else{
@@ -248,7 +249,8 @@ const discordEmoji = (id,next) => {
 						id: id,
 						next: next,
 						value: {
-							unicode: emojiUnicode
+							unicode: emojiUnicode,
+							stringValue: emojiUnicode
 						}
 					}
 				}
