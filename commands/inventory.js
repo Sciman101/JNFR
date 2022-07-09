@@ -3,7 +3,6 @@ import Database, {db} from '../util/db.js';
 import {items, rarityString} from '../data/items.js';
 import Babbler from '../util/babbler.js';
 import {searchInventory} from '../util/inventoryHelper.js';
-import {log} from '../util/logger.js';
 
 export default {
 	name: 'inventory',

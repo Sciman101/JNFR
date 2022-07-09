@@ -48,6 +48,7 @@ function createItem(name,description,rarity) {
 /*
 	Callbacks:
 		bought(message,user,itemslot,response)
+		eaten(message,user,itemslot,response)
 */
 function addCallback(item,name,effect) {
 	item.callbacks[name] = effect;

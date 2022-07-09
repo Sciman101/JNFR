@@ -36,6 +36,15 @@ export default {
 		return db.data.users[id];
 	},
 
+	getGuild: (id) => {
+		if (!db.data.guilds[id]) {
+			db.data.guilds[id] = {
+				pinboard:{}
+			};
+		}
+		return db.data.guilds[id];
+	},
+
 	scheduleWrite: () => {
 		if (!writeQueued) {
 			log.info('Writing database contents in ',SCHEDULED_WRITE_TIMEOUT,'ms');

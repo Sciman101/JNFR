@@ -1,7 +1,7 @@
 {
   "users": {
     "160121042902188033": {
-      "balance": 39998951,
+      "balance": 39998957,
       "inventory": [
         {
           "id": "ru_b_plushie",
@@ -16,7 +16,21 @@
       ]
     }
   },
-  "guilds": {},
+  "guilds": {
+    "844038368920076329": {
+      "pinboard": {
+        "channel": "844308393678077972",
+        "emoji": {
+          "unicode": "📌"
+        },
+        "minReacts": 1,
+        "enabled": true,
+        "cache": [
+          "995155988829175869"
+        ]
+      }
+    }
+  },
   "jnfr": {
     "pot": 185
   }

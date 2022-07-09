@@ -1,4 +1,5 @@
 import argumentParser from './argumentParser.js';
+import emojiRegex from 'emoji-regex';
 import {log} from '../util/logger.js';
 
 /* Argument node structure:
@@ -185,4 +186,78 @@ const stringValue = (id,quoted,next) => {
 	}
 }
 
-export {optional, any, branch, literal, numValue, stringValue};
+const mentionTypePrefixes = {
+	'channel':'<#',
+	'user':'<@',
+	'role':'<@&'
+}
+
+const discordMention = (id,type,next) => {
+	const start = mentionTypePrefixes[type];
+	return {
+		description: type,
+		next: next,
+		evaluate: (args, argIndex) => {
+			let mentionRaw = args[argIndex];
+			if (mentionRaw.startsWith(start) && mentionRaw.endsWith('>')) {
+				// Valid
+				return {
+					value: mentionRaw.slice(start.length,-1),
+					next: next,
+					id: id
+				}
+			}else{
+				// Invalid
+				return {
+					error: 'invalid ' + type + ' mention'
+				}
+			}
+		}
+	}
+}
+
+const discordEmoji = (id,next) => {
+
+	return {
+		description: `emoji`,
+		next: next,
+		evaluate: (args, argIndex) => {
+			const emojiRaw = args[argIndex];
+			// Discord emoji
+			if (emojiRaw.startsWith('<') && emojiRaw.endsWith('>')) {
+				const secondColonIndex = emojiRaw.indexOf(':',2);
+				const emojiName = emojiRaw.slice(2,secondColonIndex);
+				const emojiId = emojiRaw.slice(secondColonIndex+1,-1);
+				return {
+					id: id,
+					next: next,
+					value: {
+						name: emojiName,
+						id: emojiId,
+						toString: () => `<:${emojiName}:${emojiId}>`
+					}
+				}
+			}else{
+				// Unicode emoji?
+				const re = emojiRegex();
+				let match;
+				let emojiUnicode;
+				if ((match = re.exec(emojiRaw)) != null) {
+					emojiUnicode = match[0];
+					return {
+						id: id,
+						next: next,
+						value: {
+							unicode: emojiUnicode
+						}
+					}
+				}
+			}
+			return {
+				error: 'invalid emoji'
+			}
+		}
+	}
+}
+
+export {optional, any, branch, literal, numValue, stringValue, discordMention, discordEmoji};

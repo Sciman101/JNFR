@@ -2,7 +2,8 @@ import {optional, numValue} from '../parser/arguments.js';
 import {ItemRarity, randomItem} from '../data/items.js';
 import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
-import {addItem} from '../util/inventoryHelper.js';
+import {addItem} from '../util/inventoryHelper.js'; 
+import {MONTHS} from '../util/arrays.js';
 
 // Generate items for the day
 let inventory = [];
@@ -15,7 +16,6 @@ for (let i=0;i<5;i++) {
 	inventory.push({item:item,stock:Math.floor(Math.random()*2)+1});
 }
 
-const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
 const ITEM_RARITY_LABELS = {};
 ITEM_RARITY_LABELS[ItemRarity.COMMON] = '';
 ITEM_RARITY_LABELS[ItemRarity.RARE] = ' - Rare! ';
