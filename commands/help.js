@@ -14,7 +14,7 @@ module.exports = {
 		if (!args.length) {
 			// Spit out all commands
 			data.push('Here\'s a list of everything I can do:\n');
-			data.push(commands.map(command => '-'+command.name).join('\n'));
+			data.push(commands.filter(command => !command.hidden).map(command => '-'+command.name).join('\n'));
 			data.push(`\nYou can do \`${prefix}help [command name]\` to get specific details on a command`);
 			
 			return message.author.send(data, {split: true})
