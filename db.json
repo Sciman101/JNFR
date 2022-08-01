@@ -1,7 +1,7 @@
 {
   "users": {
     "160121042902188033": {
-      "balance": 39998958,
+      "balance": 39998966,
       "inventory": [
         {
           "id": "ru_b_plushie",
@@ -39,7 +39,14 @@
           },
           "role": "844039591761149982"
         }
-      ]
+      ],
+      "steamedhams": {
+        "enabled": true,
+        "channelId": "1003631098695254066",
+        "index": 0,
+        "bestIndex": -1,
+        "wins": 0
+      }
     }
   },
   "jnfr": {
