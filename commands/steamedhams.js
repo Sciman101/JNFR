@@ -83,6 +83,7 @@ export default {
 					
 					// Increment index
 					hams.index += 1;
+					hams.lastSenderId = message.author.id.toString();
 
 					if (hams.index >= script.length) {
 						hams.index = 0;
