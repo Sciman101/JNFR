@@ -48,6 +48,7 @@ export default {
 			const channel = args.channel;
 			guild.steamedhams.channelId = channel;
 			guild.steamedhams.enabled = true;
+			Database.scheduleWrite();
 			return message.reply(`Steamed hams enabled, at this time of day, in this server, localized entierly within <#${channel}>`);
 		}
 	},
@@ -63,7 +64,7 @@ export default {
 			if (message.channel.id.toString() === hams.channelId) {
 
 				// Strip message content
-				const content = message.cleanContent.toLowerCase().trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+				const content = message.cleanContent.toLowerCase().trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g,"");
 
 				// Compare to the next line in the script
 				const nextWord = script[hams.index];
@@ -73,12 +74,14 @@ export default {
 
 				if (!comparison) {
 					// Oops
-					hams.index = 0;
-					hams.lastSenderId = null;
-					return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`.`);
+					if (hams.index > 0) {
+						hams.index = 0;
+						hams.lastSenderId = null;
+						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`.`);
+					}
 				}else{
 					// Check for someone sending 2 messages in a roe
-					if (hams.lastSenderId === message.author.id.toString()) {
+					if (hams.lastSenderId === message.author.id.toString() && hams.index > 0) {
 						hams.index = 0;
 						hams.lastSenderId = null;
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row.`);
