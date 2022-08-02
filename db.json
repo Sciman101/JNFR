@@ -1,7 +1,7 @@
 {
   "users": {
     "160121042902188033": {
-      "balance": 39998869,
+      "balance": 39998819,
       "inventory": [
         {
           "id": "ru_b_plushie",
@@ -10,13 +10,21 @@
         },
         {
           "id": "skull",
-          "count": 1,
-          "owned": 1
+          "count": 0,
+          "owned": 1,
+          "eaten": 1
         },
         {
           "id": "disarmed_warhead_i_swear_its_totally_safe",
           "count": 1,
           "owned": 1
+        },
+        {
+          "id": "floppy_disk",
+          "count": 0,
+          "owned": 1,
+          "eaten": 1,
+          "used": 0
         }
       ],
       "tiler_team": 2

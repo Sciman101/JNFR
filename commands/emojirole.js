@@ -5,6 +5,7 @@ import Database from '../util/db.js';
 export default {
 	name: 'emojirole',
 	description: 'Setup reaction-based roles for your server!',
+	permissions:['MANAGE_MESSAGES'],
 	guildOnly:true,
 	argTree:any([
 		literal('add'),

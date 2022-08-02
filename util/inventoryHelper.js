@@ -4,7 +4,7 @@ export function addItem(user,item,count) {
 	count = count || 1;
 	let slot = user.inventory.find(slot => slot.id===item.id);
 	if (!slot) {
-		slot = {id:item.id,count:0,owned:0};
+		slot = {id:item.id,count:0,owned:0,eaten:0,used:0};
 		user.inventory.push(slot);
 	}
 	slot.count += count;

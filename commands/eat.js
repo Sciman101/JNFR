@@ -21,13 +21,16 @@ export default {
         }else if (results.length > 0) {
             
             // remove item
-            inventory[results[0]] -= 1;
+            const slot = results[0];
+            slot.count -= 1;
+            slot.eaten = (slot.eaten || 0) + 1;
+
             Database.scheduleWrite();
 
-            let response = Babbler.get('eating',{food:results[0]});
-            const item = items[results[0]];
+            let response = Babbler.get('eating',{food:items[slot.id].name});
+            const item = items[slot.id];
             if (item.callbacks.eaten) {
-				response = item.callbacks.eaten(message,user,userItemSlot,response);
+				response = item.callbacks.eaten(message,user,slot,response);
 			}
 
             // say funny thing

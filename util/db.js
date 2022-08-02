@@ -30,7 +30,8 @@ export default {
 		if (!db.data.users[id]) {
 			db.data.users[id] = {
 				balance: 0,
-				inventory: []
+				inventory: [],
+				deaths: 0
 			};
 		}
 		return db.data.users[id];

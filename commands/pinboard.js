@@ -7,6 +7,7 @@ import {MONTHS} from '../util/arrays.js';
 export default {
 	name: 'pinboard',
 	description: 'Set up a pin board for your server! (Pins will only use the first attachment/embed in an image)',
+	permissions:['MANAGE_MESSAGES'],
 	guildOnly:true,
 	argTree:branch([
 		literal('setup',

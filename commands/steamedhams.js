@@ -20,6 +20,7 @@ export default {
 	name: 'steamedhams',
 	aliases: ['steamedclams,mouthewateringhamburgers'],
 	description: 'Configure a channel for steamed hams',
+	permissions:['MANAGE_MESSAGES'],
 	guildOnly:true,
 	argTree:any([
 		literal('disable'),
