@@ -1,15 +1,20 @@
 {
   "name": "JNFR",
+  "type": "module",
   "version": "1.0.0",
   "description": "A discord bot",
-  "main": "index.js",
+  "exports": "./index.js",
   "dependencies": {
-    "discord-buttons": "^4.0.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.8.1",
+    "emoji-regex": "^10.1.0",
     "eslint": "^7.26.0",
-    "npx": "^10.2.2"
+    "lowdb": "^3.0.0",
+    "npx": "^10.2.2",
+    "simple-node-logger": "^21.8.12"
   },
-  "devDependencies": {},
+  "engines": {
+    "node": ">=14.16"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

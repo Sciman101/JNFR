@@ -1,63 +1,52 @@
-const { TextChannel } = require("discord.js");
-const storage = require("../util/storage");
+import {any,literal,discordMention,discordEmoji,stringValue,optional} from '../parser/arguments.js';
+import {log} from '../util/logger.js';
+import Database from '../util/db.js';
 
-module.exports = {
+export default {
 	name: 'emojirole',
-	aliases: [],
-	cooldown: 1,
 	description: 'Setup reaction-based roles for your server!',
-	args:true,
 	permissions:['MANAGE_MESSAGES'],
-	usage:'<add|remove> <channel> <message id> <emoji> [role (only required when adding)]',
 	guildOnly:true,
+	argTree:any([
+		literal('add'),
+		literal('remove')
+			],discordMention('channel','channel',
+				stringValue('message_id',false,
+					discordEmoji('emoji',
+						optional(discordMention('role','role')))))),
 	execute(message, args) {
 
-		if (args.length < 4) {
-			return message.reply('Improper arguments passed! Check usage for help');
-		}
-
-		// Get params
 		const guild = message.guild;
-		if (!guild.available) {
-			return;
-		}
-		const action = args[0].toLowerCase();
+		//console.log(args);
 
-		if (action == 'add' && args.length != 5) {
-			return message.reply('Improper arguments passed! Check usage for help');
-		}
+		// Are we adding or removing?
+		const adding = !!args.add;
+		const messageId = args.message_id;
+		const channelId = args.channel;
+		const emoji = args.emoji;
 
-		// Get channel
-		if (!(args[1].startsWith('<#') && args[1].endsWith('>'))) {
-			return message.reply(args[1] + ' is not a valid channel');
+		const roleId = args.role;
+		// Manual error check
+		if (adding && !roleId) {
+			return message.reply('You need to specify a role to use!');
 		}
-		const channel = guild.channels.cache.get(args[1].slice(2,-1));
-		if (!channel || channel.type != 'text') {
-			message.reply('You must specify a text channel!');
-		}
-
-		// Get emoji
-		const emoji = args[3];
-
-		// Get role
-		let role = null;
-		if (args.length == 5) {
-			if (!(args[4].startsWith('<@&') && args[4].endsWith('>'))) {
-				return message.reply(args[4] + ' is not a valid role');
-			}
-			role = guild.roles.cache.get(args[4].slice(3,-1));
-			if (role == guild.roles.everyone) {
-				return message.reply('You can\'t make an emoji role for everyone! Don\'t be ridiculous.');
-			}
+		const role = guild.roles.cache.get(roleId);
+		if (role === guild.roles.everyone) {
+			return message.reply(`You can't make an emoji role for everyone! Don't be ridiculous`);
 		}
 
-		// Get message
-		channel.messages.fetch(args[2])
+		const channel = guild.channels.cache.get(channelId);
+		if (!channel || channel.type !== 'GUILD_TEXT') {
+			return message.reply('You must specify a text channel!');
+		}
+
+		channel.messages.fetch(messageId)
 			.then(msg => {
 				if (!msg) {
-					return message.reply('Invalid message ID');
+					return message.reply('Invalid message id!');
 				}
-				setupEmojiRole(action,channel,msg,emoji,role,guild,message);
+				// Set up the role
+				setupEmojiRole(adding ? 'add':'remove',channel,msg,emoji,role,guild,message);
 			});
 
 	},
@@ -71,13 +60,16 @@ module.exports = {
 				try {
 					await reaction.fetch();
 				} catch (error) {
-					console.error('Something went wrong when fetching the message: ', error);
+					log.error('Something went wrong when fetching the message: ', error);
 					// Return as `reaction.message.author` may be undefined/null
 					return;
 				}
 			}
+
+			// Ok we're good
 			const message = reaction.message;
-			const emojirole = getEmojiRole(message,reaction.emoji.name);
+
+			const emojirole = getEmojiRole(message,reaction.emoji);
 			// Did it exist?
 			if (emojirole) {
 				// Give the role to the user!
@@ -102,7 +94,7 @@ module.exports = {
 				}
 			}
 			const message = reaction.message;
-			const emojirole = getEmojiRole(message,reaction.emoji.name);
+			const emojirole = getEmojiRole(message,reaction.emoji);
 			// Did it exist?
 			if (emojirole) {
 				// Remove the role from the user
@@ -119,6 +111,13 @@ module.exports = {
 // Ok let's do it
 async function setupEmojiRole(action,channel,message,emoji,role,guild,commandMessage) {
 
+	const guildDb = Database.getGuild(guild.id.toString());
+	let emojiroles = guildDb.emojiroles;
+	if (!emojiroles) {
+		emojiroles = [];
+		guildDb.emojiroles = emojiroles;
+	}
+
 	// Add a new role button
 	if (action == 'add') {
 
@@ -134,20 +133,15 @@ async function setupEmojiRole(action,channel,message,emoji,role,guild,commandMes
 			emoji:emoji,
 			role:role.id
 		};
-		let reacts = storage.guilddata.get(guild.id.toString(),'emojiroles');
-		if (reacts) {
-			reacts.push(reactObject);
-		}else{
-			reacts = [reactObject];
-		}
-		storage.guilddata.put(guild.id.toString(),'emojiroles',reacts);
+		emojiroles.push(reactObject);
+		Database.scheduleWrite();
 
 		// Actually react
-		message.react(emoji);
+		message.react(emoji.stringValue);
 
 		commandMessage.reply('Created new emoji role!');
 
-		console.log('created new emoji role!');
+		log.info('created new emoji role!');
 	
 	// Remove a role
 	}else if (action == 'remove') {
@@ -155,15 +149,15 @@ async function setupEmojiRole(action,channel,message,emoji,role,guild,commandMes
 		// Find a role and remove it
 		const react = getEmojiRole(message,emoji);
 		if (react) {
-			let reacts = storage.guilddata.get(guild.id.toString(),'emojiroles');
-			const index = reacts.indexOf(react);
+			const index = emojiroles.indexOf(react);
 			// Remove from array
 			if (index > -1) {
-				reacts.splice(index,1);
+				emojiroles.splice(index,1);
 			}else{
+				log.warn('Issue removing emoji role!');
 				return commandMessage.reply('There was an issue removing the role!');
 			}
-			storage.guilddata.put(guild.id.toString(),'emojiroles',reacts);
+			Database.scheduleWrite();
 
 			// remove the actual react
 			const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has('352566617231720468'));
@@ -173,7 +167,7 @@ async function setupEmojiRole(action,channel,message,emoji,role,guild,commandMes
 				}
 				commandMessage.reply('Removed emoji role!');
 			} catch (error) {
-				console.error('Failed to remove reactions.');
+				log.error('Failed to remove reactions.');
 			}
 
 		}else{
@@ -181,24 +175,23 @@ async function setupEmojiRole(action,channel,message,emoji,role,guild,commandMes
 		}
 
 	}
-
 }
 
-// Check if this specific emoji role already exists
+
 function getEmojiRole(message,emoji) {
-	const reacts = storage.guilddata.get(message.guild.id.toString(),'emojiroles');
-	if (reacts) {
-		const channel = message.channel;
-		for (let i=0;i<reacts.length;i++) {
+	const guildDb = Database.getGuild(message.guild.id.toString());
+	const emojiroles = guildDb.emojiroles || [];
 
-			const r = reacts[i];
-			if (r.channel == channel.id.toString()
-				&& r.message == message.id.toString()
-				&& r.emoji == emoji) {
-					return r;
-			}
+	const channel = message.channel;
+	for (let i=0;i<emojiroles.length;i++) {
 
+		const r = emojiroles[i];
+		if (r.channel == channel.id.toString()
+			&& r.message == message.id.toString()
+			&& emoji.toString() === r.emoji.stringValue) {
+				return r;
 		}
+
 	}
 	return null;
 }

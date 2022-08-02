@@ -1,46 +1,44 @@
-const {prefix, defaultCooldown} = require('../config.json');
+import {optional, stringValue} from '../parser/arguments.js';
+import {generateCommandUsage} from '../parser/usageGenerator.js';
+import {log} from '../util/logger.js';
+import Babbler from '../util/babbler.js';
 
-module.exports = {
+export default {
 	name: 'help',
-	cooldown: 5,
-	description: 'Lists everything I can do, or get info on a specific command',
-	aliases: ['command'],
-	usage:'[command name]',
+	description: 'Get a list of commands, or help with a specific command',
 	guildOnly:false,
+	argTree:optional(stringValue('command_name')),
 	execute(message, args) {
-		const data = [];
 		const {commands} = message.client;
-		
-		if (!args.length) {
+
+		if (args.command_name) {
+			const command = commands.get(args.command_name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(args.command_name));
+			if (command) {
+
+				// Generate description of command
+				const commandDescription = `
+**${command.name}** ${command.aliases ? `(${command.aliases.join(', ')})` : ''}
+\`Usage: ${generateCommandUsage(args.command_name,command.argTree).join('\n')}\`
+${command.description}
+`
+				message.reply(commandDescription);
+
+			}else{
+				message.reply(Babbler.get('unknown_command_help',{command:args.command_name}));
+			}
+		}else{
+			// List all commands
 			// Spit out all commands
-			data.push('Here\'s a list of everything I can do:\n');
-			data.push(commands.filter(command => !command.hidden).map(command => '-'+command.name).join('\n'));
-			data.push(`\nYou can do \`${prefix}help [command name]\` to get specific details on a command`);
+			const response = '```Commands:' + commands.map(command => '\n└ '+command.name).join('') + '\nUse j!help [command name] to get specific details on a command```';
 			
-			return message.author.send(data, {split: true})
+			return message.author.send(response)
 				.then(() => {
-					if (message.channel.type == 'dm') return;
+					if (message.channel.type == 'DM') return;
 					message.reply('I DM\'d you a list of commands!');
 				}).catch(error => {
-					console.error(`Couldn\'t send help DM to ${message.author.tag}.\n`, error);
+					log.error(`Couldn\'t send help DM to ${message.author.tag}.\n`, error);
 					message.reply('Couldn\'t DM you for some reason? Do you have DMs disabled?');
 				});
-		}else{
-			// Specific command
-			const name = args[0].toLowerCase();
-			const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name));
-			
-			if (!command) {
-				return message.reply('I don\'t know that one!');
-			}
-			
-			data.push(`**[--- ${command.name} ---]**`);
-			
-			if (command.aliases) data.push(`*Aliases: ${command.aliases.join(', ')}*`);
-			if (command.usage) data.push(`*Usage:* \`${prefix}${command.name} ${command.usage}\` (${command.cooldown || defaultCooldown}s delay)\n`);
-			if (command.description) data.push(`${command.description}`);
-			
-			message.channel.send(data, {split:true});
 		}
 	}
 }

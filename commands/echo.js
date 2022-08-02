@@ -1,12 +1,12 @@
-module.exports = {
+import {stringValue} from '../parser/arguments.js';
+
+export default {
 	name: 'echo',
-	aliases: ['repeat'],
-	cooldown: 1,
+	aliases: ['pingpong'],
 	description: 'Repeats back whatever you type',
-	args:true,
-	usage:'<message>',
 	guildOnly:false,
+	argTree:stringValue('message',true),
 	execute(message, args) {
-		message.channel.send(args.join(' '));
+		message.channel.send(args.message);
 	}
 }

@@ -1,25 +1,31 @@
-module.exports = {
-    searchInventory(inventory, search) {
-        const searchTerm = search.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').toLowerCase();
-        let results = [];
-        for (const item in inventory) {
-            if (inventory[item] > 0) {
-                const index = item.toLowerCase().replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').indexOf(searchTerm);
-                if (index < 2 && index >= 0) {
-                    results.push(item);
-                }
-            }
-        }
-        return results;
-    },
+import {nameToId} from '../data/items.js';
 
-    addItem(inventory,item) {
-        if (inventory == null) {
-            inventory = {};
-            inventory[item] = 1;
-        }else{
-            const count = inventory[item] || 0;
-            inventory[item] = count + 1;
-        }
-    }
+export function addItem(user,item,count) {
+	count = count || 1;
+	let slot = user.inventory.find(slot => slot.id===item.id);
+	if (!slot) {
+		slot = {id:item.id,count:0,owned:0,eaten:0,used:0};
+		user.inventory.push(slot);
+	}
+	slot.count += count;
+	slot.owned += count;
+	
+	return slot;
+}
+
+export function searchInventory(inventory,search) {
+
+	const searchTerm = nameToId(search).replaceAll('_','');
+	let results = [];
+	for (const index in inventory) {
+		const slot = inventory[index];
+		if (slot.count > 0 || slot.owned > 0) {
+			const index = slot.id.replaceAll('_','').indexOf(searchTerm);
+			if (index < 2 && index >= 0) {
+				results.push(slot);
+			}
+		}
+	}
+	return results;
+
 }

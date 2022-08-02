@@ -1,5 +1,7 @@
-const storage = require('../util/storage.js');
-const Text = require('../util/text.js');
+import { literal, optional, stringValue, any } from '../parser/arguments.js';
+import Database, {db} from '../util/db.js';
+import {log} from '../util/logger.js';
+import Babbler from '../util/babbler.js';
 
 // data for displaying stuff
 const NUMBER_NAMES = [
@@ -33,7 +35,7 @@ const DEFAULT_BOARD = [
 	1,0,0,0,0,0,0,0,
 ];
 
-const DA_RULES = "```TILER (JNFR EDITION) RULES:\n0) Your team is randomly assigned\n1) You can claim a space adjacent to one your team owns\n2) You may only claim one space per day\n3) If that space is owned by the opposing team, every space around it will become yours if unclaimed, and flip which team they're on otherwise\n4) Once the board is filled, the team with more claimed spaces wins!\n5) The winning team receives 500 Jollars per player who participated! (In the event of a tie, everyone who participated gets 100 Jollars)```";
+const DA_RULES = "```TILER (JNFR EDITION) RULES:\n1) You can claim a space adjacent to one your team owns\n2) You may only claim one space per day\n3) If that space is owned by the opposing team, every space around it will become yours if unclaimed, and flip which team they're on otherwise\n4) Once the board is filled, the team with more claimed spaces wins!\n5) The winning team receives 500 Jollars per player who participated! (In the event of a tie, everyone who participated gets 100 Jollars)```";
 
 // turn the board into a printable string
 function generateBoardString(board) {
@@ -52,7 +54,7 @@ function generateBoardString(board) {
 	return boardString;
 }
 
-function getTeamFromId(id) {
+function getDefaultTeamFromId(id) {
 	return Math.floor(id.charCodeAt(17) % 2) + 1;
 }
 
@@ -103,34 +105,33 @@ function checkWinner(board) {
 
 let timeouts = {};
 
-module.exports = {
+export default {
 	name: 'tiler',
-	aliases: ['board'],
-	cooldown: 5,
+	aliases: [],
 	description: 'Enjoy the classic game of Tiler in a competitive, per-server daily rumble!\nUse with no args to view your current team and board info.\nUse `j!tiler rules` to view game rules\n\n(Based on the game <https://sciman101.itch.io/tiler>)',
-	args:false,
-	usage:'[space to play (i.e. a3)]',
+    argTree: optional(stringValue('space')),
 	guildOnly:true,
 	execute(message, args) {	
 		
 		// figure out what guild and board we're on
 		const guild = message.guild;
 		const guildId = guild.id.toString();
-		let guildBoard = storage.guilddata.get(guildId,'board') || DEFAULT_BOARD;
+        let guildData = Database.getGuild(guildId);
+        let guildBoard = guildData.board || (guildData.board = DEFAULT_BOARD);
 
 		// teams are determined by author id
 		const authorId = message.author.id.toString();
-		const authorTeam = getTeamFromId(authorId);
+        const authorTeam = Database.getUser(authorId).tiler_team || (Database.getUser(authorId).tiler_team = getDefaultTeamFromId(authorId));
 
 		// just show the current board
-		if (!args.length) {
+		if (!args.space) {
 			const boardString = `You are on ${TEAM_NAMES[authorTeam]} team. The board currently looks like this.\n${generateBoardString(guildBoard)}`;
 			return message.channel.send(boardString);
 
-		}else if (args[0].toLowerCase() == 'rules') {
+		}else if (args.space === 'rules') {
 			// send rules
 			return message.author.send(DA_RULES, {split: true}).then(() => {}).catch(error => {
-					console.error(`Couldn\'t send help DM to ${message.author.tag}.\n`, error);
+					log.error(`Couldn\'t send help DM to ${message.author.tag}.\n${error}`);
 					message.reply('Couldn\'t DM you for some reason? Do you have DMs disabled?');
 				});
 
@@ -148,7 +149,7 @@ module.exports = {
 			}
 
 			// get the space they want to play
-			const space = args[0].toLowerCase();
+			const space = args.space;
 			if (space.length != 2) {
 				return message.reply(`'${space}' is not a valid tile!`);
 			}
@@ -186,10 +187,9 @@ module.exports = {
 				timeouts[guildId] = guildTimeouts;
 
 				// make sure this user is marked as a participant
-				let gamers = storage.guilddata.get(guildId,'gamers') || [];
+				let gamers = guildData.gamers || (guildData.gamers = []);
 				if (gamers.indexOf(authorId) == -1) {
 					gamers.push(authorId);
-					storage.guilddata.put(guildId,'gamers',gamers);
 				}
 
 				// Check for a winner
@@ -197,33 +197,33 @@ module.exports = {
 				if (winner != -1) {
 
 					// Looks like we have a winner!
-					const gamers = storage.guilddata.get(guildId,'gamers');
 
 					if (winner != 0) {
-						message.channel.send(`${response}\n\n${TEAM_NAMES[winner]} team wins! Every player on that team who participated will get 250 ${Text.getJollarSign(guild)}.\n\nThe board for this server will now reset. Thanks for playing!`);
+						message.channel.send(`${response}\n\n${TEAM_NAMES[winner]} team wins! Every player on that team who participated will get 250 ${Babbler.getJollarSign(guild)}.\n\nThe board for this server will now reset. Thanks for playing!`);
 					}else{
-						message.channel.send(`${response}\n\nIt's a tie! Every player who participated will get 50 ${Text.getJollarSign(guild)}.\n\nThe board for this server will now reset. Thanks for playing!`);
+						message.channel.send(`${response}\n\nIt's a tie! Every player who participated will get 50 ${Babbler.getJollarSign(guild)}.\n\nThe board for this server will now reset. Thanks for playing!`);
 					}
 
 					// reward
 					const reward = winner == 0 ? 100 : 500;
 					gamers.forEach(
 						gamer => {
-							if (winner == 0 || getTeamFromId(gamer) == winner) {
-								const bal = storage.userdata.get(gamer,'balance') || 0;
-								storage.userdata.put(gamer,'balance',bal+reward);
+							let user = Database.getUser(gamer);
+							const team = user.tiler_team || getDefaultTeamFromId(gamer);
+							if (winner == 0 || team == winner) {
+								user.balance += reward;
 							}
 						}
 					);
 
 					// clear 'gamers' array and board
-					storage.guilddata.put(guildId,'gamers',[]);
-					storage.guilddata.put(guildId,'board',DEFAULT_BOARD);
+					guildData.gamers = [];
+					guildData.board = DEFAULT_BOARD;
 					return;
 				}
 
 				// write data
-				storage.guilddata.put(guildId,'board',guildBoard);
+				Database.scheduleWrite();
 
 				return message.reply(response);
 

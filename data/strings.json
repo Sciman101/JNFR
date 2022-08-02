@@ -1,11 +1,5 @@
 {
-	"noPermission":[
-		"Sorry, you're not allowed to do that",
-		"You don't have permission for that command",
-		"Gonna need to ask someone higher up for that one",
-		"I'm afriad I can't let you do that (Insufficient permissions)"
-	],
-	"unrecognized":[
+	"unknown_command":[
 		"What the hell are you talking about?",
 		"I don't know that one",
 		"That's not a real command. You're making that up",
@@ -13,9 +7,19 @@
 		"That's not a valid command!",
 		"I can't read that, what is that, Java?",
 		"I can't read that, what is that, Python?",
-		"I can't read that, what is that, Fortran?"
+		"I can't read that, what is that, Fortran?",
+		"toki ike >:("
+	],"unknown_command_help":[
+		"'$command' isn't a valid command",
+		"That's... that's nothing. I can't help with that",
+		"I can only help with commands that actually exist",
+		"Did you make a typo? That's nothing",
+		"Idk what '$command' means",
+		"I think *you* need to j!help me figure out what that's supposed to be",
+		"Invalid command",
+		"404: Command not found"
 	],
-	"guildOnly":[
+	"guild_only":[
 		"I can't use that command here!",
 		"That only works in servers, bud",
 		"That command only works in servers",
@@ -23,56 +27,46 @@
 		"Can't use that in DMs",
 		"Oops! I can only run that in DMs"
 	],
-	"noArgs":[
-		"You didn't give me any arguments, AUTHOR!",
-		"I need a little more than that, AUTHOR, give me some arguments",
-		"That command needs arguments to run, AUTHOR",
-		"... And? I need arguments to run that, AUTHOR"
+	"lacking_permissions":[
+		"Sorry, you're not allowed to do that",
+		"You don't have permission to use that",
+		"Gonna need to ask someone higher up for that one",
+		"I'm afriad I can't let you do that"
 	],
-	"properUsage":[
-		"The proper usage of that command is USAGE",
-		"The proper way to do that is USAGE",
-		":shrug: Maybe try running it like USAGE"
+	"argument_error":[
+		"That's not how you're supposed to write that!",
+		"Incorrect command usage!",
+		"You typed that a bit wrong",
+		"Small error with how you typed that",
+		"Oops, mistyped that-"
 	],
-	"cooldown":[
-		"Wait TIME before using COMMAND again!",
-		"Gimmie like TIME before you use that command",
-		"COMMAND is on cooldown for TIME"
+	"insufficient_funds":[
+		"You don't have enough $jollar for that! Come back when you're a little, mmm, richer!",
+		"Sorry $user, I can't *give* credit. You need more $jollar for that",
+		"You're too poor, you [[LITTLE SPONGE]]!! You need more $jollar",
+		"Come back when you've got more $jollar, $user"
 	],
-	"error":[
-		"Something went wrong!",
-		"Uh, oops. Something went wrong",
-		"404: Something went wrong",
-		"Might have dropped the ball on that command, something went wrong",
-		"This is *not* poggers, there was an error running that command",
-		"Uh, try again? Something went wrong"
+	"gamble_win":[
+		"Lucky! You doubled your wager, you now have $balance $jollar!",
+		"Congrats! You now have $balance!",
+		"Big money!!! You now have $balance!",
+		"Congradulations!! You're winner!! You have $balance!",
+		"You know money is the root of all evil, right? Anyways, you won! You have $balance!",
+		"Woah, look at you, Mr/Mrs/Mx/Etc Rich Guy! You now have $balance!",
+		"Win! You now have $balance!",
+		"You feel a searing pain and gain $bet"
 	],
-	"gamblePoor":[
-		"Sorry, USER, I don't *give* credit. You can't wager more than you have!",
-		"What kind of ~~scam artist~~ authentic reputable gambler do you take me for? You don't have that much money!",
-		"You can't wager what you don't have, sorry!",
-		"USER, you don't have that much money!",
-		"You don't have enough [[WACKY STACKS]]"
+	"gamble_lose":[
+		"Tough luck, you just lost $bet, friend. You now have $balance",
+		"You lose! Good day!! You now have $balance!!!",
+		"Mmmm delicious [[JOLLARS]]. You lost $bet and now have $balance",
+		"Today's not your lucky day! You've got $balance, now",
+		"I love taking people's money :D You lost $bet and now only have $balance",
+		"`Math.random()` is *not* in your favor today. You lost $bet, and now have $balance",
+		"Lose! You now have $balance",
+		"You pay the shrine and gain nothing"
 	],
-	"gambleWin":[
-		"Lucky! You doubled your wager, you now have BALANCE!",
-		"Congrats! You now have BALANCE!",
-		"Big money!!! You now have BALANCE!",
-		"Congradulations!! You're winner!! You have BALANCE!",
-		"You know money is the root of all evil, right? Anyways, you won! You have BALANCE!",
-		"Woah, look at you, Mr/Mrs/Mx/Etc Rich Guy! You now have BALANCE!",
-		"Win! You now have BALANCE!"
-	],
-	"gambleLose":[
-		"Tough luck, you just lost WAGER, friend. You now have BALANCE",
-		"You lose! Good day!! You now have BALANCE!!!",
-		"Mmmm delicious [[JOLLARS]]. You lost WAGER and now have BALANCE",
-		"Today's not your lucky day! You've got BALANCE, now",
-		"I love taking people's money :D You lost WAGER and now only have BALANCE",
-		"`Math.random()` is *not* in your favor today. You lost WAGER, and now have BALANCE",
-		"Lose! You now have BALANCE"
-	],
-	"gambleTerrible":[
+	"gamble_lose_everything":[
 		"Ooooh, so sorry, you just lost everything. Better luck next time :smirk:",
 		"Oh noooo you lost all your money. That's so saaaaaaad",
 		"Whaaat? You bet ALL THAT? Well... mine now :)",
@@ -82,74 +76,98 @@
 		"Don't check your j!wallet soon, uh, you might find it empty. Sorry!",
 		"I will now take All your money"
 	],
+	"slots_1":[
+		"Ah, boo, no matches - you get nothing, sorry!",
+		"1 of a kind! That means... nothing. You get nothing",
+		"*Fart sound*",
+		"You get nothing for this one, sorry bud!",
+		"You'll get that pot someday!",
+		"Nope. Sorry, try again some other time! That pot is just within reach ;)"
+	],
+	"slots_2":[
+		"2 of a kind! You get 40 $jollar for your trouble",
+		"2! The loneliest number! I think? You win 40 $jollar",
+		"Ah. you got 2 of a kind. That's... something, I guess. You get 40 $jollar",
+		"I've seen better. 40 $jollar payout. No pot for you",
+		"2 of the same! Not pot worthy but, I'll give ya 40 $jollar"
+	],
+	"slots_3":[
+		"Holy shit!!! You got the pot! You win $pot $jollar !",
+		".... wait you WON? You actually ***WON***? Well... uh, you get $pot $jollar. Wow",
+		"UGGGGGHHHH now I gotta PAY you. You win the entire pot - $pot $jollar"
+	],
+	"out_of_stock":[
+		"That item is out of stock",
+		"I'm all out of $item, sorry!",
+		"All out of that for the day, come back tomorrow",
+		"I don't have any more $item to sell, sorry!"
+	],
 	"eating":[
-		"You ate up the FOOD! Yummy!",
-		"You nibbled on the FOOD - doesn't taste *that* good",
-		"You guys can eat FOOD, right? Right, yeah, shove this in your gob",
-		"Humans love eating! Especially FOOD! Yum yum!",
-		"You ate the FOOD! Mmmmm mm, bone apple tea :ok_hand:",
-		"You devoured the FOOD like some kind of animal",
-		"You donated your FOOD to the local food bank, how generous of you",
-		"You fried up your FOOD, a little salt, little pepper, that's tasty!",
-		"I'm gonna be honest, I have no taste buds, I'm just gonna assume FOOD tastes good cause you seem to be having a good time",
+		"You ate up the $food! Yummy!",
+		"You nibbled on the $food - doesn't taste *that* good",
+		"You guys can eat $food, right? Right, yeah, shove this in your gob",
+		"Humans love eating! Especially $food! Yum yum!",
+		"You ate the $food! Mmmmm mm, bone apple tea :ok_hand:",
+		"You devoured the $food like some kind of animal",
+		"You donated your $food to the local food bank, how generous of you",
+		"You fried up your $food, a little salt, little pepper, that's tasty!",
+		"I'm gonna be honest, I have no taste buds, I'm just gonna assume $food tastes good cause you seem to be having a good time",
 		"Are you sure you should be eating that? Eh, I'm not a cop, go nuts",
-		"The smooth taste of FOOD!",
-		"You ate the FOOD, Crunchy!",
-		"Yesssss consume eat devour. You have one less FOOD now",
+		"The smooth taste of $food!",
+		"You ate the $food, Crunchy!",
+		"Yesssss consume eat devour. You have one less $food now",
 		"This probably won't poison you, right? Eat up!",
 		"Dinner is served! Enjoy :thumbsup:"
 	],
-	"rating": [
-		"I rate 'THING' at a solid SCORE/10!",
-		"THING? That's gotta be a SCORE out of 10, for me",
-		"THING is a SCORE/10, imo",
-		"I don't want to start controversy but I think 'THING' is a SCORE/10",
-		"THING is an easy SCORE/10. What do these scores mean? Who knows!"
+	"no_use":[
+		"You can't use your '$item'",
+		"That item has no use (yet)",
+		"You can't use a(n) '$item'",
+		"It's no use!!!",
+		"That item has no programmed callback for being used, blame Sciman101"
 	],
-	"murder":[
-		"You run VICTIM through with your ITEM",
-		"You KICK and PUNCH and STAB and KILL and MURDER VICTIM with your ITEM",
-		"You don't do anything. VICTIM just dies of unrelated causes",
-		"You crush VICTIM under the weight of your ITEM",
-		"You bop VICTIM on the head with your ITEM",
-		"VICTIM is choked to death by ITEM",
-		"VICTIM: YOU DIED!!"
+	"fortune_cookie":[
+		"Clam Butter",
+		"Fill that void in your pathetic life by playing whack-a-mole seventeen hours a day",
+		"You are the true lord of the dance! No matter what those IDIOTS at work say",
+		"Your love life will run into trouble when your fiance hurls a javelin through your chest",
+		"All your friends are laughing behind your back (**kill them**)",
+		"You should rob a bank!",
+		"Do your dishes! I know you got some! They're in ya sink!",
+		"You will play Quiplash with the governer of France",
+		"Smile! You're on camera :)",
+		"Your lucky numbers are 1, 1, 1, 1, and 1",
+		"You will spend more money at JNFR's store",
+		"You will buy more things",
+		"Disregard previous fortune cookie",
+		"Great wealth is in your future",
+		"Buy a raincoat",
+		"Do NOT invest in crypto",
+		"You will meet your end sometime in the next hundred or so years",
+		"In a few hours, the sun will rise!",
+		"You will build a deck",
+		"You will breathe within the next minute",
+		"You are now aware of your tounge",
+		"You will have a good day, hopefully!",
+		"Luigi- Hey Mario! Look what I made!\nMario- It's a stone Luigi. You didn't make it.\nLuigi- It's a football. I chiseled it.\nMario- Well, whaddya waitin' for? Throw me a pass!\nLuigi- It's even official size! But not official weight…\nMario- Hey, you've just thrown me a great idea!",
+		"You will see a cool animal at some point. Possibly yourself",
+		"Okayish wealth is in your future",
+		"A bird in the hand is better than burning bridges once you cross them or something idk",
+		"Holy shit how many of these fortunes do I need to write",
+		"Nutrition Info: 30 Calories per Cookie",
+		"í̸͕̻͇ẗ̵͓͓̭́̓̿́̇͗̉͋̋͗͂̑́̎ ̴̢̺̦͉̉͐̒̔̂̎̆̈́̇͠ͅa̴͇̖̼͕͎̘̩͆̈́̉̄͝l̸͖̥͐͑͌̽̏̑́̐͒̌̈́̕͠ĺ̵̬̠͆͊͛͛͋͂͛̐͂̂͜͠ ̷̘͉̣͖̣̩̲̄̃͂̆̔̾͘ę̶̖̗͉̪̬̬͌͋͋͐̎͋̍̒̓̐̑̚̚n̷̛̛͉̝͔͔͎͔̝̙͈͍̳̣̭͗́̓̒̑̋ͅd̶̛̙͔͎̭̆͊̀̀̊̋̇͊͜s̷̨̩̫̻͓̦͖͍̲̯̈͑͛̎̆͆͗̆̍́̏̑͊̕͝͠ ̷̧̛̛́́̓͌̍͊̕̚͠ḩ̴̪̗̹̈͜ę̷̨̨̪̯͉̮͓͇̥̗̝̝͕̰͐̎̾̋͒͝͝r̷̡͉̥̣̦̺̦̹̙̖̰͕̞̻͆̇̎̕͜ě̷̛̛̘̱̼̭͍̬̮̮̒̔̂̀͒͘͘͝",
+		"Dogs and Cats declare world peace",
+		"You will go for a nice little walk for your silly mental and physical health",
+		"Join me Link, and I will make your face the greatest in Koridai! Or else you will **die.**",
+		"You dare bring light into my lair?! You must **DIE!**",
+		"*It's a picture of another, smaller fortune cookie*"
 	],
-
-	"crafting":[
-		"Let's just smash these things into each other and see what happens!...",
-		"Add a little this, a little that, and we get!-",
-		"Time to work some magic! What're we gonna get...",
-		"You can nail these together, right?",
-		"Will they blend?",
-		"Imagine the breath of the wild cooking jingle here",
-		"3... 2... 1... leeeeeeet's craft!",
-		"Equivalent exchange blah blah you know the drill",
-		"I sure hope this thing doesn't come alive and kill me!",
-		"Just let me check this recipe on the wiki real quick..."
-	],
-
-	"amongus":[
-		"sus",
-		"Among us??????",
-		"Sus!!!!",
-		"Haha amongus",
-		"amongus...",
-		"amongus",
-		"amongos",
-		"Hit indie game initially released 2018 but later receiving critical attention in 2020 Among Us???",
-		"Hey. You said 'among us'",
-		"Hehehe amongus"
-	],
-
-	"mention":[
-		"You better be saying good things about me",
-		"You rang?",
-		"Yep! I see every message you send",
-		"What's up?",
-		"*Alexa acivation sound*",
-		"Hello!",
-		"I can't read what you're saying so you better be saying nice things",
-		"You guys talking behind my back????"
+	"error":[
+		"Something went wrong!",
+		"Uh, oops. Something went wrong",
+		"404: Something went wrong",
+		"Might have dropped the ball on that command, something went wrong",
+		"This is *not* poggers, there was an error running that command",
+		"Uh, try again? Something went wrong"
 	]
 }
