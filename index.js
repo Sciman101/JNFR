@@ -52,6 +52,16 @@ client.once('ready', () => {
 // On message received...
 client.on('messageCreate', message => {
 
+	// nice
+	if (message.content == '69' || message.content.toLowerCase().replace(/[- ]/,'') == 'sixtynine') {
+		return message.react('🇳')
+			.then(() => message.react('🇮'))
+			.then(() => message.react('🇨'))
+			.then(() => message.react('🇪'))
+			.then(() => message.react('😎'))
+			.catch(() => console.error("Not nice :("));
+	}
+
 	// Ignore bots
 	if (message.author.bot) return;
 
