@@ -74,11 +74,13 @@ export default {
 				if (!comparison) {
 					// Oops
 					hams.index = 0;
+					hams.lastSenderId = null;
 					return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`.`);
 				}else{
 					// Check for someone sending 2 messages in a roe
 					if (hams.lastSenderId === message.author.id.toString()) {
 						hams.index = 0;
+						hams.lastSenderId = null;
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row.`);
 					}
 					
@@ -89,6 +91,7 @@ export default {
 					if (hams.index >= script.length) {
 						hams.index = 0;
 						hams.wins += 1;
+						hams.lastSenderId = null;
 
 						return message.channel.send(`You group are an odd one, but I must say, you steam a good ham. You made it to the end!\nWins: ${hams.wins}`);
 
