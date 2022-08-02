@@ -166,6 +166,15 @@ const stringValue = (id,quoted,next) => {
 				}
 			}else{
 
+				if (quoted && !next) {
+					// Return remaining args
+					return {
+						value: args.slice(argIndex,args.length).join(' '),
+						next: next,
+						id: id
+					}
+				}
+
 				let index = argIndex+1;
 				while (index < args.length) {
 					if (args[index].endsWith('"')) {

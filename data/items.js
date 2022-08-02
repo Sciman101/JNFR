@@ -1,5 +1,6 @@
 import {log} from '../util/logger.js';
 import {addItem} from '../util/inventoryHelper.js';
+import Babbler from '../util/babbler.js';
 
 export let items = {};
 let numItems = 0;
@@ -68,7 +69,13 @@ export function createItems() {
 	createItem("Spooky Potion","A bottle of swirling purple fluid, skull patterns floating inside",ItemRarity.RARE);
 	createItem("Potted Plant","A small plant in a clay plant pot");
 
-	createItem("Fortune Cookie","It's still in it's wrapper - I wonder what your fortune is?...");
+	addCallback(
+		createItem("Fortune Cookie","It's still in it's wrapper - I wonder what your fortune is?..."),
+		'eaten',
+		(message,user,slot,response) => {
+			return `You open the cookie, the slip of paper inside reads ${Babbler.get('fortune_cookie')}`;
+		}
+	);
 
 	createItem("Fidget Spinner","SpeeEeEEeeEEEeen");
 	createItem("Phone Book","Who still uses these??");

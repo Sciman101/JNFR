@@ -102,6 +102,34 @@
 		"All out of that for the day, come back tomorrow",
 		"I don't have any more $item to sell, sorry!"
 	],
+	"eating":[
+		"You ate up the $food! Yummy!",
+		"You nibbled on the $food - doesn't taste *that* good",
+		"You guys can eat $food, right? Right, yeah, shove this in your gob",
+		"Humans love eating! Especially $food! Yum yum!",
+		"You ate the $food! Mmmmm mm, bone apple tea :ok_hand:",
+		"You devoured the $food like some kind of animal",
+		"You donated your $food to the local food bank, how generous of you",
+		"You fried up your $food, a little salt, little pepper, that's tasty!",
+		"I'm gonna be honest, I have no taste buds, I'm just gonna assume $food tastes good cause you seem to be having a good time",
+		"Are you sure you should be eating that? Eh, I'm not a cop, go nuts",
+		"The smooth taste of $food!",
+		"You ate the $food, Crunchy!",
+		"Yesssss consume eat devour. You have one less $food now",
+		"This probably won't poison you, right? Eat up!",
+		"Dinner is served! Enjoy :thumbsup:"
+	],
+	"fortune_cookie":[
+		"Clam Butter",
+		"Fill that void in your pathetic life by playing whack-a-mole seventeen hours a day",
+		"You are the true lord of the dance! No matter what those IDIOTS at work say",
+		"Your love life will run into trouble when your fiance hurls a javelin through your chest",
+		"All your friends are laughing behind your back (**kill them**)",
+		"You should rob a bank!",
+		"Yes, you SHOULD do that thing you've been putting off",
+		"Do your dishes! I know you got some! They're in ya sink!",
+		""
+	],
 	"error":[
 		"Something went wrong!",
 		"Uh, oops. Something went wrong",
