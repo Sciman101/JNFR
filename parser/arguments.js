@@ -157,7 +157,7 @@ const stringValue = (id,quoted,next) => {
 
 			const arg = args[argIndex].trim();
 
-			if (!quoted || !arg.startsWith('"')) {
+			if (!quoted) {
 				// Just return the value
 				return {
 					value: args[argIndex].trim(),
@@ -175,19 +175,28 @@ const stringValue = (id,quoted,next) => {
 					}
 				}
 
-				let index = argIndex+1;
-				while (index < args.length) {
-					if (args[index].endsWith('"')) {
-						return {
-							value: args.slice(argIndex,index+1).join(' ').slice(1,-1),
-							next: next,
-							id: id
+				if (arg.startsWith('"')) {
+					let index = argIndex+1;
+					while (index < args.length) {
+						if (args[index].endsWith('"')) {
+							return {
+								value: args.slice(argIndex,index+1).join(' ').slice(1,-1),
+								next: next,
+								id: id
+							}
 						}
+						index++;
 					}
-					index++;
-				}
-				return {
-					error: 'No closing "'
+					return {
+						error: 'No closing "'
+					}
+				}else{
+					// Just return the value
+					return {
+						value: args[argIndex].trim(),
+						next: next,
+						id: id
+					}
 				}
 
 			}
