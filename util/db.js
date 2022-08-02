@@ -14,7 +14,7 @@ export default {
 		await _db.read();
 		db = _db;
 
-		db.data ||= {
+		db.data |= {
 			users: {},
 			guilds: {},
 			jnfr: {
