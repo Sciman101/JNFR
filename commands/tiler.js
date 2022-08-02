@@ -109,7 +109,7 @@ export default {
 	name: 'tiler',
 	aliases: [],
 	description: 'Enjoy the classic game of Tiler in a competitive, per-server daily rumble!\nUse with no args to view your current team and board info.\nUse `j!tiler rules` to view game rules\n\n(Based on the game <https://sciman101.itch.io/tiler>)',
-    argTree: optional(any([stringValue('space'),literal('rules')])),
+    argTree: optional(stringValue('space')),
 	guildOnly:true,
 	execute(message, args) {	
 		
@@ -128,7 +128,7 @@ export default {
 			const boardString = `You are on ${TEAM_NAMES[authorTeam]} team. The board currently looks like this.\n${generateBoardString(guildBoard)}`;
 			return message.channel.send(boardString);
 
-		}else if (args.rules) {
+		}else if (args.space === 'rules') {
 			// send rules
 			return message.author.send(DA_RULES, {split: true}).then(() => {}).catch(error => {
 					log.error(`Couldn\'t send help DM to ${message.author.tag}.\n${error}`);
@@ -208,8 +208,10 @@ export default {
 					const reward = winner == 0 ? 100 : 500;
 					gamers.forEach(
 						gamer => {
-							if (winner == 0 || getTeamFromId(gamer) == winner) {
-								Database.getUser(gamer).balance += reward;
+							let user = Database.getUser(gamer);
+							const team = user.tiler_team || getDefaultTeamFromId(gamer);
+							if (winner == 0 || team == winner) {
+								user.balance += reward;
 							}
 						}
 					);

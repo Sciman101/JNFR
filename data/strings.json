@@ -119,6 +119,13 @@
 		"This probably won't poison you, right? Eat up!",
 		"Dinner is served! Enjoy :thumbsup:"
 	],
+	"no_use":[
+		"You can't use your '$item'",
+		"That item has no use (yet)",
+		"You can't use a(n) '$item'",
+		"It's no use!!!",
+		"That item has no programmed callback for being used, blame Sciman101"
+	],
 	"fortune_cookie":[
 		"Clam Butter",
 		"Fill that void in your pathetic life by playing whack-a-mole seventeen hours a day",
