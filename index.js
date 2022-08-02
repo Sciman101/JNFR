@@ -87,7 +87,7 @@ client.on('messageCreate', message => {
 	if (command.permissions) {
 		const member = message.guild.members.cache.get(message.author.id);
 		for (const perm in command.permissions) {
-			if (!member || !member.hasPermission(perm)) {
+			if (!member || !member.permissions.has(perm)) {
 				return message.reply(Babbler.get('lacking_permissions'));
 			}
 		}
