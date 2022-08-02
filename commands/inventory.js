@@ -18,7 +18,7 @@ export default {
 		if (!args.itemname) {
 
 			// Get inventory
-			console.log(inventory);
+			//console.log(inventory);
 			const inventoryString =
 			`
 Your inventory contains:

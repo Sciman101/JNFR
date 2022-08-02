@@ -115,7 +115,7 @@ export default {
 										// Attach first attachment
 										const attachment = message.attachments.first();
 										const url = attachment.proxyURL.toLowerCase();
-										console.log(url);
+										//console.log(url);
 										const isVideo = url.endsWith('webm') || url.endsWith('mp4') || url.endsWith('mov');
 
 										pinEmbed.setImage(message.attachments.first().proxyURL);
@@ -125,7 +125,7 @@ export default {
 									}else if (message.embeds.length > 0) {
 										// Attach embed
 
-										console.log('embed');
+										//console.log('embed');
 
 										if (message.embeds[0].thumbnail) {
 											pinEmbed.setImage(message.embeds[0].thumbnail.url);

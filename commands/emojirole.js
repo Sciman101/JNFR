@@ -16,7 +16,7 @@ export default {
 	execute(message, args) {
 
 		const guild = message.guild;
-		console.log(args);
+		//console.log(args);
 
 		// Are we adding or removing?
 		const adding = !!args.add;
