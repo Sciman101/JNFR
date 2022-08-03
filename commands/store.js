@@ -30,6 +30,7 @@ export default {
 	execute(message, args) {
 
 		const jollarSign = Babbler.getJollarSign(message.guild);
+		const balance = Database.getUser(message.author.id.toString()).balance || 0;
 
 		if (!args.item_number) {
 			// Display shop
@@ -45,6 +46,7 @@ ${inventory.map((slot,index) => {
 	return itemDesc;
 }).join('\n\n')}
 =================
+You have ${balance} ${jollarSign}
 \`Type j!shop [item number] to buy that item\`
 			`;
 
