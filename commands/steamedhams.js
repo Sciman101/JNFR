@@ -28,15 +28,13 @@ export default {
 	]),
 	execute(message, args) {
 
-		let guild = Database.getGuild(message.guild.id.toString());
-		if (!guild.steamedhams) {
-			guild.steamedhams = {
-				enabled: false,
-				channelId: null,
-				lastSenderId: null,
-				index: 0,
-				wins: 0,
-			}
+		const guild = Database.getGuild(message.guild.id.toString());
+		guild.steamedhams ||= {
+			enabled: false,
+			channelId: null,
+			lastSenderId: null,
+			index: 0,
+			wins: 0,
 		}
 
 		if (args.disable) {
@@ -64,7 +62,9 @@ export default {
 			if (message.channel.id.toString() === hams.channelId) {
 
 				// Strip message content
-				const content = message.cleanContent.toLowerCase().trim().replace(/[.,\/#!?"[\]\@$%\^&\*;:{}=\-_`'~()]/g,"");
+				// Ignore messages in parehtnasees
+				if (message.cleanContent.startsWith('(')) return;
+				const content = message.cleanContent.toLowerCase().trim().replace(/[^\w\d\s]/g,"");
 
 				// Compare to the next line in the script
 				const nextWord = script[hams.index];

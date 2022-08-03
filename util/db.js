@@ -53,6 +53,7 @@ export default {
 			writeQueued = true;
 			setTimeout(() => {
 				db.write();
+				writeQueued = false;
 				log.info('Database contents written');
 			},SCHEDULED_WRITE_TIMEOUT)
 		}
