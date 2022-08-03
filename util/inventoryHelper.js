@@ -1,10 +1,10 @@
 import {nameToId} from '../data/items.js';
 
-export function addItem(user,item,count) {
+export function addItem(user,item_id,count) {
 	count = count || 1;
-	let slot = user.inventory.find(slot => slot.id===item.id);
+	let slot = user.inventory.find(slot => slot.id===item_id);
 	if (!slot) {
-		slot = {id:item.id,count:0,owned:0,eaten:0,used:0};
+		slot = {id:item_id,count:0,owned:0,eaten:0,used:0};
 		user.inventory.push(slot);
 	}
 	slot.count += count;

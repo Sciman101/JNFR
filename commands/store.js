@@ -1,19 +1,32 @@
 import {optional, numValue} from '../parser/arguments.js';
-import {ItemRarity, randomItem} from '../data/items.js';
+import {ItemRarity, randomItem, items} from '../data/items.js';
 import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 import {addItem} from '../util/inventoryHelper.js'; 
 import {MONTHS} from '../util/arrays.js';
+import {log} from '../util/logger.js';
 
-// Generate items for the day
-let inventory = [];
-for (let i=0;i<5;i++) {
-	// Add 5 random items
-	let item;
-	do {
-		item = randomItem();
-	}while (inventory.length != 0 && inventory.find(slot => slot.item === item));
-	inventory.push({item:item,stock:Math.floor(Math.random()*2)+1});
+// Get shop for the day
+const shopDate = db.data.jnfr.shop_date;
+const currentDate = getDateString();
+
+let inventory = db.data.jnfr.shop_inventory;
+
+if (!inventory || shopDate != currentDate) {
+	log.info('Regenerating shop inventory');
+	// Generate items for the day
+	db.data.jnfr.shop_inventory = inventory = [];
+	for (let i=0;i<5;i++) {
+		// Add 5 random items
+		let item;
+		do {
+			item = randomItem().id;
+		}while (inventory.length != 0 && inventory.find(slot => slot.item === item));
+		inventory.push({item_id:item,stock:Math.floor(Math.random()*2)+1});
+	}
+	db.data.jnfr.shop_date = currentDate;
+
+	Database.scheduleWrite();
 }
 
 const ITEM_RARITY_LABELS = {};
@@ -34,12 +47,13 @@ export default {
 
 		if (!args.item_number) {
 			// Display shop
-			const today = new Date();
+			
 			const shopMessage = `
-\`Shop for ${MONTHS[today.getMonth()].toUpperCase()} ${today.getDate()}, ${today.getFullYear()}\`
+\`Shop for ${currentDate}\`
 =================
 ${inventory.map((slot,index) => {
-	let itemDesc = `${index+1}) **${slot.item.name}** (x${slot.stock}) ${ITEM_RARITY_LABELS[slot.item.rarity]} - \`${50*(index+1)}\`${jollarSign}`;
+	const item = items[slot.item_id];
+	let itemDesc = `${index+1}) **${item.name}** (x${slot.stock}) ${ITEM_RARITY_LABELS[item.rarity]} - \`${50*(index+1)}\`${jollarSign}`;
 	if (slot.stock === 0) {
 		itemDesc = '~~'+itemDesc+'~~';
 	}
@@ -55,7 +69,8 @@ You have ${balance} ${jollarSign}
 		}else{
 			const itemIndex = args.item_number-1;
 			const itemSlot = inventory[itemIndex];
-			const item = itemSlot.item;
+			const item_id = itemSlot.item_id;
+			const item = items[item_id];
 			const cost = (itemIndex+1) * 50;
 			if (itemSlot.stock <= 0) {
 				// We can't sell this
@@ -69,7 +84,7 @@ You have ${balance} ${jollarSign}
 
 			itemSlot.stock -= 1;
 			user.balance -= cost;
-			const userItemSlot = addItem(user,item);
+			const userItemSlot = addItem(user,item_id);
 			
 			let response = `You bought '${item.name}' for ${cost} ${jollarSign}! Pleasure doing business with you`;
 
@@ -83,4 +98,9 @@ You have ${balance} ${jollarSign}
 			Database.scheduleWrite();
 		}
 	}
+}
+
+function getDateString() {
+	const today = new Date();
+	return `${MONTHS[today.getMonth()].toUpperCase()} ${today.getDate()}, ${today.getFullYear()}`;
 }

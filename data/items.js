@@ -144,7 +144,7 @@ export function createItems() {
 		(message,user,slot,response) => {
 			response += `\nAnd since you're such a good sport, I'll throw in a screwdriver for free!`;
 			const screwdriver_type = Math.random() < 0.5 ? 'screwdriver_flat_head' : 'screwdriver_phillips_head';
-			addItem(user,items[screwdriver_type]);
+			addItem(user,screwdriver_type);
 
 			return response;
 		}
