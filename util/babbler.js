@@ -68,6 +68,11 @@ const get = (key,placeholders,guild) => {
 }
 
 const getJollarSign = (guild) => {
+	// Dms? or an error
+	if (guild === null) {
+		return '<:jollar:845407951136096317>';
+	}
+
 	const id = guild.id.toString();
 	let emojiText = jollarCache.get(id);
 	if (!emojiText) {

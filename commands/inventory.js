@@ -17,6 +17,10 @@ export default {
 
 		if (!args.itemname) {
 
+			if (inventory.length === 0) {
+				return message.reply('Your inventory is empty');
+			}
+
 			// Get inventory
 			//console.log(inventory);
 			const inventoryString =
