@@ -1,4 +1,4 @@
-import {stringValue,optional} from '../parser/arguments.js';
+import {stringValue,any,numValue,optional} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
 import {items, rarityString} from '../data/items.js';
 import Babbler from '../util/babbler.js';
@@ -6,13 +6,23 @@ import {searchInventory} from '../util/inventoryHelper.js';
 
 export default {
 	name: 'eat',
-	description: 'Eat one of your items. Humans can eat anything, right?\n(You only need to type the first few words of the item you want to eat. If you have multiple items that work, I\'ll just feed you the first matching one)',
-    argTree: stringValue('item',true),
+	description: 'Eat one of your items, or some of your jollars. Humans can eat anything, right?\n(You only need to type the first few words of the item you want to eat. Type a number to eat that many jollars. If you have multiple items that work, I\'ll just feed you the first matching one)',
+    argTree: any([numValue('jollars',1,undefined,true),stringValue('item',true)]),
 	guildOnly:false,
 	execute(message, args) {
+
+        const userId = message.author.id.toString();
+        const user = Database.getUser(userId);
+
+        if (args.jollars) {
+            user.balance -= args.jollars;
+            user.balanceEaten += args.jollars;
+            Database.scheduleWrite();
+            return message.reply(`You ate ${args.jollars} ${Babbler.getJollarSign(message.guild)} of your money.`);
+        }
+
 		const food = args.item;
-        const user = message.author.id.toString();
-		let inventory = Database.getUser(user).inventory;
+		let inventory = user.inventory;
 
         const results = searchInventory(inventory,food);
         // did we find something to eat?
