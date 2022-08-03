@@ -80,7 +80,7 @@ function isAdjacent(board,row,col,test) {
 // flip every tile around a space
 function flipAround(board,row,col,team) {
 	for (let r=-1;r<2;r++) {
-		for (c=-1;c<2;c++) {
+		for (let c=-1;c<2;c++) {
 			const t = bs(board,row+r,col+c);
 			if (t == 0) {
 				board[(row+r)*8+col+c] = team;
