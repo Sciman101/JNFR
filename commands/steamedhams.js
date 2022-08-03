@@ -64,7 +64,7 @@ export default {
 			if (message.channel.id.toString() === hams.channelId) {
 
 				// Strip message content
-				const content = message.cleanContent.toLowerCase().trim().replace(/[.,\/#!?"[\]\@$%\^&\*;:{}=\-_`'~()]/g,"");
+				const content = message.cleanContent.toLowerCase().trim().replace(/[^\w\d\s]/g,"");
 
 				// Compare to the next line in the script
 				const nextWord = script[hams.index];
