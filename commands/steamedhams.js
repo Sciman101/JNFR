@@ -77,6 +77,7 @@ export default {
 					if (hams.index > 0) {
 						hams.index = 0;
 						hams.lastSenderId = null;
+						Database.scheduleWrite();
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`.`);
 					}
 				}else{
@@ -84,17 +85,20 @@ export default {
 					if (hams.lastSenderId === message.author.id.toString() && hams.index > 0) {
 						hams.index = 0;
 						hams.lastSenderId = null;
+						Database.scheduleWrite();
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row.`);
 					}
 					
 					// Increment index
 					hams.index += 1;
 					hams.lastSenderId = message.author.id.toString();
+					Database.scheduleWrite();
 
 					if (hams.index >= script.length) {
 						hams.index = 0;
 						hams.wins += 1;
 						hams.lastSenderId = null;
+						Database.scheduleWrite();
 
 						return message.channel.send(`You group are an odd one, but I must say, you steam a good ham. You made it to the end!\nWins: ${hams.wins}`);
 
