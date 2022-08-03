@@ -67,6 +67,7 @@ You have ${balance} ${jollarSign}
 				return message.reply(Babbler.get('insufficient_funds',{jollar:jollarSign}));
 			}
 
+			itemSlot.stock -= 1;
 			user.balance -= cost;
 			const userItemSlot = addItem(user,item);
 			
