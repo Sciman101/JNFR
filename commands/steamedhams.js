@@ -28,15 +28,13 @@ export default {
 	]),
 	execute(message, args) {
 
-		let guild = Database.getGuild(message.guild.id.toString());
-		if (!guild.steamedhams) {
-			guild.steamedhams = {
-				enabled: false,
-				channelId: null,
-				lastSenderId: null,
-				index: 0,
-				wins: 0,
-			}
+		const guild = Database.getGuild(message.guild.id.toString());
+		guild.steamedhams ||= {
+			enabled: false,
+			channelId: null,
+			lastSenderId: null,
+			index: 0,
+			wins: 0,
 		}
 
 		if (args.disable) {
