@@ -272,6 +272,9 @@ export function createItems() {
 	createItem("A really cool dog!!!!","Look at them! Look!!!!!!!");
 	createItem("This thing I found in a dumpster","It's pretty nasty not gonna lie");
 	createItem("Elephant's Foot (Like from an elephant)","Don't ask me how I got this",ItemRarity.RARE);
+
+	createItem("Ice Cube","Nice and refreshing!");
+	createItem("Black Ice Cube","Evil and refreshing!",ItemRarity.RARE);
 	
 	addCallback(
 		createItem("Elephant's Foot (This will kill you if you buy it)","DEFINITELY don't ask me how I got this",ItemRarity.LEGENDARY),
