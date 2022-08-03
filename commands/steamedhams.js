@@ -64,6 +64,8 @@ export default {
 			if (message.channel.id.toString() === hams.channelId) {
 
 				// Strip message content
+				// Ignore messages in parehtnasees
+				if (message.cleanContent.startsWith('(')) return;
 				const content = message.cleanContent.toLowerCase().trim().replace(/[^\w\d\s]/g,"");
 
 				// Compare to the next line in the script
