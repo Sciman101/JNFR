@@ -2,6 +2,8 @@ import {numValue} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 
+const CLOVER_ID = '69_leaf_clover';
+
 export default {
 	name: 'gamble',
 	description: 'Try your luck in a game of double or nothing!',
@@ -17,8 +19,28 @@ export default {
 			return message.reply(Babbler.get('insufficient_funds',{user:message.author.name,jollar:jollarSign}));
 		}
 
+		let cloverCount = 0;
+		for (let index in user.inventory) {
+			const item = user.inventory[index];
+			if (item.id === CLOVER_ID) {
+				cloverCount = item.count;
+			}
+		}
+
+		let win = false;
+		let usedClover = false;
+		for (let i=0;i<cloverCount+1;i++) {
+			win = Math.random() < 0.5;
+			if (win) {
+				if (i > 0) {
+					usedClover = true;
+				}
+				break;
+			}
+		}
+
 		// Actually do the bet
-		if (Math.random() < 0.5) {
+		if (!win) {
 			// Lose! Sad!
 			user.balance -= betAmount;
 			db.data.jnfr.pot += betAmount;
@@ -30,6 +52,10 @@ export default {
 		}else{
 			user.balance += betAmount;
 			message.reply(Babbler.get('gamble_win',{balance:user.balance+jollarSign,bet:betAmount}));
+
+			if (usedClover) {
+				user.inventory.find((item) => item.id === CLOVER_ID).used += 1;
+			}
 		}
 		Database.scheduleWrite();
 

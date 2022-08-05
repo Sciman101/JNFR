@@ -8,12 +8,13 @@ const {prefix, token} = require('./config.json');
 import Babbler from './util/babbler.js';
 import Logger, {log} from './util/logger.js';
 import Database, {db} from './util/db.js';
-import {createItems} from './data/items.js';
 import argumentParser from './parser/argumentParser.js';
+import {createItems} from './data/items.js';
 
 Logger.init();
 Database.init();
 Babbler.init();
+
 createItems();
 
 // Setup discord client

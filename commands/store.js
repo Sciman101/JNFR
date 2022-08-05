@@ -10,9 +10,13 @@ import {log} from '../util/logger.js';
 const shopDate = db.data.jnfr.shop_date;
 const currentDate = getDateString();
 
-let inventory = db.data.jnfr.shop_inventory;
 
+let inventory = db.data.jnfr.shop_inventory;
 if (!inventory || shopDate != currentDate) {
+	randomizeStore();
+}
+
+function randomizeStore() {
 	log.info('Regenerating shop inventory');
 	// Generate items for the day
 	db.data.jnfr.shop_inventory = inventory = [];
@@ -97,7 +101,8 @@ You have ${balance} ${jollarSign}
 			// Write data
 			Database.scheduleWrite();
 		}
-	}
+	},
+	randomizeStore: randomizeStore
 }
 
 function getDateString() {

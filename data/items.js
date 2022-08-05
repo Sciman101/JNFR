@@ -301,6 +301,24 @@ export function createItems() {
 	createItem("Toki Pona Dictionary","toki! mi jan jnr");
 	createItem("Disarmed warhead i swear it's totally safe","smiles :)",ItemRarity.RARE);
 
+	addCallback(
+		createItem('Die of Commerce','A magic 6-sided die that radiates mercentile energy.\n**When Used:** Refresh the current shop. Has a 1/6 chance to dissapear upon use.',ItemRarity.RARE),
+		'used',
+		(message,user,slot,response) => {
+			const dissapear = Math.random() < 0.16666;
+			response += `\nWith a roll of the dice, the shop is suddenly re-stocked with new items!${dissapear ? '\n\nAfter rolling, the dice crumbles into ash...':''}`;
+
+			message.client.commands.get('store').randomizeStore();
+
+			if (dissapear) {
+				slot.count -= 1;
+			}
+			return response;
+		}
+	);
+
+	createItem('69-Leaf Clover','Nice. I\'ve heard a rumor this thing **improves your luck** or something.',ItemRarity.LEGENDARY);
+
 	log.info('Items initialized!');
 
 }
