@@ -13,13 +13,15 @@ export function addItem(user,item_id,count) {
 	return slot;
 }
 
-export function searchInventory(inventory,search) {
+export function searchInventory(inventory,search,allow0Count) {
+
+	allow0Count = allow0Count || false;
 
 	const searchTerm = nameToId(search).replaceAll('_','');
 	let results = [];
 	for (const index in inventory) {
 		const slot = inventory[index];
-		if (slot.count > 0 || slot.owned > 0) {
+		if (slot.count > 0 || (allow0Count && slot.owned > 0)) {
 			const index = slot.id.replaceAll('_','').indexOf(searchTerm);
 			if (index < 2 && index >= 0) {
 				results.push(slot);

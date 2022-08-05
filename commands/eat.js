@@ -7,18 +7,23 @@ import {searchInventory} from '../util/inventoryHelper.js';
 export default {
 	name: 'eat',
 	description: 'Eat one of your items, or some of your jollars. Humans can eat anything, right?\n(You only need to type the first few words of the item you want to eat. Type a number to eat that many jollars. If you have multiple items that work, I\'ll just feed you the first matching one)',
-    argTree: any([numValue('jollars',1,undefined,true),stringValue('item',true)]),
+    argTree: stringValue('item',true),
 	guildOnly:false,
 	execute(message, args) {
 
         const userId = message.author.id.toString();
         const user = Database.getUser(userId);
 
-        if (args.jollars) {
-            user.balance -= args.jollars;
-            user.balanceEaten += args.jollars;
-            Database.scheduleWrite();
-            return message.reply(`You ate ${args.jollars} ${Babbler.getJollarSign(message.guild)} of your money.`);
+        const num = parseInt(args.item);
+        if (!isNaN(num)) {
+            // Look for non alphanumeric chars
+            const matches = args.item.match(/\D/g);
+            if (!matches) {
+                user.balance -= num;
+                user.balanceEaten += num;
+                Database.scheduleWrite();
+                return message.reply(`You ate ${num} ${Babbler.getJollarSign(message.guild)} of your money.`);
+            }
         }
 
 		const food = args.item;
