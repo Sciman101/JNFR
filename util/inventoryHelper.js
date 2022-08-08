@@ -13,6 +13,17 @@ export function addItem(user,item_id,count) {
 	return slot;
 }
 
+export function removeItem(user,item_id,count) {
+	let slot = user.inventory.find(slot => slot.id===item_id);
+	if (!slot) {
+		slot = {id:item_id,count:0,owned:0,eaten:0,used:0};
+		user.inventory.push(slot);
+	}
+	slot.count -= count || slot.count;
+	
+	return slot;
+}
+
 export function searchInventory(inventory,search,allow0Count) {
 
 	allow0Count = allow0Count || false;

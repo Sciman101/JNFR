@@ -27,7 +27,7 @@ export default {
 			if (!item.callbacks.used) {
 				return message.reply(Babbler.get('no_use',{item:items[slot.id].name}));
 			}else{
-				const response = item.callbacks.used(message,user,slot,`\`You use the ${item.name}!\``);
+				const response = item.callbacks.used(message,Database.getUser(user),slot,`\`You use the ${item.name}!\``);
 				slot.used += 1;
 				// say funny thing
             	return message.reply(response);

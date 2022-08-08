@@ -12,13 +12,14 @@ import argumentParser from './parser/argumentParser.js';
 import {createItems} from './data/items.js';
 
 Logger.init();
-Database.init();
 Babbler.init();
+Database.init();
 
 createItems();
 
 // Setup discord client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.DIRECT_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS], partials:['REACTION','MESSAGE'] });
+client.prefix = prefix;
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 log.info('Loading commands...');
@@ -38,7 +39,7 @@ for (const file of commandFiles) {
 					}
 				})
 				.catch((err) => {
-					log.error('Error importing command ',file,err);
+					log.error('Error importing command ',file,'\n',err);
 				});
 			
 	}

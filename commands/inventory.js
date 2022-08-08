@@ -17,7 +17,8 @@ export default {
 
 		if (!args.itemname) {
 
-			if (inventory.length === 0) {
+			let isEmpty = !inventory.some((element) => element.count > 0);
+			if (isEmpty) {
 				return message.reply('Your inventory is empty');
 			}
 

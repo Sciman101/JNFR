@@ -164,7 +164,22 @@ export function createItems() {
 	createItem("Model Rocket","... wait, 'model'? Shit, I got ripped off!");
 	createItem("Fine Art","I got it from a museum");
 	createItem("Old Lamp","Doesn't even work");
-	createItem("Void","ì̴̡̛̤̤̺̬̙͍̟̕͘̚t̴̨̛̹͖̦̫͜ ̸̡̩̳͙̫̮͖̹̹͚̼̯̻̻͚̖̂͂́͌͋͂͜a̵̛̞̹̪̮͙͓͑̄̌̈́͂̈́̏̀̽̉̄̚͝͠ļ̸̛͎̥̳̞̹̫͉͇̼͇͐̐̃l̸͉̖̰̯̱̫̞͔̬̙̟̞͎͈͑̽́̆̈́̀͂̿̊͊͑̄̇̒̐͑͘ ̴̹̍̾͗̆̽͐͌̍̏̀̕ę̵̙̊͌͐̔̔ṋ̸̮̯̐̅͑̈́̉̽̅͒̿̈͐̎d̶̢̢̻̭͔̻̙̫̤̺̲͍̰͒̍͛̌͗͊͐̿̈́͊̚̚͘s̴̢̰̹̳͓̖̩̺̗̙̙̼̝͓̮̩̥̍͋̈́ ̵͍̟͔͌̀̃͐̎̐̅̓̽̎͋̉͠h̷̨̝̤̗̰̞̄̉̎͑̌̑̂͒̽̓̃̂͋́͒̆̚e̸̯̝̻͈̤̞͚͍̞̻̝̺̳͒̂̒͑̍̕̕͜͠ͅr̵̡̡̛͇̭̭̻̹͕̂̊͐̓̔̓̍̀̿͘e̷̲͔̘̩̤̗͗͂̈́̉̈́͊̓̓̕ͅ",ItemRarity.LEGENDARY);
+
+	const voidCallback = (message,user,slot,response) => {
+		if (user.race !== 'Voidtouched') {
+			user.race = 'Voidtouched';
+			if (slot.count == 0) slot.count = 1;
+			response = `S̵̨̼̗͚͕̠͖̰͊o̶̤̱̹̭̳̹͚͋̽͝m̸̛͎̘̜̖̤̱̰̙̀̋̈̉̿̈́͑͊̎̓́̑̇͂͒͝ͅe̵̯̬͓͍̜͖̘̱̰̞̋̀̅̐̍̓̇̈͒̇̽̄͊͑̐́͜͝ͅṱ̷̲̲͓̤͇̹͕̖̝̗͂̀̋̽̍̎̽͜h̶̡̨̛̩̻̺͙̹̳͍͓͎̭̭͎͙͂̽͋̃̽͜i̴̡̙̥͎̼̦̟̯̩̬̍͆́̾̏͗͌̍̂̊͒̀͒͘͜n̸̡̘̥̜̯̟̯͛͐͆̇̍͛́͗͝g̷̢̡̛̞͍̺̼̰̙̰͚̞͍̻̙͇̼͕͒̀́͗̏̐͆̿͑̌̾̎͋ ̷̛̦̣̲̣̦͔̆͛̋̎̀͋̈́͆͊́̾̈̕̕h̸̛̪͔͕̗̝̞̦̟̘̲̺̥̦̮͚̘̎͆͂̔̿͛̉͜a̴̧͚̥͙̮̬͈̲̼͎̤͈̤̫̭̓͋͐̎̚p̸͙̪͎̟͑́̿̒̀̀p̸̲̯̳̮̓̀̈́̾̅̔̓̿͑̒͒̌̔͂͘͝ȩ̴̧̩̱͓̙̺̳͚͇̤̈́͛͌̑̂̈́̑̓͛̚͝ͅṇ̶̨̡̢̨͍̻̖͕͓͍̼̹̪̇̈́͊̈́̄͂̃͆̔̎͗̃͗̀ͅṡ̵̜͇̻͒̏̐͒̎̏́͂̈́̎̀̀̔̒̚ͅ.̸̘͉̀̓̒̔̋̿̿̉̌̀̉̾͒̍ You feel funny. Something's changed`;
+		}else{
+			response = 'Nothing happens';
+		}
+		return response;
+	}
+
+	const voidItem = createItem("Void","ì̴̡̛̤̤̺̬̙͍̟̕͘̚t̴̨̛̹͖̦̫͜ ̸̡̩̳͙̫̮͖̹̹͚̼̯̻̻͚̖̂͂́͌͋͂͜a̵̛̞̹̪̮͙͓͑̄̌̈́͂̈́̏̀̽̉̄̚͝͠ļ̸̛͎̥̳̞̹̫͉͇̼͇͐̐̃l̸͉̖̰̯̱̫̞͔̬̙̟̞͎͈͑̽́̆̈́̀͂̿̊͊͑̄̇̒̐͑͘ ̴̹̍̾͗̆̽͐͌̍̏̀̕ę̵̙̊͌͐̔̔ṋ̸̮̯̐̅͑̈́̉̽̅͒̿̈͐̎d̶̢̢̻̭͔̻̙̫̤̺̲͍̰͒̍͛̌͗͊͐̿̈́͊̚̚͘s̴̢̰̹̳͓̖̩̺̗̙̙̼̝͓̮̩̥̍͋̈́ ̵͍̟͔͌̀̃͐̎̐̅̓̽̎͋̉͠h̷̨̝̤̗̰̞̄̉̎͑̌̑̂͒̽̓̃̂͋́͒̆̚e̸̯̝̻͈̤̞͚͍̞̻̝̺̳͒̂̒͑̍̕̕͜͠ͅr̵̡̡̛͇̭̭̻̹͕̂̊͐̓̔̓̍̀̿͘e̷̲͔̘̩̤̗͗͂̈́̉̈́͊̓̓̕ͅ",ItemRarity.LEGENDARY);
+	addCallback(voidItem,'used',voidCallback);
+	addCallback(voidItem,'eaten',voidCallback);
+
 	createItem("Felix Cube","Wait, isn't this just a Rubik's cube?...");
 	createItem("Diamond Pickaxe","I came to dig, dig, dig, dig...",ItemRarity.RARE);
 	createItem("Amazon Echo with a bullet lodged in it","You can thank me for that");
@@ -282,6 +297,7 @@ export function createItems() {
 		(message,user,slot,response) => {
 			response = `Wh- didn't you read the name?? Well, you died, I guess. You lost all your jollars`;
 			user.balance = 0;
+			user.race = null;
 			user.deaths = (user.deaths || 0)+1;
 			return response;
 		}

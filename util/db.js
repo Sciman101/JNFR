@@ -9,19 +9,20 @@ let writeQueued = false;
 
 export default {
 
-	init: async () => {
+	init: () => {
 		const _db = new Low(new JSONFile('db.json'));
-		await _db.read();
+		_db.read();
 		db = _db;
 
-		db.data ||= {
+		db.data |= {
 			users: {},
 			guilds: {},
 			jnfr: {
-				pot: 0
+				pot: 0,
+				shop_date: null
 			}
 		}
-		await db.write();
+		db.write();
 
 		log.info('Database initialized!');
 	},
@@ -31,7 +32,8 @@ export default {
 			db.data.users[id] = {
 				balance: 0,
 				inventory: [],
-				deaths: 0
+				deaths: 0,
+				race: 'Human'
 			};
 		}
 		return db.data.users[id];
