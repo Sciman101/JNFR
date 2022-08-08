@@ -56,6 +56,19 @@ function addCallback(item,name,effect) {
 	return item;
 }
 
+function setRaceCallback(newRace,successPrompt,failPrompt) {
+	return (message,user,slot,response) => {
+		if (user.race !== newRace) {
+			user.race = newRace;
+			if (slot.count == 0) slot.count = 1;
+			response = successPrompt;
+		}else{
+			response = failPrompt;
+		}
+		return response;
+	}
+}
+
 export function createItems() {
 
 	// Item definitions begin below
@@ -108,7 +121,13 @@ export function createItems() {
 	createItem("Plush Dragon","The fearsome dragon, reduced to a marketable plushie :pensive:",ItemRarity.RARE);
 	createItem("Plush Dog","*muffled woof*");
 	createItem("Plush Seal","Look at this thing. Lump of a dude. Love em");
-	createItem(":clown:",":clown:",ItemRarity.LEGENDARY);
+
+	addCallBack(
+		createItem(":clown:",":clown:",ItemRarity.LEGENDARY),
+		'used',
+		setRaceCallback('Clown','You are now a :clown:','You are already a :clown:')
+		);
+
 	createItem("Iron Shield","It's dented to hell but it'll keep nasties away for a bit");
 	createItem("Spiked Shield","The best defense is a good giant spike!");
 	createItem("Really Cool Wig","I was google image searching for a really cool wig...",ItemRarity.LEGENDARY);
@@ -165,17 +184,7 @@ export function createItems() {
 	createItem("Fine Art","I got it from a museum");
 	createItem("Old Lamp","Doesn't even work");
 
-	const voidCallback = (message,user,slot,response) => {
-		if (user.race !== 'Voidtouched') {
-			user.race = 'Voidtouched';
-			if (slot.count == 0) slot.count = 1;
-			response = `S̵̨̼̗͚͕̠͖̰͊o̶̤̱̹̭̳̹͚͋̽͝m̸̛͎̘̜̖̤̱̰̙̀̋̈̉̿̈́͑͊̎̓́̑̇͂͒͝ͅe̵̯̬͓͍̜͖̘̱̰̞̋̀̅̐̍̓̇̈͒̇̽̄͊͑̐́͜͝ͅṱ̷̲̲͓̤͇̹͕̖̝̗͂̀̋̽̍̎̽͜h̶̡̨̛̩̻̺͙̹̳͍͓͎̭̭͎͙͂̽͋̃̽͜i̴̡̙̥͎̼̦̟̯̩̬̍͆́̾̏͗͌̍̂̊͒̀͒͘͜n̸̡̘̥̜̯̟̯͛͐͆̇̍͛́͗͝g̷̢̡̛̞͍̺̼̰̙̰͚̞͍̻̙͇̼͕͒̀́͗̏̐͆̿͑̌̾̎͋ ̷̛̦̣̲̣̦͔̆͛̋̎̀͋̈́͆͊́̾̈̕̕h̸̛̪͔͕̗̝̞̦̟̘̲̺̥̦̮͚̘̎͆͂̔̿͛̉͜a̴̧͚̥͙̮̬͈̲̼͎̤͈̤̫̭̓͋͐̎̚p̸͙̪͎̟͑́̿̒̀̀p̸̲̯̳̮̓̀̈́̾̅̔̓̿͑̒͒̌̔͂͘͝ȩ̴̧̩̱͓̙̺̳͚͇̤̈́͛͌̑̂̈́̑̓͛̚͝ͅṇ̶̨̡̢̨͍̻̖͕͓͍̼̹̪̇̈́͊̈́̄͂̃͆̔̎͗̃͗̀ͅṡ̵̜͇̻͒̏̐͒̎̏́͂̈́̎̀̀̔̒̚ͅ.̸̘͉̀̓̒̔̋̿̿̉̌̀̉̾͒̍ You feel funny. Something's changed`;
-		}else{
-			response = 'Nothing happens';
-		}
-		return response;
-	}
-
+	const voidCallback = setRaceCallback('Voidtouched',`S̵̨̼̗͚͕̠͖̰͊o̶̤̱̹̭̳̹͚͋̽͝m̸̛͎̘̜̖̤̱̰̙̀̋̈̉̿̈́͑͊̎̓́̑̇͂͒͝ͅe̵̯̬͓͍̜͖̘̱̰̞̋̀̅̐̍̓̇̈͒̇̽̄͊͑̐́͜͝ͅṱ̷̲̲͓̤͇̹͕̖̝̗͂̀̋̽̍̎̽͜h̶̡̨̛̩̻̺͙̹̳͍͓͎̭̭͎͙͂̽͋̃̽͜i̴̡̙̥͎̼̦̟̯̩̬̍͆́̾̏͗͌̍̂̊͒̀͒͘͜n̸̡̘̥̜̯̟̯͛͐͆̇̍͛́͗͝g̷̢̡̛̞͍̺̼̰̙̰͚̞͍̻̙͇̼͕͒̀́͗̏̐͆̿͑̌̾̎͋ ̷̛̦̣̲̣̦͔̆͛̋̎̀͋̈́͆͊́̾̈̕̕h̸̛̪͔͕̗̝̞̦̟̘̲̺̥̦̮͚̘̎͆͂̔̿͛̉͜a̴̧͚̥͙̮̬͈̲̼͎̤͈̤̫̭̓͋͐̎̚p̸͙̪͎̟͑́̿̒̀̀p̸̲̯̳̮̓̀̈́̾̅̔̓̿͑̒͒̌̔͂͘͝ȩ̴̧̩̱͓̙̺̳͚͇̤̈́͛͌̑̂̈́̑̓͛̚͝ͅṇ̶̨̡̢̨͍̻̖͕͓͍̼̹̪̇̈́͊̈́̄͂̃͆̔̎͗̃͗̀ͅṡ̵̜͇̻͒̏̐͒̎̏́͂̈́̎̀̀̔̒̚ͅ.̸̘͉̀̓̒̔̋̿̿̉̌̀̉̾͒̍ You feel funny. Something's changed`,'Nothing happened');
 	const voidItem = createItem("Void","ì̴̡̛̤̤̺̬̙͍̟̕͘̚t̴̨̛̹͖̦̫͜ ̸̡̩̳͙̫̮͖̹̹͚̼̯̻̻͚̖̂͂́͌͋͂͜a̵̛̞̹̪̮͙͓͑̄̌̈́͂̈́̏̀̽̉̄̚͝͠ļ̸̛͎̥̳̞̹̫͉͇̼͇͐̐̃l̸͉̖̰̯̱̫̞͔̬̙̟̞͎͈͑̽́̆̈́̀͂̿̊͊͑̄̇̒̐͑͘ ̴̹̍̾͗̆̽͐͌̍̏̀̕ę̵̙̊͌͐̔̔ṋ̸̮̯̐̅͑̈́̉̽̅͒̿̈͐̎d̶̢̢̻̭͔̻̙̫̤̺̲͍̰͒̍͛̌͗͊͐̿̈́͊̚̚͘s̴̢̰̹̳͓̖̩̺̗̙̙̼̝͓̮̩̥̍͋̈́ ̵͍̟͔͌̀̃͐̎̐̅̓̽̎͋̉͠h̷̨̝̤̗̰̞̄̉̎͑̌̑̂͒̽̓̃̂͋́͒̆̚e̸̯̝̻͈̤̞͚͍̞̻̝̺̳͒̂̒͑̍̕̕͜͠ͅr̵̡̡̛͇̭̭̻̹͕̂̊͐̓̔̓̍̀̿͘e̷̲͔̘̩̤̗͗͂̈́̉̈́͊̓̓̕ͅ",ItemRarity.LEGENDARY);
 	addCallback(voidItem,'used',voidCallback);
 	addCallback(voidItem,'eaten',voidCallback);
