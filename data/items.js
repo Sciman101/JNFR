@@ -122,7 +122,7 @@ export function createItems() {
 	createItem("Plush Dog","*muffled woof*");
 	createItem("Plush Seal","Look at this thing. Lump of a dude. Love em");
 
-	addCallBack(
+	addCallback(
 		createItem(":clown:",":clown:",ItemRarity.LEGENDARY),
 		'used',
 		setRaceCallback('Clown','You are now a :clown:','You are already a :clown:')

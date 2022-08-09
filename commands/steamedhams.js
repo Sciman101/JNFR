@@ -64,7 +64,7 @@ export default {
 				// Strip message content
 				// Ignore messages in parehtnasees
 				if (message.cleanContent.startsWith('(')) return;
-				const content = message.cleanContent.toLowerCase().trim().replace(/[^\w\d\s]/g,"");
+				const content = message.cleanContent.toLowerCase().trim().replace(/[\W_]/g,"");
 
 				// Compare to the next line in the script
 				const nextWord = script[hams.index];
