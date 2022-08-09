@@ -20,7 +20,7 @@ unforgettable
 luncheon
 myes|yes|myeah|yeah
 oh
-egads|egods|ye gods
+egads|egods|yegods|god
 my
 roast
 is
@@ -41,7 +41,7 @@ as
 my
 own
 cooking
-ohoho
+ohoho|hohoho|hahaha|ahaha
 delightfully
 devilish
 seymour
@@ -132,7 +132,8 @@ steamed
 clams
 oh
 no
-i said
+i
+said
 steamed
 hams
 thats
@@ -200,7 +201,7 @@ have
 at
 crusty
 burger
-hohoho|ohoho
+ohoho|hohoho|hahaha|ahaha
 no
 patented
 skinner
