@@ -1,5 +1,6 @@
 import {any,literal,discordMention} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
+import Babbler from '../util/babbler.js';
 import fs from 'fs';
 
 let script = [];
@@ -20,9 +21,9 @@ export default {
 	name: 'steamedhams',
 	aliases: ['steamedclams,mouthewateringhamburgers'],
 	description: 'Configure a channel for steamed hams',
-	permissions:['MANAGE_MESSAGES'],
 	guildOnly:true,
 	argTree:any([
+		literal('stats'),
 		literal('disable'),
 		discordMention('channel','channel')
 	]),
@@ -34,8 +35,39 @@ export default {
 			channelId: null,
 			lastSenderId: null,
 			index: 0,
+			record: 0,
 			wins: 0,
 			fails: {}
+		}
+
+		if (args.stats) {
+
+			const hams= guild.steamedhams;
+
+			let totalFails = 0;
+			let sorted = [];
+			for (let key in hams.fails) {
+				const v = hams.fails[key];
+				totalFails += v;
+				sorted.push({type:key==="double"?key:"index",index:parseInt(key),count:v});
+			}
+			sorted.sort((a,b) => b.count - a.count);
+
+			const statsMessage = `
+**Steamed Ham Statistics for '${message.guild.name}':**
+*Most Words: * ${hams.record || 0}
+*Wins: * ${hams.wins || 0}
+*Fails: * ${totalFails || 0}
+${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "Doubled Word" : '"'+script[item.index]+'"'} - ${item.count}`).join("\n")}
+			`;
+
+			return message.reply(statsMessage);
+
+		}else {
+			const member = message.guild.members.cache.get(message.author.id);
+			if (!member || !member.permissions.has('MANAGE_MESSAGES')) {
+				return message.reply(Babbler.get('lacking_permissions'));
+			}
 		}
 
 		if (args.disable) {
@@ -80,6 +112,7 @@ export default {
 						hams.lastSenderId = null;
 						hams.fails = hams.fails || {};
 						hams.fails[oldIndex] = (hams.fails[oldIndex] || 0) + 1;
+						hams.record = oldIndex+1;
 						Database.scheduleWrite();
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. You've messed up on this word \`${hams.fails[oldIndex]}\` time(s).`);
 					}
@@ -90,6 +123,7 @@ export default {
 						hams.lastSenderId = null;
 						hams.fails = hams.fails || {};
 						hams.fails.double = (hams.fails.double || 0) + 1;
+						hams.record = oldIndex+1;
 						Database.scheduleWrite();
 						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row. You've messed up this way \`${hams.fails.double}\` time(s).`);
 					}
