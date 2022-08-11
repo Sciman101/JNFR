@@ -1,6 +1,5 @@
 import {discordMention, stringValue} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
-import Babbler from '../util/babbler.js';
 
 export default {
 	name: 'mutate',
