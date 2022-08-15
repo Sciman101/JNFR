@@ -130,7 +130,7 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 					
 					// Increment index
 					hams.index += 1;
-					hams.record = hams.index+1;
+					hams.record = Math.max(hams.index+1,hams.record);
 					hams.lastSenderId = message.author.id.toString();
 					Database.scheduleWrite();
 
