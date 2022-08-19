@@ -3,6 +3,7 @@ import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 
 const amongusRegexp = /among\s*us/gi;
+const homestuckRegexp = /h[ _-]*[o0][ _-]*m[ _-]*[e3*][ _-]*[s5][ _-]*[t+][ _-]*[u*][ _-]*c[ _-]*k/gi;
 
 export default {
 	name: 'chatter',
@@ -95,6 +96,14 @@ export default {
                     return message.channel.send(Babbler.get('amongus'));
                 }
             }
+
+			const hsMatches = message.content.toLowerCase().matchAll(homestuckRegexp);
+			for (const match of hsMatches) {
+				const number = parseInt(match[1]);
+                if (number != NaN) {
+                    return message.channel.send(Babbler.get('homestuck'));
+                }
+			}
 
 
 		}

@@ -184,6 +184,11 @@
 		"Hey. You said 'among us'",
 		"Hehehe amongus"
 	],
+	"homestuck":[
+		":radioactive: WARNING: HOMESTUCK DETECTED. ACTIVATING EMERGENCY FUMIGATION PROTOCOLS :radioactive:",
+		":radioactive: WARNING! HOMESTUCK DETECTED!! PLEASE EVACUATE THE TEXT CHANNEL AT YOUR EARLIEST CONVENIENCE :radioactive:",
+		":radioactive: HAZARDOUS MATERIAL DETECTED IN TEXT CHAT. PLEASE TAKE CAUTION :radioactive:"
+	],
 	"error":[
 		"Something went wrong!",
 		"Uh, oops. Something went wrong",
