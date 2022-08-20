@@ -27,7 +27,7 @@ export default {
 			const inventoryString =
 			`
 Your inventory contains:
-\`${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '└ ' + items[slot.id].name + (slot.count > 1 ? ' (x'+slot.count+')' : '')).join('\n')}\`
+\`${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '└ ' + items[slot.id].name + (slot.count > 1 ? ' (x'+slot.count+')' : '') + (items[slot.id].callbacks.used ? ' - Usable' : '')).join('\n')}\`
 			`;
 
 			message.reply(inventoryString);
@@ -43,7 +43,7 @@ Your inventory contains:
 			// Describe item
 			const itemDescription = `
 **${item.name}** - ${rarityString(item.rarity)}
-\`You have: ${slot.count} | Total Owned: ${slot.owned} | Eaten: ${slot.eaten || 0} | Used: ${slot.used || 0}\`
+\`You have: ${slot.count} | Total Owned: ${slot.owned} | Eaten: ${slot.eaten || 0}${item.callbacks.used ? ` | Used: ${slot.used || 0}` : ''}\`
 ${item.description}
 			`;
 
