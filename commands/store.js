@@ -56,7 +56,7 @@ export default {
 =================
 ${inventory.map((slot,index) => {
 	const item = items[slot.item_id];
-	let itemDesc = `${index+1}) **${item.name}** (x${slot.stock}) ${ITEM_RARITY_LABELS[item.rarity]} - \`${50*(index+1)}\`${jollarSign}`;
+	let itemDesc = `${index+1}) **${item.name}** (x${slot.stock}${item.callbacks.used ? ', *Usable*' : ''}) ${ITEM_RARITY_LABELS[item.rarity]} - \`${50*(index+1)}\`${jollarSign}`;
 	if (slot.stock === 0) {
 		itemDesc = '~~'+itemDesc+'~~';
 	}
