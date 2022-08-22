@@ -130,7 +130,11 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 					
 					// Increment index
 					hams.index += 1;
-					hams.record = Math.max(hams.index+1,hams.record);
+					let newRecord = false;
+					if (hams.index + 1 > hams.record) {
+						hams.record = hams.index + 1;
+						newRecord = true;
+					}
 					hams.lastSenderId = message.author.id.toString();
 					Database.scheduleWrite();
 
@@ -143,7 +147,7 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 						return message.channel.send(`You group are an odd one, but I must say, you steam a good ham. You made it to the end!\nWins: ${hams.wins}`);
 
 					}else{
-						message.react('🍔');
+						message.react(newRecord ? '🔥' : '🍔');
 					}
 				}
 
