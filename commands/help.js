@@ -29,7 +29,7 @@ ${command.description}
 		}else{
 			// List all commands
 			// Spit out all commands
-			const response = '```Commands:' + commands.map(command => '\n└ '+command.name).join('') + '\nUse j!help [command name] to get specific details on a command```';
+			const response = '```Commands:' + commands.filter(command => !command.hidden).map(command => '\n└ '+command.name).join('') + '\nUse j!help [command name] to get specific details on a command```';
 			
 			return message.author.send(response)
 				.then(() => {
