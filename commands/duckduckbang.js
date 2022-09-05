@@ -7,7 +7,7 @@ export default {
 	guildOnly:false,
 	hidden:true,
 	execute(message, args) {	
-		message.reply("This command is not meant to be used!");
+		message.reply("The full list of available bangs can be found at https://duckduckgo.com/bang");
 	},
 	listeners:{
 		'messageCreate':function(message) {
