@@ -22,8 +22,7 @@ export default {
 
 async function doBangSearch(query,message) {
 	const response = await duckIt(query);
-	console.log(response.res);
-	if (response.status == 200 && response.request.res && response.request.res.responseUrl) {
+	if (response.status == 200 && response.request.res && response.request.res.responseUrl && !response.request.res.responseUrl.startsWith("https://duckduckgo.com")) {
 		return message.reply(response.request.res.responseUrl);
 	}else{
 		message.react('🚫');
