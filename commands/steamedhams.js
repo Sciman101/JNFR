@@ -3,9 +3,9 @@ import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 import fs from 'fs';
 
-let script = [];
-fs.readFile('data/steamed_hams.txt','utf8',(err,data) => {
-	if (err) throw err;
+const loadScript = (path) => {
+	let script = [];
+	let data = fs.readFileSync(path,'utf8');
 	data.split('\n').forEach(item => {
 		item = item.trim();
 		if (item.indexOf('|') == -1) {
@@ -14,15 +14,29 @@ fs.readFile('data/steamed_hams.txt','utf8',(err,data) => {
 			script.push(item.split('|'));
 		}
 	});
-});
+
+	return script;
+}
+
+let script = loadScript('data/scripts/steamed_hams.txt');
+let altScripts = [
+	{name:"Eggman's Announcement",content:loadScript('data/scripts/eggman_announcement.txt')},
+	{name:"Spamton's [[Introduction]]",content:loadScript('data/scripts/spamton_intro.txt')},
+	{name:"BIG BILL HELLS",content:loadScript('data/scripts/big_bill_hells.txt')},
+]
 
 function failChain(hams,failType) {
 	hams.lastSenderId = null;
 
 	hams.fails = hams.fails || {};
-	hams.fails[failType] = (hams.fails[failType] || 0) + 1;
+	if (hams.altScript == -1) {
+		hams.fails[failType] = (hams.fails[failType] || 0) + 1;
+	}else{
+		hams.fails[altScripts[hams.altScript].name] = (hams.fails[altScripts[hams.altScript].name] || 0) + 1;
+	}
 
 	hams.index = 0;
+	hams.altScript = -1;
 	Database.scheduleWrite();
 }
 
@@ -47,6 +61,7 @@ export default {
 			index: 0,
 			record: 0,
 			wins: 0,
+			altScript: -1,
 			fails: {}
 		}
 
@@ -83,12 +98,14 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 		if (args.disable) {
 			guild.steamedhams.enabled = false;
 			guild.steamedhams.index = 0;
+			guild.steamedhams.altScript = -1;
 			Database.scheduleWrite();
 			return message.reply('Steamed hams disabled. Score information preserved');
 		}else{
 			const channel = args.channel;
 			guild.steamedhams.channelId = channel;
 			guild.steamedhams.enabled = true;
+			guild.steamedhams.altScript = -1;
 			Database.scheduleWrite();
 			return message.reply(`Steamed hams enabled, at this time of day, in this server, localized entierly within <#${channel}>`);
 		}
@@ -101,6 +118,9 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 			const guild = Database.getGuild(message.guild.id.toString());
 			if (!guild.steamedhams) return;
 			const hams = guild.steamedhams;
+			if (!('altScript' in hams)) {
+				hams.altScript = -1;
+			}
 
 			if (message.channel.id.toString() === hams.channelId) {
 
@@ -110,16 +130,38 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 				const content = message.cleanContent.toLowerCase().trim().replace(/[\W_]/g,"");
 
 				// Compare to the next line in the script
-				const nextWord = script[hams.index];
+				let currentScript = (hams.altScript == -1 ? script : altScripts[hams.altScript].content);
+				const nextWord = currentScript[hams.index];
 
-				const comparison = (nextWord instanceof Array && nextWord.indexOf(content) !== -1) || (nextWord === content);
+				let comparison = (nextWord instanceof Array && nextWord.indexOf(content) !== -1) || (nextWord === content);
 				let oldIndex = hams.index;
+
+				// Check to start alt script
+				if (hams.index == 0) {
+					for (let i=0;i<altScripts.length;i++) {
+						let altScript = altScripts[i];
+						if (altScript.content[0] === content) {
+							// Switch to this as our alt script
+
+							hams.altScript = i;
+
+							message.channel.send(`You've activated an ALTERNATE SCRIPT - ${altScript.name}! This will continue until someone breaks the chain.`);
+							comparison = true;
+							break;
+						}
+					}
+				}
 
 				if (!comparison) {
 					// Oops
 					if (hams.index > 0) {
+						const wasAltScript = hams.altScript !== -1;
 						failChain(hams,oldIndex);
-						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. You've messed up on this word \`${hams.fails[oldIndex]}\` time(s).`);
+						if (!wasAltScript) {
+							return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. You've messed up on this word \`${hams.fails[oldIndex]}\` time(s).`);
+						}else{
+							return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. We now return to your regularly scheduled steamed hams.`);
+						}
 					}
 				}else{
 					// Check for someone sending 2 messages in a roe
@@ -131,16 +173,17 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 					// Increment index
 					hams.index += 1;
 					let newRecord = false;
-					if (hams.index + 1 > hams.record) {
+					if (hams.index + 1 > hams.record && hams.altScript === -1) {
 						hams.record = hams.index + 1;
 						newRecord = true;
 					}
 					hams.lastSenderId = message.author.id.toString();
 					Database.scheduleWrite();
 
-					if (hams.index >= script.length) {
+					if (hams.index >= currentScript.length) {
 						hams.index = 0;
 						hams.wins += 1;
+						hams.altScript = -1;
 						hams.lastSenderId = null;
 						Database.scheduleWrite();
 
