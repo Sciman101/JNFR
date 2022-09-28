@@ -8,6 +8,10 @@ export default {
     argTree: stringValue('message', true),
     execute(message, args) {
         message.channel.send(args.message);
-        message.delete();
+        try {
+            message.delete();
+        } catch (e) {
+            message.react('🗑️');
+        }
     }
 }

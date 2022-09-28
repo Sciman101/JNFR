@@ -1,84 +1,85 @@
-import {any,literal,discordMention} from '../parser/arguments.js';
-import Database, {db} from '../util/db.js';
+import { any, literal, discordMention } from '../parser/arguments.js';
+import Database, { db } from '../util/db.js';
 import Babbler from '../util/babbler.js';
 import fs from 'fs';
+import { Permissions } from 'discord.js';
 
 const loadScript = (path) => {
-	let script = [];
-	let data = fs.readFileSync(path,'utf8');
-	data.split('\n').forEach(item => {
-		item = item.trim();
-		if (item.indexOf('|') == -1) {
-			script.push(item);
-		}else{
-			script.push(item.split('|'));
-		}
-	});
+    let script = [];
+    let data = fs.readFileSync(path, 'utf8');
+    data.split('\n').forEach(item => {
+        item = item.trim();
+        if (item.indexOf('|') == -1) {
+            script.push(item);
+        } else {
+            script.push(item.split('|'));
+        }
+    });
 
-	return script;
+    return script;
 }
 
 let script = loadScript('data/scripts/steamed_hams.txt');
 let altScripts = [
-	{name:"Eggman's Announcement",content:loadScript('data/scripts/eggman_announcement.txt')},
-	{name:"Spamton's [[Introduction]]",content:loadScript('data/scripts/spamton_intro.txt')},
-	{name:"BIG BILL HELLS",content:loadScript('data/scripts/big_bill_hells.txt')},
+    { name: "Eggman's Announcement", content: loadScript('data/scripts/eggman_announcement.txt') },
+    { name: "Spamton's [[Introduction]]", content: loadScript('data/scripts/spamton_intro.txt') },
+    { name: "BIG BILL HELLS", content: loadScript('data/scripts/big_bill_hells.txt') },
 ]
 
-function failChain(hams,failType) {
-	hams.lastSenderId = null;
+function failChain(hams, failType) {
+    hams.lastSenderId = null;
 
-	hams.fails = hams.fails || {};
-	if (hams.altScript == -1) {
-		hams.fails[failType] = (hams.fails[failType] || 0) + 1;
-	}else{
-		hams.fails[altScripts[hams.altScript].name] = (hams.fails[altScripts[hams.altScript].name] || 0) + 1;
-	}
+    hams.fails = hams.fails || {};
+    if (hams.altScript == -1) {
+        hams.fails[failType] = (hams.fails[failType] || 0) + 1;
+    } else {
+        hams.fails[altScripts[hams.altScript].name] = (hams.fails[altScripts[hams.altScript].name] || 0) + 1;
+    }
 
-	hams.index = 0;
-	hams.altScript = -1;
-	Database.scheduleWrite();
+    hams.index = 0;
+    hams.altScript = -1;
+    Database.scheduleWrite();
 }
 
 
 export default {
-	name: 'steamedhams',
-	aliases: ['steamedclams,mouthewateringhamburgers'],
-	description: 'Configure a channel for steamed hams',
-	guildOnly:true,
-	argTree:any([
-		literal('stats'),
-		literal('disable'),
-		discordMention('channel','channel')
-	]),
-	execute(message, args) {
+    name: 'steamedhams',
+    aliases: ['steamedclams,mouthewateringhamburgers'],
+    description: 'Configure a channel for steamed hams',
+    guildOnly: true,
+    argTree: any([
+        literal('stats'),
+        literal('disable'),
+        discordMention('channel', 'channel')
+    ]),
+    execute(message, args) {
 
-		const guild = Database.getGuild(message.guild.id.toString());
-		guild.steamedhams ||= {
-			enabled: false,
-			channelId: null,
-			lastSenderId: null,
-			index: 0,
-			record: 0,
-			wins: 0,
-			altScript: -1,
-			fails: {}
-		}
+        const guild = Database.getGuild(message.guild.id.toString());
+        guild.steamedhams || = {
+            enabled: false,
+            channelId: null,
+            lastSenderId: null,
+            index: 0,
+            record: 0,
+            wins: 0,
+            altScript: -1,
+            fails: {}
+        }
 
-		if (args.stats) {
+        if (args.stats) {
 
-			const hams= guild.steamedhams;
+            const hams = guild.steamedhams;
 
-			let totalFails = 0;
-			let sorted = [];
-			for (let key in hams.fails) {
-				const v = hams.fails[key];
-				totalFails += v;
-				sorted.push({type:key==="double"?key:"index",index:parseInt(key),count:v});
-			}
-			sorted.sort((a,b) => b.count - a.count);
+            let totalFails = 0;
+            let sorted = [];
+            for (let key in hams.fails) {
+                const v = hams.fails[key];
+                totalFails += v;
+                sorted.push({ type: key === "double" ? key : "index", index: parseInt(key), count: v });
+            }
+            sorted.sort((a, b) => b.count - a.count);
 
-			const statsMessage = `
+            const statsMessage = `
 **Steamed Ham Statistics for '${message.guild.name}':**
 *Most Words: * ${hams.record || 0}
 *Wins: * ${hams.wins || 0}
@@ -90,7 +91,7 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 
 		}else {
 			const member = message.guild.members.cache.get(message.author.id);
-			if (!member || !member.permissions.has('MANAGE_MESSAGES')) {
+			if (!member || !member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
 				return message.reply(Babbler.get('lacking_permissions'));
 			}
 		}
