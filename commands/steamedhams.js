@@ -55,7 +55,7 @@ export default {
     execute(message, args) {
 
         const guild = Database.getGuild(message.guild.id.toString());
-        guild.steamedhams || = {
+        guild.steamedhams ||= {
             enabled: false,
             channelId: null,
             lastSenderId: null,
