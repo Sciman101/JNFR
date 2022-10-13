@@ -82,7 +82,7 @@ export default {
             if (!channelIds || channelIds.indexOf(message.channel.id.toString()) == -1) return;
 
             // Misinformation
-            if (Math.random() < 0.0025) {
+            if (Math.random() < 0.0001) {
                 return message.channel.send(':warning: The above post may contain misinformation :warning:');
             }
 

@@ -121,3 +121,5 @@ process.on('SIGTERM', () => {
 
 // Login!
 client.login(token);
+
+export default client;
