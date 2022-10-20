@@ -1,5 +1,6 @@
 import {log} from '../util/logger.js';
 import {addItem} from '../util/inventoryHelper.js';
+import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 
 export let items = {};
@@ -325,6 +326,8 @@ export function createItems() {
 	createItem("Phone case with the ghost of an iPhone in it","I would have gotten rid of the ghost but Genius bar exorcists suck",ItemRarity.RARE);
 	createItem("Toki Pona Dictionary","toki! mi jan jnr");
 	createItem("Disarmed warhead i swear it's totally safe","smiles :)",ItemRarity.RARE);
+	createItem("A Very Very Small Handful of Geckos","Like, REALLY small. They're Virgin Islands Dwarf Geckos. Be gentle, ok? They've got tiny bones");
+	createItem("A Stone Shaped like a Football","It's even regulation sized!... But not regulation weight...");
 
 	addCallback(
 		createItem('Die of Commerce','A magic 6-sided die that radiates mercentile energy.\n**When Used:** Refresh the current shop. Has a 1/6 chance to dissapear upon use.',ItemRarity.RARE),
