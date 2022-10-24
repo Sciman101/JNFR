@@ -184,6 +184,7 @@ export function createItems() {
 	createItem("Model Rocket","... wait, 'model'? Shit, I got ripped off!");
 	createItem("Fine Art","I got it from a museum");
 	createItem("Old Lamp","Doesn't even work");
+	createItem("GameClam","Pearls to the players!",ItemRarity.LEGENDARY);
 
 	const voidCallback = setRaceCallback('Voidtouched',`S̵̨̼̗͚͕̠͖̰͊o̶̤̱̹̭̳̹͚͋̽͝m̸̛͎̘̜̖̤̱̰̙̀̋̈̉̿̈́͑͊̎̓́̑̇͂͒͝ͅe̵̯̬͓͍̜͖̘̱̰̞̋̀̅̐̍̓̇̈͒̇̽̄͊͑̐́͜͝ͅṱ̷̲̲͓̤͇̹͕̖̝̗͂̀̋̽̍̎̽͜h̶̡̨̛̩̻̺͙̹̳͍͓͎̭̭͎͙͂̽͋̃̽͜i̴̡̙̥͎̼̦̟̯̩̬̍͆́̾̏͗͌̍̂̊͒̀͒͘͜n̸̡̘̥̜̯̟̯͛͐͆̇̍͛́͗͝g̷̢̡̛̞͍̺̼̰̙̰͚̞͍̻̙͇̼͕͒̀́͗̏̐͆̿͑̌̾̎͋ ̷̛̦̣̲̣̦͔̆͛̋̎̀͋̈́͆͊́̾̈̕̕h̸̛̪͔͕̗̝̞̦̟̘̲̺̥̦̮͚̘̎͆͂̔̿͛̉͜a̴̧͚̥͙̮̬͈̲̼͎̤͈̤̫̭̓͋͐̎̚p̸͙̪͎̟͑́̿̒̀̀p̸̲̯̳̮̓̀̈́̾̅̔̓̿͑̒͒̌̔͂͘͝ȩ̴̧̩̱͓̙̺̳͚͇̤̈́͛͌̑̂̈́̑̓͛̚͝ͅṇ̶̨̡̢̨͍̻̖͕͓͍̼̹̪̇̈́͊̈́̄͂̃͆̔̎͗̃͗̀ͅṡ̵̜͇̻͒̏̐͒̎̏́͂̈́̎̀̀̔̒̚ͅ.̸̘͉̀̓̒̔̋̿̿̉̌̀̉̾͒̍ You feel funny. Something's changed`,'Nothing happened');
 	const voidItem = createItem("Void","ì̴̡̛̤̤̺̬̙͍̟̕͘̚t̴̨̛̹͖̦̫͜ ̸̡̩̳͙̫̮͖̹̹͚̼̯̻̻͚̖̂͂́͌͋͂͜a̵̛̞̹̪̮͙͓͑̄̌̈́͂̈́̏̀̽̉̄̚͝͠ļ̸̛͎̥̳̞̹̫͉͇̼͇͐̐̃l̸͉̖̰̯̱̫̞͔̬̙̟̞͎͈͑̽́̆̈́̀͂̿̊͊͑̄̇̒̐͑͘ ̴̹̍̾͗̆̽͐͌̍̏̀̕ę̵̙̊͌͐̔̔ṋ̸̮̯̐̅͑̈́̉̽̅͒̿̈͐̎d̶̢̢̻̭͔̻̙̫̤̺̲͍̰͒̍͛̌͗͊͐̿̈́͊̚̚͘s̴̢̰̹̳͓̖̩̺̗̙̙̼̝͓̮̩̥̍͋̈́ ̵͍̟͔͌̀̃͐̎̐̅̓̽̎͋̉͠h̷̨̝̤̗̰̞̄̉̎͑̌̑̂͒̽̓̃̂͋́͒̆̚e̸̯̝̻͈̤̞͚͍̞̻̝̺̳͒̂̒͑̍̕̕͜͠ͅr̵̡̡̛͇̭̭̻̹͕̂̊͐̓̔̓̍̀̿͘e̷̲͔̘̩̤̗͗͂̈́̉̈́͊̓̓̕ͅ",ItemRarity.LEGENDARY);
