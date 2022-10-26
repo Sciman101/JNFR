@@ -366,6 +366,6 @@ export function createItems() {
 		}
 	);
 
-	log.info('Items initialized');
+	log.info('Items initialized!');
 
 }
