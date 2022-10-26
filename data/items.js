@@ -11,16 +11,18 @@ export const ItemRarity = {
 	RARE: 2,
 	LEGENDARY: 3
 }
+export const ITEM_RARITY_LABELS = {
+	1: 'Common',
+	2: ':sparkles:Rare!:sparkles:',
+	3: ':gem:*Legendary*:gem:'
+}
+export const ITEM_USABLE_LABEL = ':gear:Usable:gear:';
 
-export function rarityString(rarity) {
-	switch (rarity) {
-		case ItemRarity.COMMON:
-			return 'Common';
-		case ItemRarity.RARE:
-			return 'Rare!'
-		case ItemRarity.LEGENDARY:
-			return '*Legendary!!*'
-	}
+export function getItemQualities(item) {
+	let qualities = [];
+	if (item.callbacks.used) {qualities.push(ITEM_USABLE_LABEL);}
+	if (item.rarity > 1) {qualities.push(ITEM_RARITY_LABELS[item.rarity]);}
+	return qualities;
 }
 
 export function randomItem() {

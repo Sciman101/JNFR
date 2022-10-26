@@ -1,5 +1,5 @@
 import {optional, numValue} from '../parser/arguments.js';
-import {ItemRarity, randomItem, items} from '../data/items.js';
+import {ITEM_RARITY_LABELS, ITEM_USABLE_LABEL, getItemQualities, randomItem, items} from '../data/items.js';
 import Database, {db} from '../util/db.js';
 import Babbler from '../util/babbler.js';
 import {addItem} from '../util/inventoryHelper.js'; 
@@ -9,7 +9,7 @@ import {log} from '../util/logger.js';
 // Get shop for the day
 const shopDate = db.data.jnfr.shop_date || 0;
 const currentDate = getDateString();
-const SHOP_ITEM_COUNT = 6;
+const SHOP_ITEM_COUNT = 5;
 
 let inventory = db.data.jnfr.shop_inventory;
 if (!inventory || shopDate != currentDate) {
@@ -33,11 +33,6 @@ function randomizeStore() {
 	Database.scheduleWrite();
 }
 
-const ITEM_RARITY_LABELS = {};
-ITEM_RARITY_LABELS[ItemRarity.COMMON] = '';
-ITEM_RARITY_LABELS[ItemRarity.RARE] = ' - Rare! ';
-ITEM_RARITY_LABELS[ItemRarity.LEGENDARY] = ' - *Legendary!* ';
-
 export default {
 	name: 'store',
 	aliases: ['shop','buy'],
@@ -57,7 +52,11 @@ export default {
 =================
 ${inventory.map((slot,index) => {
 	const item = items[slot.item_id];
-	let itemDesc = `${index+1}) **${item.name}** (x${slot.stock}${item.callbacks.used ? ', *Usable*' : ''}) ${ITEM_RARITY_LABELS[item.rarity]} - \`${50*(index+1)}\`${jollarSign}`;
+	let itemDesc = `${index+1}) **${item.name}** (x${slot.stock}) - \`${50*(index+1)}\`${jollarSign}`;
+	const qualities = getItemQualities(item);
+	if (qualities.length > 0) {
+		itemDesc += '\n    **[** ' + qualities.join(', ') + ' **]**';
+	}
 	if (slot.stock === 0) {
 		itemDesc = '~~'+itemDesc+'~~';
 	}

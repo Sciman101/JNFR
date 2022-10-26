@@ -1,6 +1,6 @@
 import {stringValue,optional} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
-import {items, rarityString} from '../data/items.js';
+import {items, ITEM_RARITY_LABELS, ITEM_USABLE_LABEL} from '../data/items.js';
 import Babbler from '../util/babbler.js';
 import {searchInventory} from '../util/inventoryHelper.js';
 
@@ -26,8 +26,8 @@ export default {
 			//console.log(inventory);
 			const inventoryString =
 			`Your inventory contains:
-${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + items[slot.id].name + (slot.count > 1 ? ' (x'+slot.count+')' : '') + '**' + (items[slot.id].callbacks.used ? '    *:sparkles:Usable!:sparkles:*' : '')).join('\n')}
-(Type j!stuff <item name> to learn more)`;
+${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + items[slot.id].name + '**' + ' (x'+slot.count + (items[slot.id].callbacks.used ? ', :gear:Usable:gear:' : '') + ')').join('\n')}
+\`(Type j!stuff <item name> to learn more)\``;
 
 			message.reply(inventoryString);
 		}else{
@@ -41,7 +41,7 @@ ${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + i
 			const item = items[slot.id];
 			// Describe item
 			const itemDescription = `
-**${item.name}** - ${rarityString(item.rarity)}
+**${item.name}** - ${ITEM_RARITY_LABELS[item.rarity]}
 \`You have: ${slot.count} | Total Owned: ${slot.owned} | Eaten: ${slot.eaten || 0}${item.callbacks.used ? ` | Used: ${slot.used || 0}` : ''}\`
 ${item.description}
 			`;
