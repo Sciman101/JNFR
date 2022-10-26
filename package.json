@@ -17,7 +17,11 @@
         "node": ">=16.6.0"
     },
     "scripts": {
-        "dev": "node index.js"
+        "dev": "nodemon index.js",
+        "prod": "node index.js"
+    },
+    "nodemonConfig": {
+        "ignore": ["db.json"]
     },
     "keywords": [],
     "author": "Sciman101",

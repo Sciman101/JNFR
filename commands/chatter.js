@@ -3,8 +3,16 @@ import Database, { db } from '../util/db.js';
 import Babbler from '../util/babbler.js';
 import { Permissions } from 'discord.js';
 
-const amongusRegexp = /among\s*us/gi;
-const homestuckRegexp = /h[ _-]*[o0][ _-]*m[ _-]*[e3*][ _-]*[s5][ _-]*[t+][ _-]*[u*][ _-]*c[ _-]*k/gi;
+const regex_matchers = [
+    {
+        regex: /among\s*us/gi,
+        babblerString: 'amongus'
+    },
+    {
+        regex: /h[ _-]*[o0][ _-]*m[ _-]*[e3*][ _-]*[s5][ _-]*[t+][ _-]*[u*][ _-]*c[ _-]*k/gi,
+        babblerString: 'homestuck'
+    }
+];
 
 export default {
     name: 'chatter',
@@ -81,34 +89,31 @@ export default {
             // We can only send it in certain channels
             if (!channelIds || channelIds.indexOf(message.channel.id.toString()) == -1) return;
 
-            // Misinformation
-            if (Math.random() < 0.0001) {
-                return message.channel.send(':warning: The above post may contain misinformation :warning:');
-            }
-
             // mention
             if (message.content.indexOf('<@352566617231720468>') !== -1) {
                 return message.channel.send(Babbler.get('mention'));
             }
 
-            // Among us
-            const matches = message.content.matchAll(amongusRegexp);
-            for (const match of matches) {
-                const number = parseInt(match[1]);
-                if (number != NaN) {
-                    return message.channel.send(Babbler.get('amongus'));
-                }
+            // Misinformation
+            if (Math.random() < 0.0002) {
+                return message.channel.send(':warning: The above post may contain misinformation :warning:');
             }
 
-            const hsMatches = message.content.toLowerCase().matchAll(homestuckRegexp);
-            for (const match of hsMatches) {
-                const number = parseInt(match[1]);
-                if (number != NaN) {
-                    return message.channel.send(Babbler.get('homestuck'));
-                }
+            // user was
+            if (Math.random() < 0.0001) {
+                return message.channel.send(`User was ${Babbler.get('user_msg')} for this post`);
             }
 
-
+            // Regex
+            regex_matchers.forEach(matcher => {
+                const matches = message.content.matchAll(matcher.regex);
+                for (const match of matches) {
+                    const number = parseInt(match[1]);
+                    if (number != NaN) {
+                        return message.channel.send(Babbler.get(matcher.babblerString));
+                    }
+                } 
+            });
         }
     }
 }

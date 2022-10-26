@@ -9,6 +9,7 @@ import {log} from '../util/logger.js';
 // Get shop for the day
 const shopDate = db.data.jnfr.shop_date || 0;
 const currentDate = getDateString();
+const SHOP_ITEM_COUNT = 6;
 
 let inventory = db.data.jnfr.shop_inventory;
 if (!inventory || shopDate != currentDate) {
@@ -19,7 +20,7 @@ function randomizeStore() {
 	log.info('Regenerating shop inventory');
 	// Generate items for the day
 	db.data.jnfr.shop_inventory = inventory = [];
-	for (let i=0;i<5;i++) {
+	for (let i=0;i<SHOP_ITEM_COUNT;i++) {
 		// Add 5 random items
 		let item;
 		do {
@@ -42,7 +43,7 @@ export default {
 	aliases: ['shop','buy'],
 	description: 'Spend your Jollars on random crap I found! Shop contents refresh every day',
 	guildOnly:false,
-	argTree:optional(numValue('item_number',1,5,true)),
+	argTree:optional(numValue('item_number',1,SHOP_ITEM_COUNT,true)),
 	execute(message, args) {
 
 		const jollarSign = Babbler.getJollarSign(message.guild);

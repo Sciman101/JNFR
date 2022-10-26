@@ -25,10 +25,9 @@ export default {
 			// Get inventory
 			//console.log(inventory);
 			const inventoryString =
-			`
-Your inventory contains:
-\`${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '└ ' + items[slot.id].name + (slot.count > 1 ? ' (x'+slot.count+')' : '') + (items[slot.id].callbacks.used ? ' - Usable' : '')).join('\n')}\`
-			`;
+			`Your inventory contains:
+${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + items[slot.id].name + (slot.count > 1 ? ' (x'+slot.count+')' : '') + '**' + (items[slot.id].callbacks.used ? '    *:sparkles:Usable!:sparkles:*' : '')).join('\n')}
+(Type j!stuff <item name> to learn more)`;
 
 			message.reply(inventoryString);
 		}else{
