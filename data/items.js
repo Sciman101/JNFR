@@ -358,7 +358,7 @@ export function createItems() {
 		'eaten',
 		(message,user,slot,response) => {
 			const amount = Math.floor(Math.random() * 4000) + 1;
-			response = `You eat the golden egg. Suddenly, ${amount}${Babbler.getJollarSign(message.guild)} appears in your wallet!`;
+			response = `You eat the golden egg. Suddenly, ${amount}${Babbler.getJollarSign(message.guild)} appears in your wallet! Wow!`;
 
 			user.balance += amount;
 
