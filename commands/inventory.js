@@ -1,7 +1,6 @@
 import {stringValue,optional} from '../parser/arguments.js';
 import Database, {db} from '../util/db.js';
 import {items, ITEM_RARITY_LABELS, ITEM_USABLE_LABEL} from '../data/items.js';
-import Babbler from '../util/babbler.js';
 import {searchInventory} from '../util/inventoryHelper.js';
 
 export default {

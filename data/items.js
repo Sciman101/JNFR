@@ -34,7 +34,7 @@ export function nameToId(name) {
 	return name.toLowerCase().replaceAll(' ','_').replaceAll('-','_').replaceAll(/[^\w_]/g,'');
 }
 
-function createItem(name,description,rarity) {
+function createItem(name,description,rarity,buyable) {
 	// Create id by replacing spaces and stripping alphanumeric
  	const id = nameToId(name);
 
@@ -43,7 +43,8 @@ function createItem(name,description,rarity) {
 		name: name,
 		description: description,
 		rarity: rarity || ItemRarity.COMMON,
-		callbacks: []
+		callbacks: [],
+		buyable: buyable || true
 	}
 	numItems++;
 	return items[id];
@@ -73,6 +74,8 @@ function setRaceCallback(newRace,successPrompt,failPrompt) {
 }
 
 export function createItems() {
+
+	createItem("ERROR","Looks like this *used* to be something else. But something went wrong and now it's... this.",ItemRarity.COMMON,false);
 
 	// Item definitions begin below
 	createItem("Healing Potion","A small vial of shimmering red liquid");
@@ -349,6 +352,19 @@ export function createItems() {
 	);
 
 	createItem('69-Leaf Clover','Nice. I\'ve heard a rumor this thing **improves your luck** or something.',ItemRarity.LEGENDARY);
+
+	addCallback(
+		createItem('Golden Egg','Spray painted gold. Apparently tastes good.',ItemRarity.LEGENDARY),
+		'eaten',
+		(message,user,slot,response) => {
+			const amount = Math.floor(Math.random() * 4000) + 1;
+			response = `You eat the golden egg. Suddenly, ${amount}${Babbler.getJollarSign(message.guild)} appears in your wallet!`;
+
+			user.balance += amount;
+
+			return response;
+		}
+	);
 
 	log.info('Items initialized!');
 

@@ -24,9 +24,9 @@ function randomizeStore() {
 		// Add 5 random items
 		let item;
 		do {
-			item = randomItem().id;
-		}while (inventory.length != 0 && inventory.find(slot => slot.item === item));
-		inventory.push({item_id:item,stock:Math.floor(Math.random()*2)+1});
+			item = randomItem();
+		}while (inventory.length != 0 && inventory.find(slot => slot.item_id === item.id) && item.buyable);
+		inventory.push({item_id:item.id,stock:Math.floor(Math.random()*2)+1});
 	}
 	db.data.jnfr.shop_date = currentDate;
 

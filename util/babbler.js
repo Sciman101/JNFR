@@ -79,7 +79,7 @@ const getJollarSign = (guild) => {
 		const emoji = guild.emojis.cache.find(emoji => emoji.name == 'jollar');
 
 		if (!emoji) {
-			emojiText = 'Jollar(s)';
+			emojiText = '<:jollar:845407951136096317>';
 		}else{
 			emojiText = `<:jollar:${emoji.id}>`;
 		}
