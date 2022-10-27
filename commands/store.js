@@ -9,7 +9,7 @@ import {log} from '../util/logger.js';
 // Get shop for the day
 const shopDate = db.data.jnfr.shop_date || 0;
 const currentDate = getDateString();
-const SHOP_ITEM_COUNT = 5;
+const SHOP_ITEM_COUNT = 6;
 
 let inventory = db.data.jnfr.shop_inventory;
 if (!inventory || shopDate != currentDate) {
