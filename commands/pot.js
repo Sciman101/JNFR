@@ -7,6 +7,6 @@ export default {
 	description: 'View the pot (how much money you\'ve lost to gambling)',
 	guildOnly:false,
 	execute(message, args) {
-		message.channel.send(`The pot contains ${db.data.jnfr.pot}${Babbler.getJollarSign(message.guild)}`);
+		message.channel.send(`The pot contains ${db.data.jnfr.pot.toLocaleString('en-US')}${Babbler.getJollarSign(message.guild)}`);
 	}
 }
