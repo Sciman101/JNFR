@@ -13,12 +13,15 @@ export default {
 	execute(message, args) {
 
 		const jollarSign = Babbler.getJollarSign(message.guild);
+		const user = Database.getUser(message.author.id.toString());
 
 		const betAmount = args.egg ? 'egg' : args.bet;
+		const eggSlot = user.inventory.find((slot) => slot.id === 'egg');
 
-		const user = Database.getUser(message.author.id.toString());
-		if (betAmount > user.balance) {
+		if (betAmount !== 'egg' && betAmount > user.balance) {
 			return message.reply(Babbler.get('insufficient_funds',{user:message.author.name,jollar:jollarSign}));
+		}else if (betAmount === 'egg' && (!eggSlot || eggSlot.count <= 0)) {
+			return message.reply("You have no eggs to gamble!");
 		}
 
 		let cloverCount = 0;
@@ -32,7 +35,7 @@ export default {
 		let win = false;
 		let usedClover = false;
 		for (let i=0;i<cloverCount+1;i++) {
-			win = Math.random() < (betAmount === 'egg' ? 0.75 : 0.5);
+			win = Math.random() < 0.5;
 			if (win) {
 				if (i > 0) {
 					usedClover = true;
@@ -45,8 +48,15 @@ export default {
 		if (!win) {
 			// Lose! Sad!
 			if (betAmount === 'egg') {
-				message.reply(Babbler.get('gamble_lose_egg'));
-				addItem(user,'anti_egg');
+				let reply = Babbler.get('gamble_lose_egg')
+				if (eggSlot && eggSlot.count > 0) {
+					// Remove an egg
+					reply += '\nIt collides with an egg in your inventory, and they are both annihilated.';
+					eggSlot.count--;
+				}else{
+					addItem(user,'anti_egg');
+				}
+				message.reply(reply);
 			}else{
 				user.balance -= betAmount;
 				db.data.jnfr.pot += betAmount;
@@ -58,7 +68,7 @@ export default {
 			}
 		}else{
 			if (betAmount === 'egg') {
-				const eggCount = Math.floor(Math.random() * 10)+1;
+				const eggCount = Math.floor(Math.random() * 3)+1;
 				addItem(user,'egg',eggCount);
 				message.reply(Babbler.get('gamble_win_egg',{egg:eggCount}));
 			}else{

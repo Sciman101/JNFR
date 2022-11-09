@@ -125,6 +125,7 @@ export function createItems() {
 	createItem("1kg of Lead","A one-kilogram ingot of lead");
 	createItem("1kg of Feathers","A one-kilogram ingot of feathers");
 	createItem("Plush Dragon","The fearsome dragon, reduced to a marketable plushie :pensive:",ItemRarity.RARE);
+	createItem("Blank Plushie","A blank, white, humanoid plushie. Could use a little customization!");
 	createItem("Plush Dog","*muffled woof*");
 	createItem("Plush Seal","Look at this thing. Lump of a dude. Love em");
 
@@ -365,7 +366,7 @@ export function createItems() {
 	addCallback(goldenEggItem,'used',eggCallback);
 	addCallback(goldenEggItem,'eaten',eggCallback);
 
-	createItem('Anti-Egg','`Description Unavailable`',ItemRarity.LEGENDARY)
+	createItem('Anti-Egg','`Description Unavailable`',ItemRarity.LEGENDARY);
 
 	log.info('Items initialized!');
 
