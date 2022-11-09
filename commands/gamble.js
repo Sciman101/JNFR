@@ -32,7 +32,7 @@ export default {
 		let win = false;
 		let usedClover = false;
 		for (let i=0;i<cloverCount+1;i++) {
-			win = Math.random() < (betAmount === 'egg' ? 0.9 : 0.5);
+			win = Math.random() < (betAmount === 'egg' ? 0.75 : 0.5);
 			if (win) {
 				if (i > 0) {
 					usedClover = true;
