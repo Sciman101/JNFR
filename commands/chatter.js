@@ -95,12 +95,12 @@ export default {
             }
 
             // Misinformation
-            if (Math.random() < 0.0002) {
+            if (Math.random() < 0.001) {
                 return message.channel.send(':warning: The above post may contain misinformation :warning:');
             }
 
             // user was
-            if (Math.random() < 0.0001) {
+            if (Math.random() < 0.00075) {
                 return message.channel.send(`User was ${Babbler.get('user_msg')} for this post`);
             }
 

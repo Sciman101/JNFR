@@ -76,6 +76,23 @@
 		"Don't check your j!wallet soon, uh, you might find it empty. Sorry!",
 		"I will now take All your money"
 	],
+	"gamble_win_egg":[
+		"Lucky! You gained $egg eggs!",
+		"Congrats! You now have $egg more eggs!",
+		"Big egg!!! You now have +$egg :egg:!",
+		"Congradulations!! You're winner!! You gained $egg eggs!",
+		"You know egg is the root of all evil, right? Anyways, you won! You gained $egg eggs!",
+		"Woah, look at you, Mr/Mrs/Mx/Etc Egg Guy! You now gained $egg eggs!",
+		"Win! You got $egg eggs!",
+		"You feel a searing pain and receive $egg eggs."
+	],
+	"gamble_lose_egg":[
+		"You have played with powers beyond your comprehension, and must pay the price. Gain 1 anti-egg",
+		"What did you expect? Gain an anti-egg",
+		"Something went wrong. Gain an anti-egg",
+		"You lost. An anti-egg appears in your inventory",
+		"You lost the bet, gain an anti-egg"
+	],
 	"slots_1":[
 		"Ah, boo, no matches - you get nothing, sorry!",
 		"1 of a kind! That means... nothing. You get nothing",
