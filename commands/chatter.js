@@ -114,6 +114,22 @@ export default {
                     }
                 } 
             });
+
+            // Memory
+            if (Math.random() < 0.001) {
+                let memory = db.data.jnfr.memory = db.data.jnfr.memory || [];
+                if (memory.length > 0) {
+                    const index = Math.floor(Math.random() * memory.length);
+                    const text = memory[index];
+
+                    if (Math.random() < 0.1) {
+                        memory.splice(index,1);
+                        Database.scheduleWrite();
+                    }
+
+                    return message.channel.send(text);
+                }
+            }
         }
     }
 }
