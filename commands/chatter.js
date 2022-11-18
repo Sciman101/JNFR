@@ -122,7 +122,7 @@ export default {
                     const index = Math.floor(Math.random() * memory.length);
                     const text = memory[index];
 
-                    if (Math.random() < 0.1) {
+                    if (Math.random() < 0.25) {
                         memory.splice(index,1);
                         Database.scheduleWrite();
                     }

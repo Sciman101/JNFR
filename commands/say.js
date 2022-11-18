@@ -11,9 +11,11 @@ export default {
         message.channel.send(args.message);
 
         // Add to memory
-        let memory = db.data.jnfr.memory = db.data.jnfr.memory || [];
-        memory.push(args.message);
-        Database.scheduleWrite();
+        if (Math.random() < 0.5) {
+            let memory = db.data.jnfr.memory = db.data.jnfr.memory || [];
+            memory.push(args.message);
+            Database.scheduleWrite();
+        }
 
         try {
             message.delete();
