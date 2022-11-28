@@ -113,8 +113,6 @@ export default {
 				//return reaction.message.reply(Babbler.get('sold'));
 				reaction.message.edit(`~~${reaction.message.cleanContent}~~\n${Babbler.get('sold')}`);
 			}
-
-
         }
     }
 }

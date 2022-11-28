@@ -54,6 +54,10 @@ client.once('ready', () => {
 // On message received...
 client.on('messageCreate', message => {
 
+	if (message.content.toLowerCase().indexOf('dialouge') != -1 && message.author.id.toString() === '160121042902188033') {
+		message.reply(Babbler.get('dialouge'));
+	}
+
 	// nice
 	if (message.content == '69' || message.content.toLowerCase().replace(/[- ]/,'') == 'sixtynine') {
 		return message.react('🇳')
