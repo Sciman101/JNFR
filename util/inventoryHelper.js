@@ -24,6 +24,16 @@ export function removeItem(user,item_id,count) {
 	return slot;
 }
 
+export function countItem(inventory,id) {
+	for (const index in inventory) {
+		const slot = inventory[index];
+		if (slot.count > 0 && slot.id === id) {
+			return slot.count;
+		}
+	}
+	return 0;
+}
+
 export function searchInventory(inventory,search,allow0Count) {
 
 	allow0Count = allow0Count || false;

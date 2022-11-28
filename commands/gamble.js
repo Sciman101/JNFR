@@ -48,14 +48,8 @@ export default {
 		if (!win) {
 			// Lose! Sad!
 			if (betAmount === 'egg') {
-				let reply = Babbler.get('gamble_lose_egg')
-				if (eggSlot && eggSlot.count > 0) {
-					// Remove an egg
-					reply += '\nIt collides with an egg in your inventory, and they are both annihilated.';
-					eggSlot.count--;
-				}else{
-					addItem(user,'anti_egg');
-				}
+				let reply = Babbler.get('gamble_lose_egg');
+				addItem(user,'anti_egg');
 				message.reply(reply);
 			}else{
 				user.balance -= betAmount;

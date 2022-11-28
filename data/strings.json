@@ -119,6 +119,14 @@
 		"All out of that for the day, come back tomorrow",
 		"I don't have any more $item to sell, sorry!"
 	],
+	"sold": [
+		"Sold! Pleasure doing business with you",
+		"I'll take it! Thanks :D",
+		"Hehe, sucker, thanks for the item!",
+		"I feel like I'm on pawn stars, awesome",
+		"A deal's a deal! Thanks pal",
+		"I need one of these! Sold!"
+	],
 	"eating":[
 		"You ate up the $food! Yummy!",
 		"You nibbled on the $food - doesn't taste *that* good",
