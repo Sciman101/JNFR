@@ -41,6 +41,18 @@ function failChain(hams, failType) {
     Database.scheduleWrite();
 }
 
+async function generateMessage(hams, channel) {
+	const messageCache = hams.messageCache || [];
+	hams.messageCache = [];
+	let result = [];
+	for (let i = 0; i < messageCache.length; i++) {
+		const messageId = messageCache[i];
+		const message = await channel.messages.fetch(messageId);
+		result.push(message.cleanContent.trim());
+	}
+	return result.join(' ');
+}
+
 
 export default {
     name: 'steamedhams',
@@ -59,6 +71,7 @@ export default {
             enabled: false,
             channelId: null,
             lastSenderId: null,
+			messageCache: [],
             index: 0,
             record: 0,
             wins: 0,
@@ -100,6 +113,7 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 			guild.steamedhams.enabled = false;
 			guild.steamedhams.index = 0;
 			guild.steamedhams.altScript = -1;
+			guild.steamedhams.messageCache = [];
 			Database.scheduleWrite();
 			return message.reply('Steamed hams disabled. Score information preserved');
 		}else{
@@ -107,6 +121,7 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 			guild.steamedhams.channelId = channel;
 			guild.steamedhams.enabled = true;
 			guild.steamedhams.altScript = -1;
+			guild.steamedhams.messageCache = [];
 			Database.scheduleWrite();
 			return message.reply(`Steamed hams enabled, at this time of day, in this server, localized entierly within <#${channel}>`);
 		}
@@ -159,16 +174,23 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 						const wasAltScript = hams.altScript !== -1;
 						failChain(hams,oldIndex);
 						if (!wasAltScript) {
-							return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. You've messed up on this word \`${hams.fails[oldIndex]}\` time(s).`);
+							message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. You've messed up on this word \`${hams.fails[oldIndex]}\` time(s).`);
 						}else{
-							return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. We now return to your regularly scheduled steamed hams.`);
+							message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nThe next word was \`${nextWord}\`. We now return to your regularly scheduled steamed hams.`);
 						}
+						generateMessage(hams,message.channel).then(chainResult => {
+							message.channel.send(`Here's what you had:\n> ${chainResult}`);
+						})
 					}
 				}else{
 					// Check for someone sending 2 messages in a roe
 					if (hams.lastSenderId === message.author.id.toString() && hams.index > 0) {
 						failChain(hams,'double');
-						return message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row. You've messed up this way \`${hams.fails.double}\` time(s).`);
+						message.channel.send(`Ah egads!! The chain is ruined!! <@${message.author.id.toString()}> ruined it ${oldIndex} word(s) in.\nYou cannot put a word twice in a row. You've messed up this way \`${hams.fails.double}\` time(s).`);
+						generateMessage(hams,message.channel).then(chainResult => {
+							message.channel.send(`Here's what you had:\n> ${chainResult}`);
+						});
+						return;
 					}
 					
 					// Increment index
@@ -179,6 +201,8 @@ ${sorted.slice(0,10).map((item,idx) => `   ${idx+1}) ${item.type == "double" ? "
 						newRecord = true;
 					}
 					hams.lastSenderId = message.author.id.toString();
+					hams.messageCache ||= [];
+					hams.messageCache.push(message.id);
 					Database.scheduleWrite();
 
 					if (hams.index >= currentScript.length) {
