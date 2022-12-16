@@ -8,14 +8,13 @@ export default {
     guildOnly: false,
     argTree: stringValue('message', true),
     execute(message, args) {
-        message.channel.send(args.message);
 
-        // Add to memory
-        if (Math.random() < 0.5) {
-            let memory = db.data.jnfr.memory = db.data.jnfr.memory || [];
-            memory.push(args.message);
-            Database.scheduleWrite();
+        const guild = Database.getGuild(message.guild.id.toString());
+        if (guild.steamedhams && guild.steamedhams.channelId == message.channel.id.toString()) {
+            return message.react('🚫');
         }
+
+        message.channel.send(args.message);
 
         try {
             message.delete();
