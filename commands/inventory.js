@@ -9,7 +9,7 @@ export default {
 	description: 'Look at all your stuff, or a specific item',
 	guildOnly:false,
 	argTree:optional(stringValue('itemname',true)),
-	execute(message, args) {
+	async execute(message, args) {
 
 		const user = Database.getUser(message.author.id.toString());
 		const inventory = user.inventory;
@@ -23,12 +23,25 @@ export default {
 
 			// Get inventory
 			//console.log(inventory);
-			const inventoryString =
-			`Your inventory contains:
-${Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + items[slot.id].name + '**' + ' (x'+slot.count + (items[slot.id].callbacks.used ? ', :gear:Usable:gear:' : '') + ')').join('\n')}
-\`(Type j!stuff <item name> to learn more)\``;
+			let lines = Object.values(inventory).filter(slot => slot.count > 0).map(slot => '> **' + items[slot.id].name + '**' + ' (x'+slot.count + (items[slot.id].callbacks.used ? ', :gear:Usable:gear:' : '') + ')');
+			lines.push('(Type j!stuff <item name> to learn more)');
 
-			message.reply(inventoryString);
+			// Split into individual messages
+			let messages = ['Your inventory contains: '];
+			lines.forEach(line => {
+				let msg = messages[messages.length - 1];
+				if (msg.length + line.length >= 2000) {
+					messages.push(line);
+				}else{
+					messages[messages.length - 1] = msg + '\n' + line;
+				}
+			});
+
+			// Send
+			message.reply(messages[0]);
+			for (let i=1;i<messages.length;i++) {
+				await message.channel.send(messages[i]);
+			}
 		}else{
 
 			// Find matches
