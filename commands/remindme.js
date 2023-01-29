@@ -4,6 +4,7 @@ import client from "../index.js";
 
 export default {
   name: "remindme",
+  hidden: true,
   aliases: ["reminder"],
   description: "Set a reminder for later!",
   guildOnly: false,
