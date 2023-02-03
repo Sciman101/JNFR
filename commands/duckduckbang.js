@@ -12,7 +12,7 @@ export default {
     listeners: {
         'messageCreate': function(message) {
             // Ignore certain messages
-            if (message.author.bot || !message.content.startsWith('!!') || message.content.startsWith('!!!')) return;
+            if (message.author.bot || !message.content.startsWith('!!') || message.content.startsWith('!!!') || message.content == '!!') return;
 
             // Format is !(bang) - ex. !!w mario
             doBangSearch(message.content.substring(1), message);
