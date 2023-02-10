@@ -116,7 +116,7 @@ export default {
             });
 
             // Memory
-            if (Math.random() < 0.5) {
+            if (Math.random() < 0.002) {
                 const guild = Database.getGuild(message.guild.id.toString());
                 let memory = guild.memory = guild.memory || [];
                 if (memory.length > 0) {
