@@ -459,7 +459,7 @@ function createRecipes() {
 	defineRecipe('1kg_of_feathers', '1kg_of_lead');
 	defineRecipe('2kg_of_lead', '1kg_of_lead', '1kg_of_lead');
 	defineRecipe('3kg_of_lead', '2kg_of_lead', '1kg_of_lead');
-	defineRecipe('nothing', 'egg', 'anti-egg');
+	defineRecipe('nothing', 'egg', 'anti_egg');
 	defineRecipe('two_birds_and_a_stone', 'a_little_bird', 'a_little_bird', 'boulder');
 
 
