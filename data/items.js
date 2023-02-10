@@ -449,7 +449,8 @@ function createRecipes() {
 		'mariimo 1kg_of_lead',
 		'baba_is_you baba_is_you_plushie',
 		'luz 2_mile_long_aux_cable',
-		'oblivia clown'
+		'oblivia clown',
+		'lily handfull_of_small_frogs'
 	];
 	for (const index in plushieNames) {
 		const [character, item] = plushieNames[index].split(' ');
