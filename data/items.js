@@ -453,6 +453,11 @@ function createRecipes() {
 		item);
 	}
 
+	defineRecipe('1kg_of_lead', '1kg_of_feathers');
+	defineRecipe('1kg_of_feathers', '1kg_of_lead');
+	defineRecipe('2kg_of_lead', '1kg_of_lead', '1kg_of_lead');
+	defineRecipe('3kg_of_lead', '2kg_of_lead', '1kg_of_lead');
+
 
 	log.info('Custom recipes initialized!');
 }
