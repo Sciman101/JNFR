@@ -116,8 +116,9 @@ export default {
             });
 
             // Memory
-            if (Math.random() < 0.001) {
-                let memory = db.data.jnfr.memory = db.data.jnfr.memory || [];
+            if (Math.random() < 0.5) {
+                const guild = Database.getGuild(message.guild.id.toString());
+                let memory = guild.memory = guild.memory || [];
                 if (memory.length > 0) {
                     const index = Math.floor(Math.random() * memory.length);
                     const text = memory[index];

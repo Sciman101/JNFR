@@ -16,6 +16,10 @@ export default {
 
         message.channel.send(args.message);
 
+        guild.memory = guild.memory = (guild.memory ?? []);
+        guild.memory.push(args.message);
+        Database.scheduleWrite();
+
         try {
             message.delete();
         } catch (e) {

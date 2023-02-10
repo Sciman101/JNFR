@@ -355,7 +355,7 @@ export function createItems() {
 	createItem('69-Leaf Clover','Nice. I\'ve heard a rumor this thing **improves your luck** or something.',ItemRarity.LEGENDARY);
 
 	const eggCallback = (message,user,slot,response) => {
-		const amount = Math.floor(Math.random() * 4000) + 1;
+		const amount = Math.floor(Math.random() * 7500) + 1;
 		response = `You eat the golden egg. Suddenly, ${amount}${Babbler.getJollarSign(message.guild)} appears in your wallet! Wow!`;
 
 		user.balance += amount;
