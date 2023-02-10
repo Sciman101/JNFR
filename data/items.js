@@ -30,6 +30,48 @@ export function randomItem() {
 	return items[Object.keys(items)[index]];
 }
 
+export function findItem(name) {
+	const searchTerm = nameToId(name).replaceAll('_','');
+
+	for (const id in items) {
+		if (id.replaceAll('_','') === searchTerm) {
+			return items[id];
+		}
+	}
+	return null;
+}
+
+export function getItemRecipe(item) {
+	if (item.customRecipe) {
+		return item.customRecipe;
+	}else{
+		const hash1 = tinySimpleHash(item.name);
+		const hash2 = tinySimpleHash(item.id);
+		const hash3 = tinySimpleHash(item.id + item.name);
+
+		const ids = Object.keys(items);
+
+		const item1 = items[ids[Math.abs(hash1 % ids.length)]];
+		const item2 = items[ids[Math.abs(hash2 % ids.length)]];
+		const item3 = items[ids[Math.abs(hash3 % ids.length)]];
+
+		if (item.name.length % 2 === 0) {
+			return [item1, item2];
+		}else{
+			return [item1, item2, item3];
+		}
+	}
+}
+
+// https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript#7616484
+const tinySimpleHash = (s) => {
+	let h = 0;
+	for(let i=0;i<s.length;) {
+		h=Math.imul(h^s.charCodeAt(i++),9**9);
+	}
+	return h^h>>>9;
+}
+
 export function nameToId(name) {
 	return name.toLowerCase().replaceAll(' ','_').replaceAll('-','_').replaceAll(/[^\w_]/g,'');
 }
@@ -44,7 +86,8 @@ function createItem(name,description,rarity,buyable) {
 		description: description,
 		rarity: rarity || ItemRarity.COMMON,
 		callbacks: [],
-		buyable: buyable || true
+		buyable: buyable || true,
+		customRecipe: null
 	}
 	numItems++;
 	return items[id];
@@ -71,6 +114,16 @@ function setRaceCallback(newRace,successPrompt,failPrompt) {
 		}
 		return response;
 	}
+}
+
+function defineRecipe(item_id, ...item_ids) {
+	items[item_id].customRecipe = item_ids.map(id => {
+		if (items[id]) {
+			return items[id];
+		}
+		console.log('Unknown recipe component ' + id);
+		return null;
+	});
 }
 
 export function createItems() {
@@ -157,7 +210,9 @@ export function createItems() {
 	createItem("Fire Hydrant","Just found it on the side of the road, all it took to get it out was an angle grinder");
 	createItem("Little Pile of Dirt","You'll buy just about anything, won't you?");
 	createItem("Marina Plushie","Calls you a bitch and drinks all your pepsi");
+	createItem("Can of Pepsi","Siiiiiiiiiiiiiiiiiip");
 	createItem("Nerf Gun","It's this or nothing");
+	createItem("Gun","The first rule of firearm safety is to have fun!");
 	createItem("Matchbox Car Set","Made from real matchboxes!");
 	createItem("Bottled Water","As opposed to watered bottle");
 	createItem("Watered Bottle","As opposed to bottled water",ItemRarity.RARE);
@@ -370,4 +425,34 @@ export function createItems() {
 
 	log.info('Items initialized!');
 
+	createRecipes();
+}
+
+function createRecipes() {
+
+	const plushieNames = [
+		'iekika iekikas_tooth_stolen',
+		'uma bucket_of_slime',
+		'amber comically_large_wrench',
+		'jamie mana_potion',
+		'root yellow_crowbar',
+		'darue potted_plant',
+		'makana big_sword',
+		'jnfr kitbashed_jnfr_model',
+		'orange model_rocket',
+		'ru_b the_power_of_brick',
+		'marina can_of_pepsi',
+		'ome dead_aa_battery',
+		'mariimo 1kg_of_lead',
+		'baba_is_you baba_is_you_plushie'
+	];
+	for (const index in plushieNames) {
+		const [character, item] = plushieNames[index].split(' ');
+		defineRecipe(`${character}_plushie`,
+		'blank_plushie',
+		item);
+	}
+
+
+	log.info('Custom recipes initialized!');
 }
