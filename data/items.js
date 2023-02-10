@@ -390,6 +390,7 @@ export function createItems() {
 	createItem("Disarmed warhead i swear it's totally safe","smiles :)",ItemRarity.RARE);
 	createItem("A Very Very Small Handful of Geckos","Like, REALLY small. They're Virgin Islands Dwarf Geckos. Be gentle, ok? They've got tiny bones");
 	createItem("A Stone Shaped like a Football","It's even regulation sized!... But not regulation weight...");
+	createItem("Luz Plushie","A plushie of the owl robot Luz. Plays one of 1000 full length pirated songs when you squeeze it.");
 
 	addCallback(
 		createItem('Die of Commerce','A magic 6-sided die that radiates mercentile energy.\n**When Used:** Refresh the current shop. Has a 1/6 chance to dissapear upon use.',ItemRarity.RARE),
@@ -444,7 +445,8 @@ function createRecipes() {
 		'marina can_of_pepsi',
 		'ome dead_aa_battery',
 		'mariimo 1kg_of_lead',
-		'baba_is_you baba_is_you_plushie'
+		'baba_is_you baba_is_you_plushie',
+		'luz 2_mile_long_aux_cable'
 	];
 	for (const index in plushieNames) {
 		const [character, item] = plushieNames[index].split(' ');
@@ -457,6 +459,8 @@ function createRecipes() {
 	defineRecipe('1kg_of_feathers', '1kg_of_lead');
 	defineRecipe('2kg_of_lead', '1kg_of_lead', '1kg_of_lead');
 	defineRecipe('3kg_of_lead', '2kg_of_lead', '1kg_of_lead');
+	defineRecipe('nothing', 'egg', 'anti-egg');
+	defineRecipe('two_birds_and_a_stone', 'a_little_bird', 'a_little_bird', 'boulder');
 
 
 	log.info('Custom recipes initialized!');
