@@ -390,7 +390,9 @@ export function createItems() {
 	createItem("Disarmed warhead i swear it's totally safe","smiles :)",ItemRarity.RARE);
 	createItem("A Very Very Small Handful of Geckos","Like, REALLY small. They're Virgin Islands Dwarf Geckos. Be gentle, ok? They've got tiny bones");
 	createItem("A Stone Shaped like a Football","It's even regulation sized!... But not regulation weight...");
-	createItem("Luz Plushie","A plushie of the owl robot Luz. Plays one of 1000 full length pirated songs when you squeeze it.");
+	createItem("Luz Plushie","A plushie of the owl robot Luz. Plays one of 1000 full length pirated songs when you squeeze it");
+	createItem("Lily Plushie","A plushie of the Lily in her iconic frog-shaped raincoat. Comes with Ella umbrella accessory");
+	createItem("Wool Blanket","Would it be fucked up if you put this on a sheep?");
 
 	addCallback(
 		createItem('Die of Commerce','A magic 6-sided die that radiates mercentile energy.\n**When Used:** Refresh the current shop. Has a 1/6 chance to dissapear upon use.',ItemRarity.RARE),
@@ -446,7 +448,8 @@ function createRecipes() {
 		'ome dead_aa_battery',
 		'mariimo 1kg_of_lead',
 		'baba_is_you baba_is_you_plushie',
-		'luz 2_mile_long_aux_cable'
+		'luz 2_mile_long_aux_cable',
+		'oblivia clown'
 	];
 	for (const index in plushieNames) {
 		const [character, item] = plushieNames[index].split(' ');
@@ -454,6 +457,9 @@ function createRecipes() {
 		'blank_plushie',
 		item);
 	}
+	defineRecipe('plush_seal','blank_plushie','egg');
+	defineRecipe('plush_dragon','blank_plushie','fushigi_ball');
+	defineRecipe('blanket_wizard_plush','blank_plushie','wool_blanket');
 
 	defineRecipe('1kg_of_lead', '1kg_of_feathers');
 	defineRecipe('1kg_of_feathers', '1kg_of_lead');
