@@ -417,6 +417,7 @@ export function createItems() {
 		response = `You eat the golden egg. Suddenly, ${amount}${Babbler.getJollarSign(message.guild)} appears in your wallet! Wow!`;
 
 		user.balance += amount;
+		slot.count -= 1;
 
 		return response;
 	};
