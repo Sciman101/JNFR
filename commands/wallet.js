@@ -11,7 +11,7 @@ export default {
 		const userId = message.author.id.toString();
 		const bal = Database.getUser(userId).balance;
 		
-		message.reply(`You have ${bal} ${Babbler.getJollarSign(message.guild)} !`);
+		message.reply(`You have ${bal.toLocaleString()} ${Babbler.getJollarSign(message.guild)} !`);
 	},
 	listeners:{
 		'messageCreate':function(message) {

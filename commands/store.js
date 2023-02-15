@@ -63,7 +63,7 @@ ${inventory.map((slot,index) => {
 	return itemDesc;
 }).join('\n\n')}
 =================
-You have ${balance} ${jollarSign}
+You have ${balance.toLocaleString()} ${jollarSign}
 \`Type j!shop [item number] to buy that item\`
 			`;
 
