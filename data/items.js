@@ -118,8 +118,16 @@ function setRaceCallback(newRace,successPrompt,failPrompt) {
 
 function defineRecipe(item_id, ...item_ids) {
 	items[item_id].customRecipe = item_ids.map(id => {
+		// Validate components
+		if (Array.isArray(id)) {
+			if (id.every(v => items[v])) {
+				return id.map(i => items[id]);
+			}
+		}
 		if (items[id]) {
 			return items[id];
+		}else if (id.customComponent) {
+			return id;
 		}
 		console.log('Unknown recipe component ' + id);
 		return null;
@@ -266,7 +274,7 @@ export function createItems() {
 	createItem("Ome Plushie","A plushie of Ome the salamander - now with real shocking functionality!");
 	createItem("Mariimo Plushie","A plushie of Mariimo the robot - about as clumsy as the real thing");
 	createItem("Handfull of Small Frogs","A large handful");
-	createItem("Trenchoat (Max Occupancy, 3 creatures)","Granted, it's 3 smallish creatures, but still");
+	createItem("Trenchcoat (Max Occupancy, 3 creatures)","Granted, it's 3 smallish creatures, but still");
 	createItem("Soap","Light green with a slight minty scent");
 	createItem("Soup","Bought from the local soup store");
 	createItem("Clothes from the soup store","Actually very nice clothes, considering their source",ItemRarity.RARE);
@@ -426,6 +434,8 @@ export function createItems() {
 	addCallback(goldenEggItem,'eaten',eggCallback);
 
 	createItem('Anti-Egg','`Description Unavailable`',ItemRarity.LEGENDARY);
+	createItem('Mechanical Keyboard','Clickity Klackity');
+	createItem('Knife Keyboard','Comes with high quality stabs!',ItemRarity.COMMON,false);
 
 	log.info('Items initialized!');
 
@@ -469,6 +479,10 @@ function createRecipes() {
 	defineRecipe('3kg_of_lead', '2kg_of_lead', '1kg_of_lead');
 	defineRecipe('nothing', 'egg', 'anti_egg');
 	defineRecipe('two_birds_and_a_stone', 'a_little_bird', 'a_little_bird', 'boulder');
+	defineRecipe('knife_keyboard', 'mechanical_keyboard', {
+		name: '*Any Sword*',
+		customComponent: (item_id) => item_id.indexOf('sword') !== -1
+	});
 
 
 	log.info('Custom recipes initialized!');

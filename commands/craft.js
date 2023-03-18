@@ -17,11 +17,25 @@ export default {
 			const user = Database.getUser(message.author.id.toString());
 			const inventory = user.inventory;
 
-			const slots = recipe.map(item => inventory.find(slot => slot.id === item.id) ?? {count: 0});
-			const valid = slots.every(slot => slot.count > 0);
+			const slots = recipe.map(item => {
+				console.log(item);
+				if (Array.isArray(item)) {
+					// Any item is valid
+					for (const i in item) {
+						const slot = inventory.find(slot => slot.id == i.id);
+						if (slot) return slot;
+					}
+					return undefined;
+				}else if (item.customComponent) {
+					return inventory.find(slot => item.customComponent(slot.id));
+				}else{
+					return inventory.find(slot => slot.id === item.id);
+				}
+			});
+			const valid = slots.every(slot => slot && slot.count > 0);
 			
 			if (!valid) {
-				return message.reply(`***You don't have enough ingredients!***\nTo craft **${item.name}** you need...\n${recipe.map(item => ` - ${item.name}`).join('\n')}`);
+				return message.reply(`***You don't have enough ingredients!***\nTo craft **${item.name}** you need...\n${getRecipeString(recipe)}`);
 			}else{
 				addItem(user, item.id, 1);
 				recipe.forEach(item => {
@@ -38,3 +52,12 @@ export default {
 
 	}
 }
+
+const getRecipeString = (recipe) => recipe.map((item) => {
+	if (Array.isArray(item)) {
+		return 'One of ' + item.map((itm) => itm.name).join(', ');
+	}else{
+		// This covers items, as well as custom recipe components
+		return '-' + item.name;
+	}
+}).join('\n');
