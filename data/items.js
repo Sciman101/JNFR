@@ -86,7 +86,7 @@ function createItem(name,description,rarity,buyable) {
 		description: description,
 		rarity: rarity || ItemRarity.COMMON,
 		callbacks: [],
-		buyable,
+		buyable: buyable === undefined ? true : buyable,
 		customRecipe: null
 	}
 	numItems++;
