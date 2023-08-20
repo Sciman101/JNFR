@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { createRequire } from 'module';
 
 import {Client, Intents, Collection} from 'discord.js';
 const prefix = "j!";
