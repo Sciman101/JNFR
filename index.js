@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
 
 import {Client, Intents, Collection} from 'discord.js';
 const prefix = "j!";
@@ -12,7 +11,7 @@ const token = process.env.DISCORD_TOKEN;
 
 import Babbler from './util/babbler.js';
 import Logger, {log} from './util/logger.js';
-import Database, {db} from './util/db.js';
+import Database from './util/db.js';
 import argumentParser from './parser/argumentParser.js';
 import {createItems} from './data/items.js';
 
