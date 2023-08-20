@@ -57,6 +57,9 @@ client.once('ready', () => {
 // On message received...
 client.on('messageCreate', message => {
 
+	// Ignore bots
+	if (message.author.bot) return;
+
 	if (message.content.toLowerCase().indexOf('dialouge') != -1 && message.author.id.toString() === '160121042902188033') {
 		message.reply(Babbler.get('dialouge'));
 	}
@@ -70,9 +73,6 @@ client.on('messageCreate', message => {
 			.then(() => message.react('😎'))
 			.catch(() => console.error("Not nice :("));
 	}
-
-	// Ignore bots
-	if (message.author.bot) return;
 
 	// Make sure it's a command for us
 	if (!message.content.startsWith(prefix)) return;
