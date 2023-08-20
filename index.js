@@ -3,7 +3,12 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 import {Client, Intents, Collection} from 'discord.js';
-const {prefix, token} = require('./config.json');
+const prefix = "j!";
+
+if (!process.env.DISCORD_TOKEN) {
+	throw new Error("DISCORD_TOKEN environment variable missing.");
+}
+const token = process.env.DISCORD_TOKEN;
 
 import Babbler from './util/babbler.js';
 import Logger, {log} from './util/logger.js';

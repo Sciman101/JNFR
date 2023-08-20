@@ -10,19 +10,21 @@ let writeQueued = false;
 export default {
 
 	init: () => {
-		const _db = new Low(new JSONFile('db.json'));
+		const _db = new Low(new JSONFile('storage/db.json'));
 		_db.read();
 		db = _db;
 
-		db.data |= {
-			users: {},
-			guilds: {},
-			jnfr: {
-				pot: 0,
-				shop_date: null
+		if (!db.data || Object.keys(db.data).length === 0) {
+			db.data = {
+				users: {},
+				guilds: {},
+				jnfr: {
+					pot: 0,
+					shop_date: null
+				}
 			}
+			db.write();
 		}
-		db.write();
 
 		log.info('Database initialized!');
 	},
