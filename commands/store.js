@@ -8,11 +8,10 @@ import {log} from '../util/logger.js';
 
 // Get shop for the day
 const shopDate = db.data?.jnfr?.shop_date || 0;
-const currentDate = getDateString();
 const SHOP_ITEM_COUNT = 6;
 
 let inventory = db.data?.jnfr?.shop_inventory;
-if (!inventory || shopDate != currentDate) {
+if (!inventory || shopDate != getDateString()) {
 	randomizeStore();
 }
 
@@ -28,7 +27,7 @@ function randomizeStore() {
 		}while (inventory.length != 0 && inventory.find(slot => slot.item_id === item.id) && item.buyable);
 		inventory.push({item_id:item.id,stock:Math.floor(Math.random()*2)+1});
 	}
-	db.data.jnfr.shop_date = currentDate;
+	db.data.jnfr.shop_date = getDateString();
 
 	Database.scheduleWrite();
 }
@@ -40,6 +39,13 @@ export default {
 	guildOnly:false,
 	argTree:optional(numValue('item_number',1,SHOP_ITEM_COUNT,true)),
 	execute(message, args) {
+
+		// Check if we need to reset the shop
+		const shopNeedsReset = getDateString() !== shopDate;
+		if (shopNeedsReset) {
+			randomizeStore();
+			Database.scheduleWrite();
+		}
 
 		const jollarSign = Babbler.getJollarSign(message.guild);
 		const balance = Database.getUser(message.author.id.toString()).balance || 0;
@@ -70,6 +76,12 @@ You have ${balance.toLocaleString()} ${jollarSign}
 			message.channel.send(shopMessage);
 
 		}else{
+
+			if (shopNeedsReset) {
+				message.channel.send("Heads up! The shop has re-stocked since it was last checked, and the item you want has changed. I won't say this again, so check what's in the shop today before continuing!");
+				return;
+			}
+
 			const itemIndex = args.item_number-1;
 			const itemSlot = inventory[itemIndex];
 			const item_id = itemSlot.item_id;
