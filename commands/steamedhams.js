@@ -24,6 +24,7 @@ let altScripts = [
     { name: "Eggman's Announcement", content: loadScript('data/scripts/eggman_announcement.txt') },
     { name: "Spamton's [[Introduction]]", content: loadScript('data/scripts/spamton_intro.txt') },
     { name: "BIG BILL HELLS", content: loadScript('data/scripts/big_bill_hells.txt') },
+    { name: "Mario, the Idea vs. Mario, the Man", content: loadScript('data/scripts/mario_the_man.txt') },
 ]
 
 function failChain(hams, failType) {
