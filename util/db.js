@@ -9,9 +9,9 @@ export let db;
 let writeQueued = false;
 
 export default {
-  init: () => {
+  init: async () => {
     const _db = new Low(new JSONFile(DB_PATH));
-    _db.read();
+    await _db.read();
     db = _db;
 
     if (!db.data || Object.keys(db.data).length === 0) {
