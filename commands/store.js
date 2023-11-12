@@ -13,7 +13,7 @@ import { MONTHS } from "../util/arrays.js";
 import { log } from "../util/logger.js";
 
 // Get shop for the day
-const shopDate = db.data?.jnfr?.shop_date || 0;
+let shopDate = db.data?.jnfr?.shop_date || 0;
 const SHOP_ITEM_COUNT = 6;
 
 let inventory = db.data?.jnfr?.shop_inventory;
