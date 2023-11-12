@@ -41,6 +41,7 @@ function randomizeStore() {
     });
   }
   db.data.jnfr.shop_date = getDateString();
+  shopDate = db.data.jnfr.shop_date;
 
   Database.scheduleWrite();
 }
@@ -112,7 +113,10 @@ You have ${balance.toLocaleString()} ${jollarSign}
       const user = Database.getUser(message.author.id.toString());
       if (user.balance < cost) {
         return message.reply(
-          Babbler.get("insufficient_funds", { jollar: jollarSign })
+          Babbler.get("insufficient_funds", {
+            jollar: jollarSign,
+            user: message.author.username,
+          })
         );
       }
 
