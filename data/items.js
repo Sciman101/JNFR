@@ -447,7 +447,7 @@ export function createItems() {
 function genericizeIngredient(ingredient) {
 	return {
 		name: `*Any ${ingredient}*`,
-		customComponent: (item_id) => item_id.indexOf('ingredient') !== -1
+		customComponent: (item_id) => item_id.indexOf(ingredient) !== -1
 	};
 
 }
