@@ -401,6 +401,8 @@ export function createItems() {
 	createItem("Luz Plushie","A plushie of the owl robot Luz. Plays one of 1000 full length pirated songs when you squeeze it");
 	createItem("Lily Plushie","A plushie of the Lily in her iconic frog-shaped raincoat. Comes with Ella umbrella accessory");
 	createItem("Wool Blanket","Would it be fucked up if you put this on a sheep?");
+	createItem("Silly Putty Omelet", "Chewy.");
+	createItem("Steamed Ham", "That's what I call hamburgers!");
 
 	addCallback(
 		createItem('Die of Commerce','A magic 6-sided die that radiates mercentile energy.\n**When Used:** Refresh the current shop. Has a 1/6 chance to dissapear upon use.',ItemRarity.RARE),
@@ -442,6 +444,14 @@ export function createItems() {
 	createRecipes();
 }
 
+function genericizeIngredient(ingredient) {
+	return {
+		name: `*Any ${ingredient}*`,
+		customComponent: (item_id) => item_id.indexOf('ingredient') !== -1
+	};
+
+}
+
 function createRecipes() {
 
 	const plushieNames = [
@@ -461,7 +471,7 @@ function createRecipes() {
 		'baba_is_you baba_is_you_plushie',
 		'luz 2_mile_long_aux_cable',
 		'oblivia clown',
-		'lily handfull_of_small_frogs'
+		'lily handfull_of_small_frogs',
 	];
 	for (const index in plushieNames) {
 		const [character, item] = plushieNames[index].split(' ');
@@ -479,11 +489,10 @@ function createRecipes() {
 	defineRecipe('3kg_of_lead', '2kg_of_lead', '1kg_of_lead');
 	defineRecipe('nothing', 'egg', 'anti_egg');
 	defineRecipe('two_birds_and_a_stone', 'a_little_bird', 'a_little_bird', 'boulder');
-	defineRecipe('knife_keyboard', 'mechanical_keyboard', {
-		name: '*Any Sword*',
-		customComponent: (item_id) => item_id.indexOf('sword') !== -1
-	});
-
+	defineRecipe('knife_keyboard', 'mechanical_keyboard', genericizeIngredient("sword"));
+	defineRecipe('blank_plushie', 'nullpointerexception', genericizeIngredient("plushie"));
+	defineRecipe('egg_timer', genericizeIngredient("egg"), genericizeIngredient("clock"));
+	defineRecipe('silly_putty_omelet', 'silly_putty_egg', 'silly_putty_egg', 'silly_putty_egg'));
 
 	log.info('Custom recipes initialized!');
 }
