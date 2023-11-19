@@ -791,6 +791,8 @@ export function createItems() {
     "Wool Blanket",
     "Would it be fucked up if you put this on a sheep?"
   );
+  createItem("Silly Putty Omelet", "Chewy.");
+  createItem("Steamed Ham", "That's what I call hamburgers!");
 
   addCallback(
     createItem(
@@ -853,6 +855,13 @@ export function createItems() {
   createRecipes();
 }
 
+function genericizeIngredient(ingredient) {
+  return {
+    name: `*Any ${ingredient}*`,
+    customComponent: (item_id) => item_id.indexOf(ingredient) !== -1
+  };
+}
+
 function createRecipes() {
   const plushieNames = [
     "iekika iekikas_tooth_stolen",
@@ -892,10 +901,10 @@ function createRecipes() {
     "a_little_bird",
     "boulder"
   );
-  defineRecipe("knife_keyboard", "mechanical_keyboard", {
-    name: "*Any Sword*",
-    customComponent: (item_id) => item_id.indexOf("sword") !== -1,
-  });
+  defineRecipe('knife_keyboard', 'mechanical_keyboard', genericizeIngredient("sword"));
+  defineRecipe('blank_plushie', 'nullpointerexception', genericizeIngredient("plushie"));
+  defineRecipe('egg_timer', genericizeIngredient("egg"), genericizeIngredient("clock"));
+  defineRecipe('silly_putty_omelet', 'silly_putty_egg', 'silly_putty_egg', 'silly_putty_egg');
 
   log.info("Custom recipes initialized!");
 }
