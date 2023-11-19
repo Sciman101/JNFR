@@ -4,9 +4,8 @@ import Database, { db } from "../util/db.js";
 import { addItem, removeItem } from "../util/inventoryHelper.js";
 
 export default {
-  name: "craft",
-  aliases: ["make"],
-  description: "Create an item using stuff in your inventory",
+  name: "recipe",
+  description: "Learn the recipe to any item",
   guildOnly: false,
   argTree: stringValue("item", true),
   execute(message, args) {
@@ -17,6 +16,7 @@ export default {
       const inventory = user.inventory;
 
       const slots = recipe.map((item) => {
+        console.log(item);
         if (Array.isArray(item)) {
           // Any item is valid
           for (const i in item) {
