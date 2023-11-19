@@ -38,7 +38,7 @@ export function randomItem() {
 export function findItem(query) {
   // If the query is monospaced, treat it as a raw item id
   if (query.startsWith("`") && query.endsWith("`") && query.length > 2) {
-    const idSearch = search.substring(1, search.length - 1);
+    const idSearch = query.substring(1, query.length - 1);
     for (const id in items) {
       if (idSearch === id) {
         return items[id];
@@ -87,7 +87,7 @@ export const getRecipeString = (recipe) =>
         return "One of " + item.map((itm) => itm.name).join(", ");
       } else {
         // This covers items, as well as custom recipe components
-        return "-" + item.name;
+        return "- " + item.name;
       }
     })
     .join("\n");
