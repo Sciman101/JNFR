@@ -274,8 +274,9 @@
 		"put in time-out",
 		"character assasinated",
 		"put in the pear wiggler",
-		"received an extra 5 minutes in the ball pit",
-		"turned into a small toad"
+		"given an extra 5 minutes in the ball pit",
+		"turned into a small toad",
+		"blent"
 	],
 	"error":[
 		"Something went wrong!",
@@ -290,5 +291,17 @@
 		"SCIMAN EPIC TYPO FAIL (POINT AND LAUGH)",
 		"That's not how you spell that sweaty :)",
 		"You made a typo on Discord.com, you are going to lose subscriber!"
+	],
+	"crafting_instructions":[
+		"Mix together and bake at 400 degrees for 30 minutes",
+		"Boil for 3 days, serve hot",
+		"Dice and serve with a dipping sauce of your choice",
+		"Make sure to apply plenty of adhesive compound!",
+		"Don't forget to add a bead of thermal paste before installing",
+		"Remember: Cut twice, measure once!",
+		"Some assembly required!",
+		"You will need: A hacksaw, hammer, and wood glue",
+		"You will need: A milling machine, lathe, and a small mammal",
+		"You will need: Hex key (included), measuring tape, entabulator"
 	]
 }
