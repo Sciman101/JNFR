@@ -492,7 +492,7 @@ function createRecipes() {
 	defineRecipe('knife_keyboard', 'mechanical_keyboard', genericizeIngredient("sword"));
 	defineRecipe('blank_plushie', 'nullpointerexception', genericizeIngredient("plushie"));
 	defineRecipe('egg_timer', genericizeIngredient("egg"), genericizeIngredient("clock"));
-	defineRecipe('silly_putty_omelet', 'silly_putty_egg', 'silly_putty_egg', 'silly_putty_egg'));
+	defineRecipe('silly_putty_omelet', 'silly_putty_egg', 'silly_putty_egg', 'silly_putty_egg');
 
 	log.info('Custom recipes initialized!');
 }
