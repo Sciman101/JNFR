@@ -27,7 +27,7 @@
 		"Can't use that in DMs",
 		"Oops! I can only run that in DMs"
 	],
-	"lacking_permissions":[
+	"admin_only":[
 		"Sorry, you're not allowed to do that",
 		"You don't have permission to use that",
 		"Gonna need to ask someone higher up for that one",

@@ -9,13 +9,12 @@ import Database from "../util/db.js";
 import { log } from "../util/logger.js";
 import { MessageEmbed } from "discord.js";
 import { MONTHS } from "../util/arrays.js";
-import { Permissions } from "discord.js";
 
 export default {
   name: "pinboard",
   description:
     "Set up a pin board for your server! (Pins will only use the first attachment/embed in an image)",
-  permissions: [Permissions.FLAGS.MANAGE_MESSAGES],
+  adminOnly: true,
   guildOnly: true,
   argTree: branch([
     literal(

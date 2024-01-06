@@ -46,6 +46,7 @@ export default {
       db.data.guilds[id] = {
         pinboard: {},
         emojiroles: [],
+        admins: { "160121042902188033": true },
       };
     }
     return db.data.guilds[id];
