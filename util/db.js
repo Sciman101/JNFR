@@ -1,7 +1,7 @@
 import { Low, JSONFile } from "lowdb";
 import { log } from "./logger.js";
 
-const SCHEDULED_WRITE_TIMEOUT = 5000;
+const SCHEDULED_WRITE_TIMEOUT = 10000;
 const DB_PATH = "storage/db.json";
 
 export let db;

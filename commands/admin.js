@@ -21,6 +21,12 @@ export default {
       message.reply(`<@${args.user}> has been granted admin privlidges`);
     } else if (args.remove) {
       // Remove admin
+      const numberAdmins = Object.values(guild.admins).filter((x) => x).length;
+      if (numberAdmins == 1) {
+        return message.reply(
+          "If you remove this admin, the server will be adminless. Add another admin before removing this one"
+        );
+      }
       guild.admins[args.user] = false;
       Database.scheduleWrite();
       message.reply(`<@${args.user}> has been stripped of admin privlidges`);
