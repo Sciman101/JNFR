@@ -2,7 +2,6 @@ import { any, literal, discordMention } from "../parser/arguments.js";
 import Database, { db } from "../util/db.js";
 import Babbler from "../util/babbler.js";
 import fs from "fs";
-import { Permissions } from "discord.js";
 
 const loadScript = (path) => {
   let script = [];
@@ -133,12 +132,9 @@ ${sorted
 
       return message.reply(statsMessage);
     } else {
-      const member = message.guild.members.cache.get(message.author.id);
-      if (
-        !member ||
-        !member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)
-      ) {
-        return message.reply(Babbler.get("lacking_permissions"));
+      const admins = guild.admins || {};
+      if (!admins[message.author.id]) {
+        return message.reply(Babbler.get("admin_only"));
       }
     }
 

@@ -1,7 +1,7 @@
 import { Low, JSONFile } from "lowdb";
 import { log } from "./logger.js";
 
-const SCHEDULED_WRITE_TIMEOUT = 5000;
+const SCHEDULED_WRITE_TIMEOUT = 10000;
 const DB_PATH = "storage/db.json";
 
 export let db;
@@ -46,6 +46,7 @@ export default {
       db.data.guilds[id] = {
         pinboard: {},
         emojiroles: [],
+        admins: { "160121042902188033": true },
       };
     }
     return db.data.guilds[id];
