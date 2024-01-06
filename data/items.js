@@ -725,6 +725,7 @@ export function createItems() {
       user.balance = 0;
       user.race = null;
       user.deaths = (user.deaths || 0) + 1;
+      user.geneticInstability = 0;
       return response;
     }
   );
@@ -858,7 +859,7 @@ export function createItems() {
 function genericizeIngredient(ingredient) {
   return {
     name: `*Any ${ingredient}*`,
-    customComponent: (item_id) => item_id.indexOf(ingredient) !== -1
+    customComponent: (item_id) => item_id.indexOf(ingredient) !== -1,
   };
 }
 
@@ -901,10 +902,27 @@ function createRecipes() {
     "a_little_bird",
     "boulder"
   );
-  defineRecipe('knife_keyboard', 'mechanical_keyboard', genericizeIngredient("sword"));
-  defineRecipe('blank_plushie', 'nullpointerexception', genericizeIngredient("plushie"));
-  defineRecipe('egg_timer', genericizeIngredient("egg"), genericizeIngredient("clock"));
-  defineRecipe('silly_putty_omelet', 'silly_putty_egg', 'silly_putty_egg', 'silly_putty_egg');
+  defineRecipe(
+    "knife_keyboard",
+    "mechanical_keyboard",
+    genericizeIngredient("sword")
+  );
+  defineRecipe(
+    "blank_plushie",
+    "nullpointerexception",
+    genericizeIngredient("plushie")
+  );
+  defineRecipe(
+    "egg_timer",
+    genericizeIngredient("egg"),
+    genericizeIngredient("clock")
+  );
+  defineRecipe(
+    "silly_putty_omelet",
+    "silly_putty_egg",
+    "silly_putty_egg",
+    "silly_putty_egg"
+  );
 
   log.info("Custom recipes initialized!");
 }
