@@ -6,8 +6,10 @@ export default {
     // https://stackoverflow.com/questions/70646350/how-do-i-get-the-last-message-sent-in-a-channel-discord-js-v13
     const lastMessages = await message.channel.messages.fetch({ limit: 2 });
     const previousMessage = lastMessages.last();
-    message.channel.send(
-      previousMessage.cleanContent.split("").sort().join("")
-    );
+    try {
+      message.channel.send(
+        previousMessage.cleanContent.split("").sort().join("")
+      );
+    } catch (e) {}
   },
 };
