@@ -198,7 +198,11 @@ ${sorted
         if (hams.index == 0) {
           for (let i = 0; i < altScripts.length; i++) {
             let altScript = altScripts[i];
-            if (altScript.content[0] === content) {
+            const matcher = altScript.content[0];
+            if (
+              matcher === content ||
+              (typeof matcher === "object" && matcher.indexOf(content) !== -1)
+            ) {
               // Switch to this as our alt script
 
               hams.altScript = i;
