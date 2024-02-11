@@ -44,6 +44,10 @@ let altScripts = [
     name: "The Alphabet",
     content: loadScript("data/scripts/the_alphabet.txt"),
   },
+  {
+    name: "Wizard Beer",
+    content: loadScript("data/scripts/wizard_beer.txt"),
+  },
 ];
 
 function failChain(hams, failType) {
