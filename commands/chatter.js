@@ -118,6 +118,13 @@ export default {
         );
       }
 
+      // Information
+      if (Math.random() < 0.0005) {
+        return message.channel.send(
+          ":white_check_mark: The above post contains information :white_check_mark:"
+        );
+      }
+
       // user was
       if (Math.random() < 0.00075) {
         return message.channel.send(
