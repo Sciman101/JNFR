@@ -112,7 +112,7 @@ export default {
       }
 
       // Maxxer
-      if (Math.random() < 1) {
+      /* if (Math.random() < 0) {
         const noSymbols = message.cleanContent
           .toString()
           .replace(/[^a-zA-Z0-9 ]/g, "");
@@ -134,7 +134,7 @@ export default {
             );
           }
         }
-      }
+      }*/
 
       // Misinformation
       if (Math.random() < 0.001) {
