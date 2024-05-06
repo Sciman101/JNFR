@@ -200,6 +200,17 @@ export default {
       }
 
       const message = reaction.message;
+
+      // Make sure it's in an enabled channel
+      const channelIds =
+        Database.getGuild(message.guild.id.toString()).chatterChannels || [];
+      // We can only send it in certain channels
+      if (
+        !channelIds ||
+        channelIds.indexOf(message.channel.id.toString()) == -1
+      )
+        return;
+
       if (
         message.author.id === "352566617231720468" ||
         message.author.id === "844191168899842049"
