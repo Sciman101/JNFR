@@ -111,6 +111,31 @@ export default {
         return message.channel.send(Babbler.get("mention"));
       }
 
+      // Maxxer
+      if (Math.random() < 1) {
+        const noSymbols = message.cleanContent
+          .toString()
+          .replace(/[^a-zA-Z0-9 ]/g, "");
+        if (noSymbols.length > 0) {
+          const words = noSymbols
+            .split(" ")
+            .filter((substr) => substr.length > 2)
+            .map((word) => word.toLowerCase());
+          if (words.length >= 2) {
+            const firstWordIndex = Math.floor(
+              Math.random() * (words.length - 2)
+            );
+            const secondWordIndex =
+              firstWordIndex +
+              Math.floor(Math.random() * (words.length - 1 - firstWordIndex)) +
+              1;
+            return message.reply(
+              `${words[firstWordIndex]}-pilled ${words[secondWordIndex]}-maxxer`
+            );
+          }
+        }
+      }
+
       // Misinformation
       if (Math.random() < 0.001) {
         return message.channel.send(
@@ -157,6 +182,30 @@ export default {
           }
 
           return message.channel.send(text);
+        }
+      }
+    },
+    // Allow users to delete JNFR messages with ⛔
+    messageReactionAdd: async (reaction, user) => {
+      // When a reaction is received, check if the structure is partial
+      if (reaction.partial) {
+        // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
+        try {
+          await reaction.fetch();
+        } catch (error) {
+          log.error("Something went wrong when fetching the message: ", error);
+          // Return as `reaction.message.author` may be undefined/null
+          return;
+        }
+      }
+
+      const message = reaction.message;
+      if (
+        message.author.id === "352566617231720468" ||
+        message.author.id === "844191168899842049"
+      ) {
+        if (reaction.emoji.name === "⛔") {
+          message.delete();
         }
       }
     },
