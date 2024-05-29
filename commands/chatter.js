@@ -1,6 +1,7 @@
 import { any, discordMention, literal, optional } from "../parser/arguments.js";
 import Database, { db } from "../util/db.js";
 import Babbler from "../util/babbler.js";
+import { log } from "../util/logger.js";
 
 const regex_matchers = [
   {
@@ -216,7 +217,11 @@ export default {
         message.author.id === "844191168899842049"
       ) {
         if (reaction.emoji.name === "⛔") {
-          message.delete();
+          try {
+            message.delete();
+          } catch (e) {
+            log.warn("Unable to delete message");
+          }
         }
       }
     },
