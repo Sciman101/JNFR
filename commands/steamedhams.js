@@ -48,6 +48,10 @@ let altScripts = [
     name: "Wizard Beer",
     content: loadScript("data/scripts/wizard_beer.txt"),
   },
+  {
+  	name: "Weird Al's Hardware Store (Bridge)",
+  	content: loadScript("data/scripts/hardware_store.txt")
+  }
 ];
 
 function failChain(hams, failType) {
