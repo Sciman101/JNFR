@@ -48,10 +48,6 @@ let altScripts = [
     name: "Wizard Beer",
     content: loadScript("data/scripts/wizard_beer.txt"),
   },
-  {
-  	name: "Weird Al's Hardware Store (Bridge)",
-  	content: loadScript("data/scripts/hardware_store.txt")
-  }
 ];
 
 function failChain(hams, failType) {
@@ -170,7 +166,7 @@ ${sorted
   listeners: {
     messageCreate: function (message) {
       // Ignore certain messages
-      if (message.author.bot || message.content.startsWith("j!")) return;
+      if (message.author.bot || message.cleanContent.startsWith("j!")) return;
 
       const guild = Database.getGuild(message.guild.id.toString());
       if (!guild.steamedhams) return;

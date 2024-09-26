@@ -93,7 +93,7 @@ export default {
       // Ignore certain messagesst
       if (
         message.author.bot ||
-        message.content.startsWith(message.client.prefix)
+        message.cleanContent.startsWith(message.client.prefix)
       )
         return;
 
@@ -108,7 +108,7 @@ export default {
         return;
 
       // mention
-      if (message.content.indexOf("<@352566617231720468>") !== -1) {
+      if (message.cleanContent.indexOf("<@352566617231720468>") !== -1) {
         return message.channel.send(Babbler.get("mention"));
       }
 
@@ -160,7 +160,7 @@ export default {
 
       // Regex
       regex_matchers.forEach((matcher) => {
-        const matches = message.content.matchAll(matcher.regex);
+        const matches = message.cleanContent.matchAll(matcher.regex);
         for (const match of matches) {
           const number = parseInt(match[1]);
           if (number != NaN) {

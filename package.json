@@ -5,11 +5,12 @@
     "description": "A discord bot",
     "exports": "./index.js",
     "dependencies": {
-        "discord.js": "^13.8.1",
+        "discord.js": "^14.16.2",
         "emoji-regex": "^10.1.0",
         "eslint": "^7.26.0",
         "lowdb": "^3.0.0",
         "node-duckduckgo": "^2.0.17",
+        "nodemon": "^3.1.7",
         "npx": "^10.2.2",
         "simple-node-logger": "^21.8.12"
     },
@@ -21,7 +22,9 @@
         "prod": "node index.js"
     },
     "nodemonConfig": {
-        "ignore": ["db.json"]
+        "ignore": [
+            "db.json"
+        ]
     },
     "keywords": [],
     "author": "Sciman101",

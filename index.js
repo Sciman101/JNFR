@@ -1,6 +1,11 @@
 import fs from "fs";
 
-import { Client, Intents, Collection } from "discord.js";
+import {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  PermissionsBitField,
+} from "discord.js";
 const prefix = "j!";
 
 if (!process.env.DISCORD_TOKEN) {
@@ -23,12 +28,13 @@ createItems();
 // Setup discord client
 const client = new Client({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-    Intents.FLAGS.DIRECT_MESSAGES,
-    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-    Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.GuildEmojisAndStickers,
   ],
   partials: ["REACTION", "MESSAGE"],
 });
@@ -67,12 +73,11 @@ client.once("ready", () => {
 });
 
 // On message received...
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   // Ignore bots
   if (message.author.bot) return;
-
   if (
-    message.content.toLowerCase().indexOf("dialouge") != -1 &&
+    message.cleanContent.toLowerCase().indexOf("dialouge") != -1 &&
     message.author.id.toString() === "160121042902188033"
   ) {
     message.reply(Babbler.get("dialouge"));
@@ -80,8 +85,8 @@ client.on("messageCreate", (message) => {
 
   // nice
   if (
-    message.content == "69" ||
-    message.content.toLowerCase().replace(/[- ]/, "") == "sixtynine"
+    message.cleanContent == "69" ||
+    message.cleanContent.toLowerCase().replace(/[- ]/, "") == "sixtynine"
   ) {
     return message
       .react("🇳")
@@ -93,10 +98,10 @@ client.on("messageCreate", (message) => {
   }
 
   // Make sure it's a command for us
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.cleanContent.startsWith(prefix)) return;
 
   // Parse command name and arguments
-  const rawArgs = message.content.slice(prefix.length).trim().split(/ +/);
+  const rawArgs = message.cleanContent.slice(prefix.length).trim().split(/ +/);
   const commandName = rawArgs.shift().toLowerCase();
 
   const command =
@@ -116,8 +121,11 @@ client.on("messageCreate", (message) => {
 
   // Check admin only
   if (command.adminOnly) {
-    const admins = Database.getGuild(message.guild.id.toString()).admins || {};
-    if (!admins[message.author.id.toString()]) {
+    // Get member
+    const member = await message.guild.members.fetch(
+      message.author.id.toString()
+    );
+    if (!member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
       return message.reply(Babbler.get("admin_only"));
     }
   }

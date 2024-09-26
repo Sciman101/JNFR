@@ -7,7 +7,7 @@ import {
 } from "../parser/arguments.js";
 import Database from "../util/db.js";
 import { log } from "../util/logger.js";
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { MONTHS } from "../util/arrays.js";
 
 export default {
@@ -110,7 +110,7 @@ export default {
                   //const pinnedDate = new Date();
 
                   // Create an embed for it
-                  const pinEmbed = new MessageEmbed()
+                  const pinEmbed = new EmbedBuilder()
                     .setColor("#62B7E8")
                     .setTitle(`Jump to message!`)
                     .setURL(message.url)
