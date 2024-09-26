@@ -93,7 +93,7 @@ export default {
       // Ignore certain messagesst
       if (
         message.author.bot ||
-        message.cleanContent.startsWith(message.client.prefix)
+        message.content.startsWith(message.client.prefix)
       )
         return;
 
@@ -108,7 +108,7 @@ export default {
         return;
 
       // mention
-      if (message.cleanContent.indexOf("<@352566617231720468>") !== -1) {
+      if (message.content.indexOf("<@352566617231720468>") !== -1) {
         return message.channel.send(Babbler.get("mention"));
       }
 

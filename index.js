@@ -77,7 +77,7 @@ client.on("messageCreate", async (message) => {
   // Ignore bots
   if (message.author.bot) return;
   if (
-    message.cleanContent.toLowerCase().indexOf("dialouge") != -1 &&
+    message.content.toLowerCase().indexOf("dialouge") != -1 &&
     message.author.id.toString() === "160121042902188033"
   ) {
     message.reply(Babbler.get("dialouge"));
@@ -85,8 +85,8 @@ client.on("messageCreate", async (message) => {
 
   // nice
   if (
-    message.cleanContent == "69" ||
-    message.cleanContent.toLowerCase().replace(/[- ]/, "") == "sixtynine"
+    message.content == "69" ||
+    message.content.toLowerCase().replace(/[- ]/, "") == "sixtynine"
   ) {
     return message
       .react("🇳")
@@ -98,10 +98,10 @@ client.on("messageCreate", async (message) => {
   }
 
   // Make sure it's a command for us
-  if (!message.cleanContent.startsWith(prefix)) return;
+  if (!message.content.startsWith(prefix)) return;
 
   // Parse command name and arguments
-  const rawArgs = message.cleanContent.slice(prefix.length).trim().split(/ +/);
+  const rawArgs = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = rawArgs.shift().toLowerCase();
 
   const command =

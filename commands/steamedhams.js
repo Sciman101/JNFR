@@ -178,8 +178,8 @@ ${sorted
       if (message.channel.id.toString() === hams.channelId) {
         // Strip message content
         // Ignore messages in parehtnasees
-        if (message.cleanContent.startsWith("(")) return;
-        const content = message.cleanContent
+        if (message.content.startsWith("(")) return;
+        const content = message.content
           .toLowerCase()
           .trim()
           .replace(/[\W_]/g, "");

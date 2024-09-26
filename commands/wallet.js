@@ -21,7 +21,7 @@ export default {
   listeners: {
     messageCreate: function (message) {
       // Ignore certain messages
-      if (message.author.bot || message.cleanContent.startsWith("j!")) return;
+      if (message.author.bot || message.content.startsWith("j!")) return;
 
       // Give em a coin
       const userId = message.author.id.toString();

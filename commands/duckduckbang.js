@@ -16,14 +16,14 @@ export default {
       // Ignore certain messages
       if (
         message.author.bot ||
-        !message.cleanContent.startsWith("!!") ||
-        message.cleanContent.startsWith("!!!") ||
-        message.cleanContent == "!!"
+        !message.content.startsWith("!!") ||
+        message.content.startsWith("!!!") ||
+        message.content == "!!"
       )
         return;
 
       // Format is !(bang) - ex. !!w mario
-      doBangSearch(message.cleanContent.substring(1), message);
+      doBangSearch(message.content.substring(1), message);
     },
   },
 };
