@@ -2,6 +2,7 @@ import { any, discordMention, literal, optional } from "../parser/arguments.js";
 import Database, { db } from "../util/db.js";
 import Babbler from "../util/babbler.js";
 import { log } from "../util/logger.js";
+import { ChannelType } from "discord.js";
 
 const regex_matchers = [
   {
@@ -60,7 +61,7 @@ export default {
           const id = channel.id.toString();
           if (
             guildData.chatterChannels.indexOf(id) === -1 &&
-            channel.type === "GUILD_TEXT"
+            channel.type === ChannelType.GuildText
           ) {
             guildData.chatterChannels.push(id);
           }

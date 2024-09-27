@@ -8,6 +8,7 @@ import {
 } from "../parser/arguments.js";
 import { log } from "../util/logger.js";
 import Database from "../util/db.js";
+import { ChannelType } from "discord.js";
 
 export default {
   name: "emojirole",
@@ -49,7 +50,7 @@ export default {
     }
 
     const channel = guild.channels.cache.get(channelId);
-    if (!channel || channel.type !== "GUILD_TEXT") {
+    if (!channel || channel.type !== ChannelType.GuildText) {
       return message.reply("You must specify a text channel!");
     }
 

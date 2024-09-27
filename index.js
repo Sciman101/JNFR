@@ -5,6 +5,7 @@ import {
   GatewayIntentBits,
   Collection,
   PermissionsBitField,
+  ChannelType,
 } from "discord.js";
 const prefix = "j!";
 
@@ -115,7 +116,7 @@ client.on("messageCreate", async (message) => {
 
   // Check command requirements
   // Guild only
-  if (command.guildOnly && message.channel.type == "dm") {
+  if (command.guildOnly && message.channel.type == ChannelType.DM) {
     return message.reply(Babbler.get("guild_only"));
   }
 
