@@ -73,8 +73,10 @@ async function generateMessage(hams, channel) {
   let result = [];
   for (let i = 0; i < messageCache.length; i++) {
     const messageId = messageCache[i];
-    const message = await channel.messages.fetch(messageId);
-    result.push(message.cleanContent.trim());
+    try {
+      const message = await channel.messages.fetch(messageId);
+      result.push(message.cleanContent.trim());
+    } catch (e) {}
   }
   return result.join(" ");
 }
