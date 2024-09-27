@@ -2,6 +2,7 @@ import { any, literal, discordMention } from "../parser/arguments.js";
 import Database, { db } from "../util/db.js";
 import Babbler from "../util/babbler.js";
 import fs from "fs";
+import { PermissionsBitField } from "discord.js";
 
 const loadScript = (path) => {
   let script = [];
@@ -88,7 +89,7 @@ export default {
     literal("disable"),
     discordMention("channel", "channel"),
   ]),
-  execute(message, args) {
+  async execute(message, args) {
     const guild = Database.getGuild(message.guild.id.toString());
     guild.steamedhams ||= {
       enabled: false,
@@ -136,8 +137,10 @@ ${sorted
 
       return message.reply(statsMessage);
     } else {
-      const admins = guild.admins || {};
-      if (!admins[message.author.id]) {
+      const member = await message.guild.members.fetch(
+        message.author.id.toString()
+      );
+      if (!member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
         return message.reply(Babbler.get("admin_only"));
       }
     }

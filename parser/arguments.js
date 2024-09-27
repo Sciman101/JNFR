@@ -54,7 +54,7 @@ const any = (nodes, next) => {
         }
       }
       return {
-        error: "no matching argument provided",
+        error: `expected one of ${descText}`,
       };
     },
   };
@@ -78,7 +78,7 @@ const branch = (paths) => {
         }
       }
       return {
-        error: "no matching argument provided",
+        error: `expected ${descText}`,
       };
     },
   };
@@ -214,7 +214,7 @@ const mentionTypePrefixes = {
 const discordMention = (id, type, next) => {
   const start = mentionTypePrefixes[type];
   return {
-    description: type,
+    description: `[${type} mention]`,
     next: next,
     evaluate: (args, argIndex) => {
       let mentionRaw = args[argIndex];
