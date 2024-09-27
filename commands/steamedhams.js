@@ -169,11 +169,7 @@ ${sorted
   listeners: {
     messageCreate: function (message) {
       // Ignore certain messages
-      if (
-        message.author.id.toString() === "352566617231720468" ||
-        message.cleanContent.startsWith("j!")
-      )
-        return;
+      if (message.author.bot || message.cleanContent.startsWith("j!")) return;
 
       const guild = Database.getGuild(message.guild.id.toString());
       if (!guild.steamedhams) return;
