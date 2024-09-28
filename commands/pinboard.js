@@ -118,13 +118,15 @@ export default {
                       name: nickname,
                       iconUrl: message.author.avatarURL(),
                     })
-                    .setDescription(message.cleanContent)
                     //.setTimestamp()
                     .setFooter({
                       text: `Originally posted ${
                         MONTHS[originalDate.getMonth()]
                       } ${originalDate.getDate()}, ${originalDate.getFullYear()}`,
                     });
+                  if (message.cleanContent.length >= 1) {
+                    pinEmbed.setDescription(message.cleanContent);
+                  }
                   /*.addFields(
                                         	{name: 'Pinned on ', value: `${MONTHS[pinnedDate.getMonth()]} ${pinnedDate.getDate()}, ${pinnedDate.getFullYear()}`}
                                         );*/
