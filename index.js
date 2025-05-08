@@ -84,6 +84,14 @@ client.on("messageCreate", async (message) => {
     message.reply(Babbler.get("dialouge"));
   }
 
+  if (message.content.toLowerCase() == "or pvp boss") {
+    return message.channel.send("or PvP Boss");
+  }
+
+  if (message.content.toLowerCase().indexOf('bionicle') !== -1 && message.guild.id.toString() === "843708033171456001") {
+    message.channel.send("<@230066983306133504>");
+  }
+
   // nice
   if (
     message.content == "69" ||
