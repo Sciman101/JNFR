@@ -5,15 +5,6 @@ import { log } from "../util/logger.js";
 import { ChannelType } from "discord.js";
 
 const regex_matchers = [
-  {
-    regex: /among\s*us/gi,
-    babblerString: "amongus",
-  },
-  {
-    regex:
-      /h[ _-]*[o0][ _-]*m[ _-]*[e3*][ _-]*[s5][ _-]*[t+][ _-]*[u*][ _-]*c[ _-]*k/gi,
-    babblerString: "homestuck",
-  },
 ];
 
 export default {
